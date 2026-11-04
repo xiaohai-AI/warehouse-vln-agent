@@ -1,0 +1,76 @@
+# depot-vln — 指令基准（人工编写，**不由被测解析器的模板生成**）
+#
+# 与重构前那份 69 条基准的根本差别：
+#   旧：utterance 由模板拼出来，模板与 `nlu.py` 的正则一一对应，答案由同一份真值算出
+#       -> 100% 是构造出来的恒等式，换一个说法就崩，测不出任何泛化能力。
+#   新：句子是人写的（含口语、省略、英文、错地址、生造说法），期望行为是**声明**的；
+#       `oracle.py` 用真值独立复核每一条声明（目标可达吗？那个 bay 真的空吗？），
+#       声明与真值矛盾就**拒绝运行**，而不是静默计分。
+#
+# 四类：direct / attribute / ambiguous / unreachable
+meta:
+  schema: depot-vln/bench@2
+  note: expected 由人声明，oracle 用 ground_truth 复核；解析器与生成器无关。
+
+cases:
+  # ---------------------------------------------------------------- 直达
+  - {id: D01, category: direct, utterance: "去 B-L-07-2", expect: {behavior: reach, target: B-L-07-2}}
+  - {id: D02, category: direct, utterance: "带我去 C-R-02-1 那个货位", expect: {behavior: reach, target: C-R-02-1}}
+  - {id: D03, category: direct, utterance: "A-L-24-1 怎么走", expect: {behavior: reach, target: A-L-24-1}}
+  - {id: D04, category: direct, utterance: "go to E-R-03-1", expect: {behavior: reach, target: E-R-03-1}}
+  - {id: D05, category: direct, utterance: "麻烦到 D-L-16-1 一趟", expect: {behavior: reach, target: D-L-16-1}}
+  - {id: D06, category: direct, utterance: "把车开到 A-R-05-2", expect: {behavior: reach, target: A-R-05-2}}
+  - {id: D07, category: direct, utterance: "去 b l 12 1 看看", expect: {behavior: reach, target: B-L-12-1}}
+  - {id: D08, category: direct, utterance: "导航到 F-L-17-1", expect: {behavior: reach, target: F-L-17-1}}
+  - {id: D09, category: direct, utterance: "去 E-L-19-1", expect: {behavior: reach, target: E-L-19-1}}
+  - {id: D10, category: direct, utterance: "到 A-L-01-1", expect: {behavior: reach, target: A-L-01-1}}
+  - {id: D11, category: direct, utterance: "去 C-L-10-1", expect: {behavior: reach, target: C-L-10-1}}
+  - {id: D12, category: direct, utterance: "F-R-05-1 在哪儿", expect: {behavior: reach, target: F-R-05-1}}
+  - {id: D13, category: direct, utterance: "去 D-R-22-1", expect: {behavior: reach, target: D-R-22-1}}
+  - {id: D14, category: direct, utterance: "去 B-R-12-1", expect: {behavior: reach, target: B-R-12-1}}
+
+  # ---------------------------------------------------------------- 属性/关系
+  - {id: A01, category: attribute, utterance: "去 A 巷放油桶的那面货架", expect: {behavior: reach, target: A-R}}
+  - {id: A02, category: attribute, utterance: "A 巷哪面货架有油桶", expect: {behavior: reach, target: A-R}}
+  - {id: A03, category: attribute, utterance: "去放纸箱最多的那排货架", expect: {behavior: reach, target: A-R}}
+  - {id: A04, category: attribute, utterance: "纸箱最多的是哪排货架", expect: {behavior: reach, target: A-R}}
+  - {id: A05, category: attribute, utterance: "去 A 巷最里面那个空位", expect: {behavior: reach, target: A-L-24-1}}
+  - {id: A06, category: attribute, utterance: "A 巷最里头第一层那个空位", expect: {behavior: reach, target: A-L-24-1}}
+  - {id: A07, category: attribute, utterance: "去 E 巷 13 号位第一层放油桶的那格", expect: {behavior: reach, target: E-R-13-1}}
+  - {id: A08, category: attribute, utterance: "C 巷 7 号位第二层放油桶的那格", expect: {behavior: reach, target: C-R-07-2}}
+  - {id: A09, category: attribute, utterance: "去 D 巷 4 号位第二层放周转箱的", expect: {behavior: reach, target: D-R-04-2}}
+  - {id: A10, category: attribute, utterance: "去 B 巷 10 号位第一层放油桶的那格", expect: {behavior: reach, target: B-L-10-1}}
+  - {id: A11, category: attribute, utterance: "E 巷哪面托盘最多", expect: {behavior: reach, target: E-R}}
+  - {id: A12, category: attribute, utterance: "去 F 巷放周转箱最多的那面", expect: {behavior: reach, target: F-R}}
+  - {id: A13, category: attribute, utterance: "去 A 巷 11 号位第二层放纸箱的那格", expect: {behavior: reach, target: A-R-11-2}}
+  - {id: A14, category: attribute, utterance: "哪排货架的油桶最多", expect: {behavior: clarify, answer: "C 巷右边", after_clarify: C-R}}
+
+  # ---------------------------------------------------------------- 歧义（必须反问）
+  - {id: M01, category: ambiguous, utterance: "去 10 号位", expect: {behavior: clarify, answer: "C 巷左边第一层", after_clarify: C-L-10-1}}
+  - {id: M02, category: ambiguous, utterance: "去 7 号位", expect: {behavior: clarify, answer: "B 巷右边第二层", after_clarify: B-R-07-2}}
+  - {id: M03, category: ambiguous, utterance: "去 3 号位", expect: {behavior: clarify, answer: "E 巷左边第一层", after_clarify: E-L-03-1}}
+  - {id: M04, category: ambiguous, utterance: "去 A 巷放纸箱的那面货架", expect: {behavior: clarify, answer: "左边", after_clarify: A-L}}
+  - {id: M05, category: ambiguous, utterance: "去 B-L-07", expect: {behavior: clarify, answer: "第二层", after_clarify: B-L-07-2}}
+  - {id: M06, category: ambiguous, utterance: "去 A 巷最里面那个位", expect: {behavior: clarify, answer: "左边第一层", after_clarify: A-L-24-1}}
+  - {id: M07, category: ambiguous, utterance: "去 F 巷最里面那个位", expect: {behavior: clarify, answer: "左边第一层", after_clarify: F-L-17-1}}
+  - {id: M08, category: ambiguous, utterance: "去 D 巷 14 号位", expect: {behavior: clarify, answer: "右边第二层", after_clarify: D-R-14-2}}
+  - {id: M09, category: ambiguous, utterance: "去放油桶最多的那面货架", expect: {behavior: clarify, answer: "C 巷右边", after_clarify: C-R}}
+  - {id: M10, category: ambiguous, utterance: "去 12 号位", expect: {behavior: clarify, answer: "F 巷右边第一层", after_clarify: F-R-12-1}}
+  - {id: M11, category: ambiguous, utterance: "去 B 巷放纸箱的那面货架", expect: {behavior: clarify, answer: "右边", after_clarify: B-R}}
+  - {id: M12, category: ambiguous, utterance: "去 A 巷 11 号位的空位", expect: {behavior: clarify, answer: "左边第一层", after_clarify: A-L-11-1}}
+  - {id: M13, category: ambiguous, utterance: "去 5 号位", expect: {behavior: clarify, answer: "A 巷左边第一层", after_clarify: A-L-05-1}}
+  - {id: M14, category: ambiguous, utterance: "去 A 巷放托盘的货架", expect: {behavior: clarify, answer: "右边", after_clarify: A-R}}
+
+  # ---------------------------------------------------------------- 不可达 / 不存在
+  - {id: U01, category: unreachable, utterance: "去 F-L-20-1", expect: {behavior: reject, reason: BLOCKED, inspect: {address: F-L-20-1}}}
+  - {id: U02, category: unreachable, utterance: "去 F-R-21-1", expect: {behavior: reject, reason: BLOCKED, inspect: {address: F-R-21-1}}}
+  - {id: U03, category: unreachable, utterance: "去封住的 F 巷", expect: {behavior: reject, reason: BLOCKED}}
+  - {id: U04, category: unreachable, utterance: "封住的那条巷子能过去吗", expect: {behavior: reject, reason: BLOCKED}}
+  - {id: U05, category: unreachable, utterance: "去 Z-L-01-1", expect: {behavior: reject, reason: NO_SLOT}}
+  - {id: U06, category: unreachable, utterance: "去 A-L-01-3", expect: {behavior: reject, reason: NO_SLOT}}
+  - {id: U07, category: unreachable, utterance: "去 A-L-30-1", expect: {behavior: reject, reason: NO_SLOT}}
+  - {id: U08, category: unreachable, utterance: "去 Q 巷", expect: {behavior: reject, reason: NO_SLOT}}
+  - {id: U09, category: unreachable, utterance: "去 A 巷放冰箱的那面货架", expect: {behavior: reject, reason: NO_SLOT}}
+  - {id: U10, category: unreachable, utterance: "去 A 巷 11 号位第一层放油桶的那格", expect: {behavior: reject, reason: EMPTY_BAY, inspect: {bay: [A, 11], levels: [1]}}}
+  - {id: U11, category: unreachable, utterance: "去 C 巷 12 号位第一层放托盘的那格", expect: {behavior: reject, reason: EMPTY_BAY, inspect: {bay: [C, 12], levels: [1]}}}
+  - {id: U12, category: unreachable, utterance: "去 B 巷 2 号位第一层放油桶的", expect: {behavior: reject, reason: EMPTY_BAY, inspect: {bay: [B, 2], levels: [1]}}}

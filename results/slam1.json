@@ -1,0 +1,29 @@
+{
+  "config": "S1 纯激光（3D 点云 -> p2l 切片 -> slam_toolbox）",
+  "frames": 1097,
+  "frames_with_estimate": 1095,
+  "path_length_m": 202.66,
+  "ate_rmse_m": 0.3557,
+  "ate_max_m": 0.7892,
+  "final_drift_m": 0.3038,
+  "final_drift_dx": -0.2165,
+  "final_drift_dy": -0.2131,
+  "map": {
+    "cells": 18849,
+    "match_ratio": 0.9062,
+    "offset": [
+      -30.94,
+      -0.014
+    ],
+    "offset_vs_ate": [
+      0.05,
+      0.05
+    ]
+  },
+  "thresholds": {
+    "ate_rmse_m": 0.5,
+    "final_drift_m": 1.0,
+    "note": "SPEC 未规定 SLAM-1 数值阈值，此处为工程阈值"
+  },
+  "result": "PASS"
+}

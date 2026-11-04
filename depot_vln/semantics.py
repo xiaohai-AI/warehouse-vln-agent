@@ -6,10 +6,12 @@
 from __future__ import annotations
 
 import json
-import math
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable
+from typing import TYPE_CHECKING, Any, Iterable
+
+if TYPE_CHECKING:  # 只用于类型标注，运行时不 import（保持本模块零依赖）
+    from depot_vln.inventory import Inventory
 
 ROOT = Path(__file__).resolve().parents[1]
 HALF_LIFE_S = 1800.0  # 置信度半衰期 30 分钟（仓库一次巡检的时间尺度）
@@ -114,9 +116,12 @@ class SemanticMap:
         return counts
 
     def rank_rack_faces_by_class(self, classes: set[str]) -> list[dict[str, Any]]:
+        from depot_vln.catalog import get_catalog
+
+        cat = get_catalog()
         out: list[dict[str, Any]] = []
         for aisle in self.grid["aisles"]:
-            for side in ("L", "R"):
+            for side in cat.sides:
                 c = self.rack_face_counts(aisle["name"], side)
                 total = sum(v for k, v in c.items() if k in classes)
                 out.append(
@@ -137,6 +142,27 @@ class SemanticMap:
             for a, s in self.slots.items()
             if not s.occupied and (aisle is None or a.startswith(f"{aisle}-"))
         )
+
+    # ------------------------------------------------------------ 从快照装载
+    @classmethod
+    def from_inventory(cls, slot_grid: dict[str, Any], inv: "Inventory") -> "SemanticMap":
+        """用一次观测快照初始化（运行时**唯一**的语义数据来源）。
+
+        未出现的货位就是"没看过"，不是"空"：`get()` 返回 None，上层必须显式处理。
+        """
+        m = cls(slot_grid, now=float(inv.provenance.get("now") or 0.0))
+        for addr, e in inv.observed().items():
+            if addr not in slot_grid.get("slots", {}):
+                continue
+            m.observe(addr, bool(e.occupied), e.cls, float(e.confidence), float(e.observed_at),
+                      source=e.source)
+        return m
+
+    def unobserved_slots(self) -> list[str]:
+        return sorted(a for a in self.grid.get("slots", {}) if a not in self.slots)
+
+    def known_slots(self) -> list[str]:
+        return sorted(a for a, s in self.slots.items() if s.occupied is not None)
 
     def to_json(self, path: str | Path | None = None) -> dict[str, Any]:
         obj = {

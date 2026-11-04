@@ -33,17 +33,33 @@ class SemanticGraph:
         self.aisles = {a["name"]: a for a in slot_grid["aisles"]}
         self.bays_per_aisle = int(slot_grid["derived"]["bays_per_aisle"])
         self.cross_w = float(slot_grid["derived"]["cross_aisle_width"])
+        # bay 间距：优先用 layout 派生的 bay_pitch，别再写死 2.4
+        self.bay_pitch = float(
+            slot_grid["derived"].get("bay_pitch")
+            or slot_grid["derived"]["rack_run"] / max(1, self.bays_per_aisle)
+        )
         self._build()
 
     # ------------------------------------------------------------ build
     def _barrier_xs(self, aisle: str) -> list[float]:
+        """路障所在的 X 位置。
+
+        三种写法都支持（按优先级）：显式 `barrier_xs` → `x0` → `[bay_from, bay_to]` 区间。
+        区间写法按几何推出"第 bay_from 格之前"那道墙的位置 —— 这样 world.yaml 里
+        只写 `{aisle: F, bay_from: 18, bay_to: 24}` 就够了，不需要在配置里抄坐标。
+        """
+        x_rack0 = -float(self.grid["derived"]["rack_run"]) / 2
         xs: list[float] = []
         for seg in self.blocked:
-            if seg.get("aisle") == aisle:
-                if seg.get("barrier_xs"):
-                    xs.extend(float(v) for v in seg["barrier_xs"])
-                else:  # 兼容只有区间的情况
-                    xs.append(float(seg["x0"]) - 0.35)
+            if seg.get("aisle") != aisle:
+                continue
+            if seg.get("barrier_xs"):
+                xs.extend(float(v) for v in seg["barrier_xs"])
+            elif seg.get("x0") is not None:
+                xs.append(float(seg["x0"]) - 0.35)
+            elif seg.get("bay_from"):
+                b = int(seg["bay_from"])
+                xs.append(round(x_rack0 + (b - 1) * self.bay_pitch, 6))
         return xs
 
     def _add(self, node: str, xy: tuple[float, float]) -> None:
@@ -68,7 +84,10 @@ class SemanticGraph:
             w, e = f"W:{name}", f"E:{name}"
             self._add(w, (xw, y))
             self._add(e, (xe, y))
-            stations = [(f"{name}@{b:02d}", (x_rack0 + (b - 0.5) * 2.4, y)) for b in range(1, self.bays_per_aisle + 1)]
+            stations = [
+                (f"{name}@{b:02d}", (x_rack0 + (b - 0.5) * self.bay_pitch, y))
+                for b in range(1, self.bays_per_aisle + 1)
+            ]
             for node, xy in stations:
                 self._add(node, xy)
             chain = [w] + [s[0] for s in stations] + [e]
@@ -91,8 +110,12 @@ class SemanticGraph:
 
     # ------------------------------------------------------------ query
     def node_for_slot(self, addr: str) -> str:
-        aisle, _side, bay, _lvl = addr.split("-")
-        return f"{aisle}@{int(bay):02d}"
+        from depot_vln.catalog import get_catalog
+
+        a = get_catalog().parse_address(addr)
+        if a is None:
+            raise ValueError(f"无法解析货位地址 {addr!r}（格式见 depot_vln/catalog.py）")
+        return f"{a.aisle}@{a.bay:02d}"
 
     def nearest_node(self, x: float, y: float) -> str:
         return min(self.pos, key=lambda n: _dist(self.pos[n], (x, y)))

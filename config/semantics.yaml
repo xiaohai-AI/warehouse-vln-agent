@@ -1,0 +1,46 @@
+# depot-vln — 语言/语义层词表（唯一来源）
+#
+# 设计原则：**加一个货类、一个别名、一种说法 = 只改这个文件，不改 Python。**
+# 以前这些词写死在 depot_vln/agent/nlu.py、constraint.py、build_bench.py 三处，
+# 换一个货类要改三个文件、而且不会同步。现在只有这一份。
+#
+# 与 config/world.yaml 的分工：
+#   world.yaml  = 物理世界（几何、尺寸、颜色、占用概率）
+#   semantics.yaml = 这个世界的语言（怎么说出来）
+# 两者在 depot_vln/catalog.py 里合并成 Catalog。
+
+schema: depot-vln/semantics@1
+
+# ---- 货类别名：值是该类别「所有」叫法；同一个词可以出现在多个类别下（如"纸箱"覆盖 S/M/L）
+classes:
+  carton_s: [纸箱, 纸板箱, 纸盒, 箱子, carton, box, cardboard]
+  carton_m: [纸箱, 纸板箱, 纸盒, 箱子, carton, box, cardboard]
+  carton_l: [纸箱, 纸板箱, 纸盒, 箱子, carton, box, cardboard]
+  tote:     [周转箱, 蓝箱, 蓝色周转箱, 蓝色箱, tote, bin]
+  pallet:   [托盘, 卡板, 栈板, pallet, skid]
+  drum:     [油桶, 桶, 圆桶, 化工桶, drum, barrel]
+
+# ---- 关系词
+lexicon:
+  goto:      [去, 到, 带我去, 带到, 开到, 导航到, 前往, 看看, 看一下, go to, navigate to, take me, head to]
+  blocked:   [封住, 封堵, 封了, 封锁, 堵住, 被堵, 不通, blocked, sealed, closed]
+  empty:     [空位, 空格, 空的, 空着, 空货位, 没有货, 没货, 闲置, empty, vacant, free]
+  farthest:  [最里面, 最里头, 最里, 最远, 尽头, 最后一个, 最后, farthest, deepest, last]
+  most:      [最多, 最多的, most]
+  # 闭集之外的具体物体：理解层必须认出"这是我没见过的类别"，而不是猜最近的
+  unknown_objects: [冰箱, 冰柜, 电视, 沙发, 洗衣机, 空调, fridge, freezer, tv, sofa, washing machine]
+
+# 地址里的方位词
+sides:
+  L: [左, 左边, 左侧, 左手边, left, lhs]
+  R: [右, 右边, 右侧, 右手边, right, rhs]
+
+# 地址里的层词
+levels:
+  1: [第一层, 一层, 底层, 下层, 地面层, 地面, 低层, level 1, first floor, ground]
+  2: [第二层, 二层, 上层, 顶层, 高层, level 2, second floor, top]
+
+# 地址里的单位词
+units:
+  aisle: [巷, 巷道, 通道, 过道, aisle, row, corridor]
+  bay:   [号位, 号, 位, bay, slot]

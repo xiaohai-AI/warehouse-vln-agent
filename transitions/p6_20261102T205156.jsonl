@@ -1,6 +1,0 @@
-{"run": "p6-205155", "i": 0, "node": "understand", "utterance": "去 C-L-08-1", "reason_code": "MOTION_NAV2_FAILED", "target": "C-L-08-1", "wall_s": 0.5}
-{"run": "p6-205155", "i": 1, "node": "resolve", "utterance": "去 C-L-08-1", "reason_code": "MOTION_NAV2_FAILED", "target": "C-L-08-1", "wall_s": 0.5}
-{"run": "p6-205155", "i": 2, "node": "plan", "utterance": "去 C-L-08-1", "reason_code": "MOTION_NAV2_FAILED", "target": "C-L-08-1", "wall_s": 0.5}
-{"run": "p6-205155", "i": 3, "node": "act", "utterance": "去 C-L-08-1", "reason_code": "MOTION_NAV2_FAILED", "target": "C-L-08-1", "wall_s": 0.5}
-{"run": "p6-205155", "i": 4, "node": "recover", "utterance": "去 C-L-08-1", "reason_code": "MOTION_NAV2_FAILED", "target": "C-L-08-1", "wall_s": 0.5}
-{"run": "p6-205155", "i": 5, "node": "respond", "utterance": "去 C-L-08-1", "reason_code": "MOTION_NAV2_FAILED", "target": "C-L-08-1", "wall_s": 0.5}

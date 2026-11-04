@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "depot-vln"
+version = "0.3.0"
+description = "麦克纳姆全向车在自动化仓库里的语义导航（ROS 2 Humble + Nav2 + LangGraph）"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+  "pyyaml>=6.0",
+  "pydantic>=2.0",
+  "langgraph>=1.2,<2",
+  "langgraph-checkpoint-sqlite>=3.1",
+  "langchain-core>=1.7",
+  "langchain-ollama>=1.1",
+]
+
+[project.optional-dependencies]
+# 评测/离线开发：不需要 ROS、不碰 GPU
+dev = ["pytest>=7", "numpy>=1.26"]
+# 在仿真里跑：需要系统装 ROS 2 Humble + Gazebo Fortress + nav2
+sim = ["numpy>=1.26", "opencv-python>=4.8"]
+
+[project.scripts]
+depot-bench = "depot_vln.eval.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["depot_vln*"]
+
+[tool.setuptools.package-data]
+depot_vln = ["eval/*.yaml"]
+
+[tool.pytest.ini_options]
+# 系统 pytest 6.2.5 与 anyio 的插件不兼容（`_pytest.scope` 只在新版存在）
+addopts = "-p no:anyio -p no:cacheprovider"
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]

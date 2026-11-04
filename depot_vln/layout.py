@@ -288,6 +288,8 @@ def compute_layout(cfg: dict[str, Any]) -> dict[str, Any]:
             "z_max": wall_h,
         },
         "derived": {
+            "bay_pitch": pitch,
+            "n_levels": len(racks["levels"]),
             "rack_run": rack_run,
             "rack_total_y": rack_total_y,
             "footprint_x": footprint_x,
@@ -303,6 +305,13 @@ def compute_layout(cfg: dict[str, Any]) -> dict[str, Any]:
             "n_slots": len(slots),
         },
         "seed": int(cfg.get("seed", 0)),
+        # 出生点：西横通道中线、Y 居中。**这是唯一来源** —— 任何脚本不得再写 -31.0。
+        # 改 bays_per_aisle / cross_aisle_width，这里自动跟着变。
+        "spawn": {
+            "x": round(-(rack_run / 2 + cross_w / 2), 6),
+            "y": 0.0,
+            "yaw": 0.0,
+        },
     }
 
 

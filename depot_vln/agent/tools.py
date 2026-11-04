@@ -48,9 +48,13 @@ class ToolLayer(Protocol):
     def observe(self, target: dict[str, Any]) -> Observation: ...
 
 
-# ---------------------------------------------------------------- mock 实现
-class MockToolLayer:
-    """把 MockWorld 包成工具层：加 seq 校验、取消语义、"过期结果丢弃"。"""
+# ---------------------------------------------------------------- 离线实现
+class OfflineToolLayer:
+    """把 `WorldModel` 包成工具层：加 seq 校验、取消语义、"过期结果丢弃"。
+
+    它**不含任何 /cmd_vel**，也不认识 ROS：只用来跑语言层/图结构的离线评测。
+    真仿真版本见 `depot_vln/agent/ros_tools.py:SimToolLayer`（同一个 Protocol）。
+    """
 
     def __init__(self, world, *, step_time: float = 0.0):
         self.world = world
@@ -109,7 +113,10 @@ class MockToolLayer:
         if kind == "slot":
             raw = self.world.observe_slot(target["address"])
         elif kind == "rack_face":
-            addr = target.get("sample_slot") or f"{target['aisle']}-{target['side']}-01-1"
+            from depot_vln.catalog import get_catalog
+
+            addr = target.get("sample_slot") or get_catalog().format_address(
+                target["aisle"], target["side"], 1, get_catalog().level_numbers()[0])
             raw = self.world.observe_slot(addr)
         else:
             return Observation(ok=True, detail="巷道级目标无需观测", confidence=1.0)
@@ -123,16 +130,3 @@ class MockToolLayer:
             elapsed=raw.get("elapsed", 0.0),
         )
 
-
-# ---------------------------------------------------------------- ROS 实现（P6 接线）
-class RosToolLayer:
-    """真机/仿真接线的位置。P6 用 rclpy 实现：NavigateToPose action + 状态轮询。
-
-    现在故意抛错，而不是悄悄 mock —— "哪一层还没接"必须是显式的。
-    """
-
-    def __init__(self, *args: Any, **kwargs: Any):
-        raise NotImplementedError(
-            "RosToolLayer 未接线：P6 阶段实现 rclpy 版 "
-            "(nav2 NavigateToPose action + /cmd_vel 独占 + seq 取消)。基准请用 MockToolLayer。"
-        )

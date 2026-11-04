@@ -1,0 +1,263 @@
+{
+  "criterion": "GRAPH-1",
+  "grid_res_m": 0.2,
+  "robot_radius_m": 0.26,
+  "start": [
+    -31.05,
+    0.0
+  ],
+  "nodes": 156,
+  "edges": 158,
+  "components": 2,
+  "expected_components": 2,
+  "blocked_segments": [
+    "F"
+  ],
+  "n_compared": 59,
+  "median_rel_err": 0.0721,
+  "p90_rel_err": 0.3013,
+  "mismatched": 0,
+  "pass": true,
+  "samples": [
+    {
+      "address": "A-L-01-1",
+      "graph": 13.34,
+      "truth": 12.443,
+      "rel_err": 0.0721
+    },
+    {
+      "address": "A-L-05-2",
+      "graph": 22.94,
+      "truth": 22.043,
+      "rel_err": 0.0407
+    },
+    {
+      "address": "A-L-10-1",
+      "graph": 34.94,
+      "truth": 34.043,
+      "rel_err": 0.0264
+    },
+    {
+      "address": "A-L-14-2",
+      "graph": 44.54,
+      "truth": 43.643,
+      "rel_err": 0.0206
+    },
+    {
+      "address": "A-L-19-1",
+      "graph": 56.54,
+      "truth": 55.643,
+      "rel_err": 0.0161
+    },
+    {
+      "address": "A-L-23-2",
+      "graph": 66.14,
+      "truth": 65.243,
+      "rel_err": 0.0138
+    },
+    {
+      "address": "A-R-04-1",
+      "graph": 20.54,
+      "truth": 19.643,
+      "rel_err": 0.0457
+    },
+    {
+      "address": "A-R-08-2",
+      "graph": 30.14,
+      "truth": 29.243,
+      "rel_err": 0.0307
+    },
+    {
+      "address": "A-R-13-1",
+      "graph": 42.14,
+      "truth": 41.243,
+      "rel_err": 0.0218
+    },
+    {
+      "address": "A-R-17-2",
+      "graph": 51.74,
+      "truth": 50.843,
+      "rel_err": 0.0177
+    },
+    {
+      "address": "A-R-22-1",
+      "graph": 63.74,
+      "truth": 62.843,
+      "rel_err": 0.0143
+    },
+    {
+      "address": "B-L-02-2",
+      "graph": 10.795,
+      "truth": 10.525,
+      "rel_err": 0.0256
+    },
+    {
+      "address": "B-L-07-1",
+      "graph": 22.795,
+      "truth": 22.525,
+      "rel_err": 0.012
+    },
+    {
+      "address": "B-L-11-2",
+      "graph": 32.395,
+      "truth": 32.125,
+      "rel_err": 0.0084
+    },
+    {
+      "address": "B-L-16-1",
+      "graph": 44.395,
+      "truth": 44.125,
+      "rel_err": 0.0061
+    },
+    {
+      "address": "B-L-20-2",
+      "graph": 53.995,
+      "truth": 53.725,
+      "rel_err": 0.005
+    },
+    {
+      "address": "B-R-01-1",
+      "graph": 8.395,
+      "truth": 8.125,
+      "rel_err": 0.0332
+    },
+    {
+      "address": "B-R-05-2",
+      "graph": 17.995,
+      "truth": 17.725,
+      "rel_err": 0.0152
+    },
+    {
+      "address": "B-R-10-1",
+      "graph": 29.995,
+      "truth": 29.725,
+      "rel_err": 0.0091
+    },
+    {
+      "address": "B-R-14-2",
+      "graph": 39.595,
+      "truth": 39.325,
+      "rel_err": 0.0069
+    },
+    {
+      "address": "B-R-19-1",
+      "graph": 51.595,
+      "truth": 51.325,
+      "rel_err": 0.0053
+    },
+    {
+      "address": "B-R-23-2",
+      "graph": 61.195,
+      "truth": 60.925,
+      "rel_err": 0.0044
+    },
+    {
+      "address": "C-L-04-1",
+      "graph": 10.65,
+      "truth": 11.511,
+      "rel_err": 0.0748
+    },
+    {
+      "address": "C-L-08-2",
+      "graph": 20.25,
+      "truth": 21.111,
+      "rel_err": 0.0408
+    },
+    {
+      "address": "C-L-13-1",
+      "graph": 32.25,
+      "truth": 33.111,
+      "rel_err": 0.026
+    },
+    {
+      "address": "C-L-17-2",
+      "graph": 41.85,
+      "truth": 42.711,
+      "rel_err": 0.0202
+    },
+    {
+      "address": "C-L-22-1",
+      "graph": 53.85,
+      "truth": 54.711,
+      "rel_err": 0.0157
+    },
+    {
+      "address": "C-R-02-2",
+      "graph": 5.85,
+      "truth": 6.711,
+      "rel_err": 0.1283
+    },
+    {
+      "address": "C-R-07-1",
+      "graph": 17.85,
+      "truth": 18.711,
+      "rel_err": 0.046
+    },
+    {
+      "address": "C-R-11-2",
+      "graph": 27.45,
+      "truth": 28.311,
+      "rel_err": 0.0304
+    },
+    {
+      "address": "C-R-16-1",
+      "graph": 39.45,
+      "truth": 40.311,
+      "rel_err": 0.0214
+    },
+    {
+      "address": "C-R-20-2",
+      "graph": 49.05,
+      "truth": 49.911,
+      "rel_err": 0.0173
+    },
+    {
+      "address": "D-L-01-1",
+      "graph": 8.395,
+      "truth": 4.228,
+      "rel_err": 0.9854
+    },
+    {
+      "address": "D-L-05-2",
+      "graph": 17.995,
+      "truth": 13.828,
+      "rel_err": 0.3013
+    },
+    {
+      "address": "D-L-10-1",
+      "graph": 29.995,
+      "truth": 25.828,
+      "rel_err": 0.1613
+    },
+    {
+      "address": "D-L-14-2",
+      "graph": 39.595,
+      "truth": 35.428,
+      "rel_err": 0.1176
+    },
+    {
+      "address": "D-L-19-1",
+      "graph": 51.595,
+      "truth": 47.428,
+      "rel_err": 0.0879
+    },
+    {
+      "address": "D-L-23-2",
+      "graph": 61.195,
+      "truth": 57.028,
+      "rel_err": 0.0731
+    },
+    {
+      "address": "D-R-04-1",
+      "graph": 15.595,
+      "truth": 11.428,
+      "rel_err": 0.3646
+    },
+    {
+      "address": "D-R-08-2",
+      "graph": 25.195,
+      "truth": 21.028,
+      "rel_err": 0.1981
+    }
+  ]
+}

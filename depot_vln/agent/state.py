@@ -15,6 +15,7 @@ ReasonCode = Literal[
     "EMPTY_BAY",
     "BLOCKED",
     "UNREACHABLE",
+    "UNOBSERVED",
     "VERIFY_MISMATCH",
     "TIMEOUT",
     "CLARIFY_LIMIT",
@@ -53,6 +54,9 @@ class AgentState(TypedDict, total=False):
     intent: str            # goto | query | reject
     query: dict[str, Any]  # 结构化槽位（不含坐标）
     constraints: dict[str, Any]
+    slots: dict[str, Any]  # 抽取到的原始槽位 + 依据（审计用）
+    backend: str           # 这一句是哪个后端理解的（rule / llm）
+    dropped: list[str]     # 被落地校验丢弃的槽位（模型幻觉）
 
     # --- resolve
     candidates: list[Candidate]

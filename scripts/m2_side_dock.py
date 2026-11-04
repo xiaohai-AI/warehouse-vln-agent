@@ -30,6 +30,7 @@ from geometry_msgs.msg import PoseStamped
 from nav_msgs.msg import Odometry
 from rclpy.node import Node
 from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPolicy
+from depot_vln.catalog import get_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -166,7 +167,7 @@ def main() -> int:
                     help="具体 bay 号；C 巷 bay 5 右侧被静态叉车占用，不能用")
     ap.add_argument("--side", default="R", choices=["L", "R"])
     ap.add_argument("--out", default=str(ROOT / "results" / "m2.json"))
-    ap.add_argument("--spawn-x", type=float, default=-31.0,
+    ap.add_argument("--spawn-x", type=float, default=float(get_catalog().spawn["x"]),
                     help="出生点（odom 原点在世界里的位置），用于把 odom 换算回 map")
     ap.add_argument("--spawn-y", type=float, default=0.0)
     ap.add_argument("--frame", default="world", choices=["world", "slam"],

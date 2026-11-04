@@ -1,0 +1,24 @@
+# depot-vln — 导航/工具层参数（原来是散在 Python 里的模块常量）
+#
+# 每一条都曾经是硬编码，改一次要动代码：
+#   lane_offsets   原 ros_tools.py: LANE_DY = {"C": 0.55} —— "C 巷 bay5 停着叉车，
+#                  沿中线走只剩 2 cm 余量"。这是**场地事实**，属于配置。
+#   nominal_speed / dock_time / tol / wall_budget_margin  原散在 world.py / ros_tools.py。
+#
+schema: depot-vln/nav@1
+
+nominal_speed: 0.35        # m/s，图航点导航的常用速度
+dock_time: 6.0             # s，贴靠/观测的固定开销
+tol: 0.12                  # m，点对点停位容差
+wall_budget_margin: 1.8    # 墙钟预算 = 期望时间 × 该系数（超时即判 FAIL，不无限等）
+max_speed: 0.60            # m/s，路线脚本的上限
+
+# 行驶车道相对巷道中线的横向偏移（m）。正 = 向 +Y。
+# 只在**中间航段**生效；最后一段进观测位仍走站台原坐标（否则对着货架的距离会错）。
+# 新场地有障碍物挡中线时，往这里加一行即可，不用改代码。
+lane_offsets: {}
+# 例：lane_offsets: {C: 0.55}
+
+# 地图锚定：map→odom 用"起车时真值位姿 − odom 位姿"现算（static_map_pub --from-truth）。
+# 这里只声明"没有真值时是否允许回退出生的固定偏移"。
+allow_fixed_anchor_fallback: true

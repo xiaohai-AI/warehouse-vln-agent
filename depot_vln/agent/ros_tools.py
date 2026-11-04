@@ -1,6 +1,6 @@
 """P6-2 真工具层：把 agent 的 act / verify 接到仿真上（`resolve` / `plan` 复用地图世界）。
 
-与 `MockToolLayer` 的差别只有三处，且都在这条边界上：
+与 `OfflineToolLayer`（离线实现）的差别只有三处，且都在这条边界上：
   * `navigate()` —— **真的开**：`drive_to_point` 闭环到 `plan.obs_pose`，需要时按
     `plan.entry` 做侧移贴靠（全向底盘的优势，不掉头）。
   * `observe()`  —— **真的看**：抓一帧 `/stereo_left` → 送 VLM（qwen3-vl）判占用/类别。
@@ -31,20 +31,40 @@ from .tools import Observation, ToolResult
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-NOMINAL_SPEED = 0.35          # m/s，与路线脚本一致
-DOCK_TIME = 6.0               # 观测/贴靠的固定开销（s）
+# ---- 配置（config/nav.yaml 是唯一来源；这里只做读取与默认值兜底）
+_NAV_DEFAULTS = {
+    "nominal_speed": 0.35,
+    "dock_time": 6.0,
+    "tol": 0.12,
+    "wall_budget_margin": 1.8,
+    "lane_offsets": {},
+}
 
-# **行驶车道偏移**（按巷）：语义图的站台坐标在巷道中线，但中线不一定能走。
-# C 巷 bay 5 停着一台静态叉车（占 y∈[−3.00,−2.40]），沿中线 −2.15 走机身与叉车只剩 2 cm
-# 余量，会擦到 —— 路线脚本早就用 DRIVE_Y["C"]=−1.60 绕开（离叉车 0.8 m、离北货架 1.05 m）。
-# 这里只在**中间航段**生效；最后一段进观测位仍走站台原坐标（否则对着货架的距离会错）。
-LANE_DY: dict[str, float] = {"C": 0.55}
 
-# **world ← odom 的固定偏移**：仿真出生点 x=−31、y=0、yaw=0（`launch/depot_sim.launch.py`
-# 的 `x` 默认值），而 `mecanum_odom` 从 0 开始积分 → 等价于一张 static `map→odom`。
-# 这是部署口径的**锚定方式**，不是拿真值作弊：odom 自己不知道自己在世界哪，
-# 静态地图/标定把它锚上去。试"估计位姿"时用 `POSE=odom`（见 `_est_pose()`）。
-WORLD_ORIGIN = (-31.0, 0.0)
+def _nav_cfg() -> dict[str, Any]:
+    import yaml
+
+    p = ROOT / "config" / "nav.yaml"
+    cfg = dict(_NAV_DEFAULTS)
+    if p.exists():
+        cfg.update(yaml.safe_load(p.read_text(encoding="utf-8")) or {})
+    return cfg
+
+
+_NAV = _nav_cfg()
+NOMINAL_SPEED = float(_NAV["nominal_speed"])
+DOCK_TIME = float(_NAV["dock_time"])
+LANE_DY: dict[str, float] = {str(k).upper(): float(v) for k, v in (_NAV.get("lane_offsets") or {}).items()}
+
+# world ← odom 的锚定偏移：**从 catalog 派生**（原写死 (-31.0, 0.0)，改世界就错位）
+def _world_origin() -> tuple[float, float]:
+    from depot_vln.catalog import get_catalog
+
+    s = get_catalog().spawn
+    return float(s["x"]), float(s["y"])
+
+
+WORLD_ORIGIN = _world_origin()
 
 
 class _OdomPoller:
@@ -88,7 +108,7 @@ class _OdomPoller:
 
 
 class SimToolLayer:
-    """真工具层。`world` 只需提供 resolve/plan/score_target（MockWorld 即是）。"""
+    """真工具层。`world` 只需提供 resolve/plan/observe（`depot_vln/world.py:WorldModel`）。"""
 
     def __init__(
         self,
@@ -159,13 +179,6 @@ class SimToolLayer:
 
     def plan(self, target: dict[str, Any]) -> dict[str, Any] | None:
         return self.world.plan(target)
-
-    def score(self, target: dict[str, Any], observation: dict[str, Any] | None = None):
-        """只给 `p6_demo.py` 打分用（图永远看不到）。观测与真值逐项对比。"""
-        try:
-            return self.world.score(target, observation)
-        except Exception as e:            # 打分失败不能影响演示
-            return {"error": f"{type(e).__name__}: {e}"}
 
     # ------------------------------------------------------------ act（真开）
     def navigate(self, target: dict[str, Any], plan: dict[str, Any] | None, seq: int) -> ToolResult:

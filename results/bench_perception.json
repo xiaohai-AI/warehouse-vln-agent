@@ -1,0 +1,47 @@
+{
+  "schema": "depot-vln/bench_result@2",
+  "backend": "rule",
+  "inventory": {
+    "provider": "perception",
+    "sources": [
+      {
+        "source": "results/seg2.json",
+        "n": 46
+      }
+    ],
+    "built_at": "2026-11-04T13:13:51",
+    "note": "只包含真实观测过的货位；未观测的货位在运行时是 'unknown'，不是 '空'",
+    "file": "/home/dan/Project/depot-vln/results/inventory.json"
+  },
+  "n": 54,
+  "ok": 35,
+  "rate": 0.6481,
+  "silent_wrong": 0,
+  "per_category": {
+    "direct": {
+      "n": 14,
+      "ok": 14,
+      "rate": 1.0,
+      "silent_wrong": 0
+    },
+    "attribute": {
+      "n": 14,
+      "ok": 0,
+      "rate": 0.0,
+      "silent_wrong": 0
+    },
+    "ambiguous": {
+      "n": 14,
+      "ok": 11,
+      "rate": 0.7857,
+      "silent_wrong": 0
+    },
+    "unreachable": {
+      "n": 12,
+      "ok": 10,
+      "rate": 0.8333,
+      "silent_wrong": 0
+    }
+  },
+  "wall_s": 2.04
+}

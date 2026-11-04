@@ -8,7 +8,7 @@
 # 前置：已装 rtabmap：  sudo apt install -y ros-humble-rtabmap-ros
 # 用法：bash scripts/s3_smoke.sh
 #       CHECK=scripts/s3_diag.py bash scripts/s3_smoke.sh   # 换用归因诊断（5 分钟，走 20 m 进巷）
-#       ODOM_PARAMS=config/rtabmap_stereo_ff.yaml CHECK=scripts/s3_diag.py \
+#       ODOM_PARAMS=config/rtabmap_stereo.yaml CHECK=scripts/s3_diag.py \
 #         bash scripts/s3_smoke.sh                          # 换 VO 估计器做 A/B（帧到帧+SIFT）
 #       EXTRA_NODES='.venv/bin/python scripts/floorflow_odom.py' CHECK=scripts/s4_check.py \
 #         bash scripts/s3_smoke.sh                          # S4：地面带光流里程计（make s4-smoke）

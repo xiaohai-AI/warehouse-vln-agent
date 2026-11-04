@@ -1,9 +1,0 @@
-{"run": "p6-104642", "i": 0, "node": "understand", "utterance": "去 10 号位", "reason_code": "VERIFY_SKIPPED", "target": "C-R-10-1", "wall_s": 0.01}
-{"run": "p6-104642", "i": 1, "node": "resolve", "utterance": "去 10 号位", "reason_code": "VERIFY_SKIPPED", "target": "C-R-10-1", "wall_s": 0.01}
-{"run": "p6-104642", "i": 2, "node": "clarify", "utterance": "去 10 号位", "reason_code": "VERIFY_SKIPPED", "target": "C-R-10-1", "wall_s": 0.01}
-{"run": "p6-104642", "i": 3, "node": "resolve", "utterance": "去 10 号位", "reason_code": "VERIFY_SKIPPED", "target": "C-R-10-1", "wall_s": 0.01}
-{"run": "p6-104642", "i": 4, "node": "plan", "utterance": "去 10 号位", "reason_code": "VERIFY_SKIPPED", "target": "C-R-10-1", "wall_s": 0.01}
-{"run": "p6-104642", "i": 5, "node": "act", "utterance": "去 10 号位", "reason_code": "VERIFY_SKIPPED", "target": "C-R-10-1", "wall_s": 0.01}
-{"run": "p6-104642", "i": 6, "node": "verify", "utterance": "去 10 号位", "reason_code": "VERIFY_SKIPPED", "target": "C-R-10-1", "wall_s": 0.01}
-{"run": "p6-104642", "i": 7, "node": "recover", "utterance": "去 10 号位", "reason_code": "VERIFY_SKIPPED", "target": "C-R-10-1", "wall_s": 0.01}
-{"run": "p6-104642", "i": 8, "node": "respond", "utterance": "去 10 号位", "reason_code": "VERIFY_SKIPPED", "target": "C-R-10-1", "wall_s": 0.01}

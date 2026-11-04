@@ -32,6 +32,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from drive_to import align_to, drive_to_point, turn_to, turn_to_precise  # noqa: E402  # noqa: F401
 from slam_route import TruthPoller, cmd  # noqa: E402
+from depot_vln.catalog import get_catalog
 
 # 相机在 base_link 里的位置（xacro: cam_z=0.35；x 前移 0.10，与雷达同位）
 CAM_XYZ = (0.10, 0.0, 0.35 - 0.076)
@@ -178,7 +179,7 @@ def main() -> int:
     p0 = poller.get()
     if p0 is not None and abs(p0[1] - aisle_y) > 0.6:
         print(f"[seg2] 车不在巷内（y={p0[1]:+.2f}），先送到 A 巷西口 (-28.5,{aisle_y:+.2f})")
-        drive_to_point(poller, -31.0, aisle_y, args.speed, 0.20, 180.0)
+        drive_to_point(poller, float(get_catalog().spawn["x"]), aisle_y, args.speed, 0.20, 180.0)
         drive_to_point(poller, -28.5, aisle_y, args.speed, 0.12, 90.0)
 
     rclpy.init()

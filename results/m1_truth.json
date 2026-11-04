@@ -1,0 +1,45 @@
+{
+  "criterion": "M1-truth",
+  "source": "gazebo_true_pose (world/depot/pose/info), NOT /odom",
+  "methods": "mid-motion sampling, first 25% of samples dropped",
+  "cases": [
+    {
+      "name": "vx_only",
+      "dt": 3.093999999999994,
+      "mvx": 0.40000025993334415,
+      "mvy": -1.0399697191896292e-08,
+      "n": 6,
+      "ok": true
+    },
+    {
+      "name": "vy_only",
+      "dt": 2.956000000000003,
+      "mvx": -0.003343266269447209,
+      "mvy": 0.29767181737693577,
+      "n": 6,
+      "ok": true
+    },
+    {
+      "name": "wz_only",
+      "dt": 3.1779999999999973,
+      "mvx": -0.0015488838114134861,
+      "mvy": 0.0010905824462882536,
+      "n": 7,
+      "ok": true
+    },
+    {
+      "name": "diag",
+      "dt": 2.602000000000004,
+      "mvx": 0.299614914148304,
+      "mvy": 0.2994630872747872,
+      "n": 6,
+      "ok": true
+    }
+  ],
+  "pass": true,
+  "tol": {
+    "vx": 0.1,
+    "vy": 0.25,
+    "dir": 15.0
+  }
+}

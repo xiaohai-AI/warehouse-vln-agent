@@ -29,6 +29,11 @@ from launch.conditions import IfCondition, LaunchConfigurationEquals, UnlessCond
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+import os as _os
+import sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+from depot_vln.catalog import get_catalog as _get_catalog  # noqa: E402
+SPAWN = _get_catalog().spawn
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -192,7 +197,7 @@ def generate_launch_description() -> LaunchDescription:
             DeclareLaunchArgument("bridge_images", default_value="false", description="桥相机图像到 ROS"),
             DeclareLaunchArgument("odom_tf", default_value="true",
                                   description="mecanum_odom 是否发 TF odom->base_footprint（S2 用 false，交给 EKF）"),
-            DeclareLaunchArgument("x", default_value="-31.0"),
+            DeclareLaunchArgument("x", default_value=str(SPAWN["x"])),
             DeclareLaunchArgument("y", default_value="0.0"),
             DeclareLaunchArgument("use_sim_time", default_value="true"),
             egl_env_nvidia,

@@ -1,6 +1,0 @@
-{"run": "p6-174444", "i": 0, "node": "understand", "utterance": "去 C-L-09-1", "reason_code": "", "target": "C-L-09-1", "wall_s": 167.72}
-{"run": "p6-174444", "i": 1, "node": "resolve", "utterance": "去 C-L-09-1", "reason_code": "", "target": "C-L-09-1", "wall_s": 167.72}
-{"run": "p6-174444", "i": 2, "node": "plan", "utterance": "去 C-L-09-1", "reason_code": "", "target": "C-L-09-1", "wall_s": 167.72}
-{"run": "p6-174444", "i": 3, "node": "act", "utterance": "去 C-L-09-1", "reason_code": "", "target": "C-L-09-1", "wall_s": 167.72}
-{"run": "p6-174444", "i": 4, "node": "verify", "utterance": "去 C-L-09-1", "reason_code": "", "target": "C-L-09-1", "wall_s": 167.72}
-{"run": "p6-174444", "i": 5, "node": "respond", "utterance": "去 C-L-09-1", "reason_code": "", "target": "C-L-09-1", "wall_s": 167.72}

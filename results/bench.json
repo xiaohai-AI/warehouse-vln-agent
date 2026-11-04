@@ -1,0 +1,42 @@
+{
+  "schema": "depot-vln/bench_result@2",
+  "backend": "rule",
+  "inventory": {
+    "provider": "sim-sampled",
+    "coverage": 1.0,
+    "noise": 0.0,
+    "seed": 0,
+    "note": "替身数据：来自世界生成器采样，不是感知结果"
+  },
+  "n": 54,
+  "ok": 54,
+  "rate": 1.0,
+  "silent_wrong": 0,
+  "per_category": {
+    "direct": {
+      "n": 14,
+      "ok": 14,
+      "rate": 1.0,
+      "silent_wrong": 0
+    },
+    "attribute": {
+      "n": 14,
+      "ok": 14,
+      "rate": 1.0,
+      "silent_wrong": 0
+    },
+    "ambiguous": {
+      "n": 14,
+      "ok": 14,
+      "rate": 1.0,
+      "silent_wrong": 0
+    },
+    "unreachable": {
+      "n": 12,
+      "ok": 12,
+      "rate": 1.0,
+      "silent_wrong": 0
+    }
+  },
+  "wall_s": 1.9
+}

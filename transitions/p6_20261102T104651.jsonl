@@ -1,4 +1,0 @@
-{"run": "p6-104651", "i": 0, "node": "understand", "utterance": "去 F-R-18-2", "reason_code": "BLOCKED", "target": "", "wall_s": 0.0}
-{"run": "p6-104651", "i": 1, "node": "resolve", "utterance": "去 F-R-18-2", "reason_code": "BLOCKED", "target": "", "wall_s": 0.0}
-{"run": "p6-104651", "i": 2, "node": "recover", "utterance": "去 F-R-18-2", "reason_code": "BLOCKED", "target": "", "wall_s": 0.0}
-{"run": "p6-104651", "i": 3, "node": "respond", "utterance": "去 F-R-18-2", "reason_code": "BLOCKED", "target": "", "wall_s": 0.0}

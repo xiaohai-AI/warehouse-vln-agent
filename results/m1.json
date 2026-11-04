@@ -1,0 +1,94 @@
+{
+  "criterion": "M1",
+  "timestamp": "2026-10-26T22:35:24",
+  "settle_s": 2.0,
+  "duration_s": 4.0,
+  "cases": [
+    {
+      "n_samples": 2010,
+      "duration_s": 4.02,
+      "vx_meas": 0.3984,
+      "vy_meas": 0.0,
+      "wz_meas": 0.0,
+      "vx_std": 0.0252,
+      "vy_std": 0.0,
+      "wz_std": 0.0,
+      "cmd": [
+        0.4,
+        0.0,
+        0.0
+      ],
+      "case": "vx_only",
+      "metric": "vx_rel_err",
+      "value": 0.004,
+      "tol": 0.1,
+      "pass": true
+    },
+    {
+      "n_samples": 2010,
+      "duration_s": 4.02,
+      "vx_meas": -0.0,
+      "vy_meas": 0.2988,
+      "wz_meas": 0.0,
+      "vx_std": 0.0,
+      "vy_std": 0.0189,
+      "wz_std": 0.0,
+      "cmd": [
+        0.0,
+        0.3,
+        0.0
+      ],
+      "case": "vy_only",
+      "metric": "vy_rel_err",
+      "value": 0.004,
+      "tol": 0.25,
+      "pass": true
+    },
+    {
+      "n_samples": 2010,
+      "duration_s": 4.02,
+      "vx_meas": 0.0,
+      "vy_meas": 0.0,
+      "wz_meas": 0.498,
+      "vx_std": 0.0,
+      "vy_std": 0.0,
+      "wz_std": 0.0315,
+      "cmd": [
+        0.0,
+        0.0,
+        0.5
+      ],
+      "case": "wz_only",
+      "metric": "wz_rel_err",
+      "value": 0.004,
+      "tol": 0.15,
+      "pass": true
+    },
+    {
+      "n_samples": 2010,
+      "duration_s": 4.02,
+      "vx_meas": 0.2988,
+      "vy_meas": 0.2988,
+      "wz_meas": 0.0,
+      "vx_std": 0.0189,
+      "vy_std": 0.0189,
+      "wz_std": 0.0,
+      "cmd": [
+        0.3,
+        0.3,
+        0.0
+      ],
+      "case": "diag",
+      "metric": "dir_err_deg",
+      "value": 0.0,
+      "tol": 15.0,
+      "dir_cmd": 45.0,
+      "dir_meas": 45.0,
+      "pass": true
+    }
+  ],
+  "n_pass": 4,
+  "n_total": 4,
+  "pass": true,
+  "note": "实测速度由 /odom 位姿有限差分得到（不是插件自报的 twist）"
+}

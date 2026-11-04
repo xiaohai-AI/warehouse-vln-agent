@@ -10,7 +10,9 @@ from typing import Any, Callable
 
 from langgraph.types import interrupt
 
-from .nlu import matches_constraints
+from depot_vln.agent.nlu.compile import matches_constraints
+from depot_vln.catalog import get_catalog
+
 from .state import AgentState
 
 MAX_RECOVER = 2
@@ -31,9 +33,9 @@ class Runtime:
         self.context = context or {}
 
     def nlu_context(self) -> dict[str, Any]:
-        ctx = dict(self.context)
-        ctx.setdefault("aisles", list("ABCDEF"))
-        ctx.setdefault("bays_per_aisle", 24)
+        """给理解层的世界上下文。**全部来自 catalog**，不再有 list("ABCDEF")/24。"""
+        ctx = get_catalog().context()
+        ctx.update(self.context)
         return ctx
 
 
@@ -44,6 +46,9 @@ def make_understand(rt: Runtime) -> Callable[[AgentState], dict]:
         return {
             "intent": out.get("intent", "unknown"),
             "query": out.get("query", {"kind": "unknown"}),
+            "slots": out.get("slots") or {},
+            "backend": out.get("backend", getattr(rt.nlu, "name", "?")),
+            "dropped": list(out.get("dropped") or []),
             "node_trace": _t("understand"),
         }
 
@@ -84,6 +89,13 @@ def make_resolve(rt: Runtime) -> Callable[[AgentState], dict]:
             if aisle:
                 q = {"kind": "aisle", "aisle": aisle}
             else:
+                blocked = sorted({s["aisle"] for s in (getattr(rt.world, "blocked", None) or [])})
+                if blocked:
+                    return {
+                        "reason_code": "BLOCKED",
+                        "question": f"被封的是 {'、'.join(blocked)} 巷",
+                        "node_trace": _t("resolve"),
+                    }
                 return {"reason_code": "NO_SLOT", "node_trace": _t("resolve")}
 
         # 闭集之外的类别（"冰箱"）：理解层认出来了，但地图里没有这个概念
@@ -137,7 +149,7 @@ def make_clarify(rt: Runtime) -> Callable[[AgentState], dict]:
         question = rt.nlu.ask(state.get("candidates") or [], state.get("utterance", ""))
         # interrupt 只用于"等一句话"（SPEC §8.3 ②）：机器人动起来期间绝不挂起图
         answer = interrupt({"question": question, "candidates": [c["target"] for c in (state.get("candidates") or [])]})
-        from .nlu import parse_clarification
+        from depot_vln.agent.nlu.compile import parse_clarification
 
         c = parse_clarification(str(answer))
         merged = dict(state.get("constraints") or {})
@@ -216,9 +228,8 @@ def make_verify(rt: Runtime) -> Callable[[AgentState], dict]:
         # 写回地图：这就是"再次观测刷新置信度"的那一步
         if rt.world is not None and target.get("kind") == "slot" and obs.ok:
             try:
-                rt.world.map.observe(
-                    target["address"], bool(obs.occupied), obs.cls, float(obs.confidence), rt.world.t, source="vision"
-                )
+                rt.world.observe(target["address"], obs.occupied, obs.cls,
+                                 float(obs.confidence), source="vision")
             except Exception:
                 pass
         step = {

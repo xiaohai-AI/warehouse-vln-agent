@@ -19,6 +19,11 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, ExecuteProcess
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+import os as _os
+import sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+from depot_vln.catalog import get_catalog as _get_catalog  # noqa: E402
+SPAWN = _get_catalog().spawn
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -69,8 +74,8 @@ def generate_launch_description() -> LaunchDescription:
         DeclareLaunchArgument("map", default_value=os.path.join(ROOT, "maps", "depot_static.yaml")),
         DeclareLaunchArgument("params", default_value=os.path.join(ROOT, "config", "amcl_omni.yaml")),
         DeclareLaunchArgument("use_sim_time", default_value="true"),
-        DeclareLaunchArgument("x0", default_value="-31.0", description="出生点 x（世界系）"),
-        DeclareLaunchArgument("y0", default_value="0.0"),
+        DeclareLaunchArgument("x0", default_value=str(SPAWN["x"]), description="出生点 x（世界系，来自 catalog）"),
+        DeclareLaunchArgument("y0", default_value=str(SPAWN["y"])),
         DeclareLaunchArgument("yaw0", default_value="0.0"),
         relay,
         map_server,

@@ -1,0 +1,55 @@
+{
+  "criterion": "M2",
+  "timestamp": "2026-10-28T14:07:56",
+  "aisle": "C",
+  "bay": 4,
+  "side": "R",
+  "lateral_displacement_m": 0.9,
+  "frame": "world",
+  "dock_pose": [
+    -20.4,
+    -3.05,
+    -1.571
+  ],
+  "runs": [
+    {
+      "attempt": 1,
+      "nav_ok": true,
+      "recoveries": 0,
+      "final_err_m": 0.0171,
+      "final_err_odom_m": 0.0385
+    },
+    {
+      "attempt": 2,
+      "nav_ok": true,
+      "recoveries": 0,
+      "final_err_m": 0.0334,
+      "final_err_odom_m": 0.0368
+    },
+    {
+      "attempt": 3,
+      "nav_ok": true,
+      "recoveries": 0,
+      "final_err_m": 0.0122,
+      "final_err_odom_m": 0.0386
+    },
+    {
+      "attempt": 4,
+      "nav_ok": true,
+      "recoveries": 0,
+      "final_err_m": 0.0977,
+      "final_err_odom_m": 0.0369
+    },
+    {
+      "attempt": 5,
+      "nav_ok": true,
+      "recoveries": 0,
+      "final_err_m": 0.0762,
+      "final_err_odom_m": 0.0366
+    }
+  ],
+  "n_success": 5,
+  "n_attempts": 5,
+  "pass": true,
+  "note": "成功 = 导航 SUCCEEDED 且 0 次恢复行为 且 落点误差 < 0.10 m（落点误差取 Gazebo 真值位姿，不用 /odom；odom 口径另存在 final_err_odom_m）"
+}

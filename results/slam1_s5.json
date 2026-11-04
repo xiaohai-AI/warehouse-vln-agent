@@ -1,0 +1,29 @@
+{
+  "config": "S5 地面光流+轮速 EKF（floorflow + wheel + IMU -> slam_toolbox）",
+  "frames": 1304,
+  "frames_with_estimate": 1301,
+  "path_length_m": 202.71,
+  "ate_rmse_m": 0.2267,
+  "ate_max_m": 0.5534,
+  "final_drift_m": 0.1586,
+  "final_drift_dx": -0.1341,
+  "final_drift_dy": -0.0847,
+  "map": {
+    "cells": 18426,
+    "match_ratio": 0.9365,
+    "offset": [
+      -30.945,
+      -0.023
+    ],
+    "offset_vs_ate": [
+      0.05,
+      0.05
+    ]
+  },
+  "thresholds": {
+    "ate_rmse_m": 0.5,
+    "final_drift_m": 1.0,
+    "note": "SPEC 未规定 SLAM-1 数值阈值，此处为工程阈值"
+  },
+  "result": "PASS"
+}

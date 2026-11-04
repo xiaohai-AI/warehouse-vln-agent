@@ -1,0 +1,61 @@
+{
+  "median_rel_err": 0.0171,
+  "p95_rel_err": 0.0606,
+  "pass": true,
+  "n_pixels": 302058,
+  "samples": 5,
+  "range_m": [
+    1.0,
+    6.0
+  ],
+  "baseline_m": 0.12,
+  "hfov_rad": 1.5708,
+  "resolution": [
+    640,
+    480
+  ],
+  "curve": [
+    {
+      "z_lo": 1.0,
+      "z_hi": 2.0,
+      "n": 185919,
+      "median_err": 0.0165,
+      "p95_err": 0.0325
+    },
+    {
+      "z_lo": 2.0,
+      "z_hi": 3.0,
+      "n": 57734,
+      "median_err": 0.0167,
+      "p95_err": 2.4503
+    },
+    {
+      "z_lo": 3.0,
+      "z_hi": 4.0,
+      "n": 23659,
+      "median_err": 0.0167,
+      "p95_err": 0.0563
+    },
+    {
+      "z_lo": 4.0,
+      "z_hi": 5.0,
+      "n": 17037,
+      "median_err": 0.0181,
+      "p95_err": 0.0614
+    },
+    {
+      "z_lo": 5.0,
+      "z_hi": 6.01,
+      "n": 17709,
+      "median_err": 0.0273,
+      "p95_err": 0.0866
+    }
+  ],
+  "frac_within_5pct": 0.9372,
+  "frac_within_12pct": 0.9671,
+  "textured": {
+    "n": 275684,
+    "median_rel_err": 0.0178,
+    "p95_rel_err": 0.0648
+  }
+}

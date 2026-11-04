@@ -1,0 +1,55 @@
+id,category,utterance,expected,actual,ok,silent_wrong,reason,clarify,backend,query,dropped,note
+D01,direct,去 B-L-07-2,reach:B-L-07-2,reach:B-L-07-2,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""B-L-07-2""}",[],
+D02,direct,带我去 C-R-02-1 那个货位,reach:C-R-02-1,reach:C-R-02-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""C-R-02-1""}",[],
+D03,direct,A-L-24-1 怎么走,reach:A-L-24-1,reach:A-L-24-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""A-L-24-1""}",[],
+D04,direct,go to E-R-03-1,reach:E-R-03-1,reach:E-R-03-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""E-R-03-1""}",[],
+D05,direct,麻烦到 D-L-16-1 一趟,reach:D-L-16-1,reach:D-L-16-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""D-L-16-1""}",[],
+D06,direct,把车开到 A-R-05-2,reach:A-R-05-2,reach:A-R-05-2,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""A-R-05-2""}",[],
+D07,direct,去 b l 12 1 看看,reach:B-L-12-1,reach:B-L-12-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""B-L-12-1""}",[],
+D08,direct,导航到 F-L-17-1,reach:F-L-17-1,reach:F-L-17-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""F-L-17-1""}",[],
+D09,direct,去 E-L-19-1,reach:E-L-19-1,reach:E-L-19-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""E-L-19-1""}",[],
+D10,direct,到 A-L-01-1,reach:A-L-01-1,reach:A-L-01-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""A-L-01-1""}",[],
+D11,direct,去 C-L-10-1,reach:C-L-10-1,reach:C-L-10-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""C-L-10-1""}",[],
+D12,direct,F-R-05-1 在哪儿,reach:F-R-05-1,reach:F-R-05-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""F-R-05-1""}",[],
+D13,direct,去 D-R-22-1,reach:D-R-22-1,reach:D-R-22-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""D-R-22-1""}",[],
+D14,direct,去 B-R-12-1,reach:B-R-12-1,reach:B-R-12-1,True,False,,0,rule,"{""kind"": ""address"", ""address"": ""B-R-12-1""}",[],
+A01,attribute,去 A 巷放油桶的那面货架,reach:A-R,reject:AMBIGUOUS,False,False,AMBIGUOUS,0,rule,"{""kind"": ""class_in_aisle"", ""aisle"": ""A"", ""classes"": [""drum""]}",[],期望到达 A-R
+A02,attribute,A 巷哪面货架有油桶,reach:A-R,reject:AMBIGUOUS,False,False,AMBIGUOUS,0,rule,"{""kind"": ""class_in_aisle"", ""aisle"": ""A"", ""classes"": [""drum""]}",[],期望到达 A-R
+A03,attribute,去放纸箱最多的那排货架,reach:A-R,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""max_class"", ""classes"": [""carton_l"", ""carton_m"", ""carton_s""]}",[],期望到达 A-R
+A04,attribute,纸箱最多的是哪排货架,reach:A-R,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""max_class"", ""classes"": [""carton_l"", ""carton_m"", ""carton_s""]}",[],期望到达 A-R
+A05,attribute,去 A 巷最里面那个空位,reach:A-L-24-1,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""farthest"", ""aisle"": ""A"", ""empty"": true}",[],期望到达 A-L-24-1
+A06,attribute,A 巷最里头第一层那个空位,reach:A-L-24-1,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""farthest"", ""aisle"": ""A"", ""empty"": true, ""level"": 1}",[],期望到达 A-L-24-1
+A07,attribute,去 E 巷 13 号位第一层放油桶的那格,reach:E-R-13-1,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""class_in_bay"", ""aisle"": ""E"", ""bay"": 13, ""classes"": [""drum""], ""level"": 1}",[],期望到达 E-R-13-1
+A08,attribute,C 巷 7 号位第二层放油桶的那格,reach:C-R-07-2,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""class_in_bay"", ""aisle"": ""C"", ""bay"": 7, ""classes"": [""drum""], ""level"": 2}",[],期望到达 C-R-07-2
+A09,attribute,去 D 巷 4 号位第二层放周转箱的,reach:D-R-04-2,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""class_in_bay"", ""aisle"": ""D"", ""bay"": 4, ""classes"": [""tote""], ""level"": 2}",[],期望到达 D-R-04-2
+A10,attribute,去 B 巷 10 号位第一层放油桶的那格,reach:B-L-10-1,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""class_in_bay"", ""aisle"": ""B"", ""bay"": 10, ""classes"": [""drum""], ""level"": 1}",[],期望到达 B-L-10-1
+A11,attribute,E 巷哪面托盘最多,reach:E-R,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""max_class"", ""classes"": [""pallet""], ""aisle"": ""E""}",[],期望到达 E-R
+A12,attribute,去 F 巷放周转箱最多的那面,reach:F-R,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""max_class"", ""classes"": [""tote""], ""aisle"": ""F""}",[],期望到达 F-R
+A13,attribute,去 A 巷 11 号位第二层放纸箱的那格,reach:A-R-11-2,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""class_in_bay"", ""aisle"": ""A"", ""bay"": 11, ""classes"": [""carton_l"", ""carton_m"", ""carton_s""], ""level"": 2}",[],期望到达 A-R-11-2
+A14,attribute,哪排货架的油桶最多,clarify:C-R,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""max_class"", ""classes"": [""drum""]}",[],期望澄清后到 C-R
+M01,ambiguous,去 10 号位,clarify:C-L-10-1,reach:C-L-10-1,True,False,,1,rule,"{""kind"": ""bay"", ""bay"": 10}",[],
+M02,ambiguous,去 7 号位,clarify:B-R-07-2,reach:B-R-07-2,True,False,,1,rule,"{""kind"": ""bay"", ""bay"": 7}",[],
+M03,ambiguous,去 3 号位,clarify:E-L-03-1,reach:E-L-03-1,True,False,,1,rule,"{""kind"": ""bay"", ""bay"": 3}",[],
+M04,ambiguous,去 A 巷放纸箱的那面货架,clarify:A-L,reach:A-L,True,False,,1,rule,"{""kind"": ""class_in_aisle"", ""aisle"": ""A"", ""classes"": [""carton_l"", ""carton_m"", ""carton_s""]}",[],
+M05,ambiguous,去 B-L-07,clarify:B-L-07-2,reach:B-L-07-2,True,False,,1,rule,"{""kind"": ""address"", ""address"": ""B-L-07""}",[],
+M06,ambiguous,去 A 巷最里面那个位,clarify:A-L-24-1,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""farthest"", ""aisle"": ""A"", ""empty"": false}",[],期望澄清后到 A-L-24-1
+M07,ambiguous,去 F 巷最里面那个位,clarify:F-L-17-1,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""farthest"", ""aisle"": ""F"", ""empty"": false}",[],期望澄清后到 F-L-17-1
+M08,ambiguous,去 D 巷 14 号位,clarify:D-R-14-2,reach:D-R-14-2,True,False,,1,rule,"{""kind"": ""bay"", ""bay"": 14, ""aisle"": ""D""}",[],
+M09,ambiguous,去放油桶最多的那面货架,clarify:C-R,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""max_class"", ""classes"": [""drum""]}",[],期望澄清后到 C-R
+M10,ambiguous,去 12 号位,clarify:F-R-12-1,reach:F-R-12-1,True,False,,1,rule,"{""kind"": ""bay"", ""bay"": 12}",[],
+M11,ambiguous,去 B 巷放纸箱的那面货架,clarify:B-R,reach:B-R,True,False,,1,rule,"{""kind"": ""class_in_aisle"", ""aisle"": ""B"", ""classes"": [""carton_l"", ""carton_m"", ""carton_s""]}",[],
+M12,ambiguous,去 A 巷 11 号位的空位,clarify:A-L-11-1,reach:A-L-11-1,True,False,,1,rule,"{""kind"": ""empty_slot_in_bay"", ""aisle"": ""A"", ""bay"": 11}",[],
+M13,ambiguous,去 5 号位,clarify:A-L-05-1,reach:A-L-05-1,True,False,,1,rule,"{""kind"": ""bay"", ""bay"": 5}",[],
+M14,ambiguous,去 A 巷放托盘的货架,clarify:A-R,reach:A-R,True,False,,1,rule,"{""kind"": ""class_in_aisle"", ""aisle"": ""A"", ""classes"": [""pallet""]}",[],
+U01,unreachable,去 F-L-20-1,reject:BLOCKED,reject:BLOCKED,True,False,BLOCKED,0,rule,"{""kind"": ""address"", ""address"": ""F-L-20-1""}",[],
+U02,unreachable,去 F-R-21-1,reject:BLOCKED,reject:BLOCKED,True,False,BLOCKED,0,rule,"{""kind"": ""address"", ""address"": ""F-R-21-1""}",[],
+U03,unreachable,去封住的 F 巷,reject:BLOCKED,reject:BLOCKED,True,False,BLOCKED,0,rule,"{""kind"": ""blocked_aisle"", ""aisle"": ""F""}",[],
+U04,unreachable,封住的那条巷子能过去吗,reject:BLOCKED,reject:BLOCKED,True,False,BLOCKED,0,rule,"{""kind"": ""blocked_aisle"", ""aisle"": null}",[],
+U05,unreachable,去 Z-L-01-1,reject:NO_SLOT,reject:NO_SLOT,True,False,NO_SLOT,0,rule,"{""kind"": ""address"", ""address"": ""Z-L-01-1""}",[],
+U06,unreachable,去 A-L-01-3,reject:NO_SLOT,reject:NO_SLOT,True,False,NO_SLOT,0,rule,"{""kind"": ""address"", ""address"": ""A-L-01-3""}",[],
+U07,unreachable,去 A-L-30-1,reject:NO_SLOT,reject:NO_SLOT,True,False,NO_SLOT,0,rule,"{""kind"": ""address"", ""address"": ""A-L-30-1""}",[],
+U08,unreachable,去 Q 巷,reject:NO_SLOT,reject:NO_SLOT,True,False,NO_SLOT,0,rule,"{""kind"": ""aisle"", ""aisle"": ""Q""}",[],
+U09,unreachable,去 A 巷放冰箱的那面货架,reject:NO_SLOT,reject:NO_SLOT,True,False,NO_SLOT,0,rule,"{""kind"": ""max_class"", ""classes"": [""__unknown__""]}",[],
+U10,unreachable,去 A 巷 11 号位第一层放油桶的那格,reject:EMPTY_BAY,reject:EMPTY_BAY,True,False,EMPTY_BAY,0,rule,"{""kind"": ""class_in_bay"", ""aisle"": ""A"", ""bay"": 11, ""classes"": [""drum""], ""level"": 1}",[],
+U11,unreachable,去 C 巷 12 号位第一层放托盘的那格,reject:EMPTY_BAY,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""class_in_bay"", ""aisle"": ""C"", ""bay"": 12, ""classes"": [""pallet""], ""level"": 1}",[],期望 EMPTY_BAY，实际 UNOBSERVED
+U12,unreachable,去 B 巷 2 号位第一层放油桶的,reject:EMPTY_BAY,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""class_in_bay"", ""aisle"": ""B"", ""bay"": 2, ""classes"": [""drum""], ""level"": 1}",[],期望 EMPTY_BAY，实际 UNOBSERVED

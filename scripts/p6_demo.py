@@ -30,11 +30,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from depot_vln.agent.constraint import ConstrainedNLU  # noqa: E402
 from depot_vln.agent.graph import build_graph, memory_checkpointer  # noqa: E402
-from depot_vln.agent.nlu import RuleNLU  # noqa: E402
+from depot_vln.agent.nlu import LLMNLU, RuleNLU  # noqa: E402
 from depot_vln.agent.ros_tools import SimToolLayer  # noqa: E402
-from depot_vln.mock.world import load_mock_world  # noqa: E402
+from depot_vln.sim import load_sim_world  # noqa: E402
 
 
 def _rule_id(args) -> str | None:
@@ -73,7 +72,7 @@ def main() -> int:
     ap.add_argument("--block", default="",
                     help="注入路障：'AISLE:b0-b1' = 在 bay b0..b1 与各自后一格之间立墙"
                          "（多个用逗号分隔）。例：--block 'C:20-21' 把 C 巷 21 号站台孤立")
-    ap.add_argument("--backend", default="rule", choices=["rule", "ollama-constrained"],
+    ap.add_argument("--backend", default="rule", choices=["rule", "llm"],
                     help="理解层后端。rule=确定性（默认，离线可用）；"
                          "ollama-constrained=P6-1 约束层（需要 ollama）")
     args = ap.parse_args()
@@ -98,7 +97,7 @@ def main() -> int:
             print(f"[p6] 注入路障：{b['aisle']} 巷 bay {b['bay_from']}→{b['bay_to']+1} 之间，"
                   f"x={b['barrier_xs']}")
 
-    world = load_mock_world(blocked=blocks or None)  # 地图 + 语义图（等价库存快照）
+    world = load_sim_world(blocked=blocks or None)  # 地图 + 语义图（显式替身：provider=sim-sampled）
 
     # preflight：真跑前必须确认**真值位姿**这条通道活着。
     # 踩过：`/world/depot/pose/info` 一次读 573 个模型，仿真刚起来时首读会撞 8 s 超时
@@ -154,7 +153,7 @@ def main() -> int:
                           verify=args.verify, pose_source=args.pose_source,
                           act_backend=args.act_backend, rtf=args.rtf)
 
-    nlu = RuleNLU() if args.backend == "rule" else ConstrainedNLU()
+    nlu = RuleNLU() if args.backend == "rule" else LLMNLU()
     graph = build_graph(tools, nlu, world=world, checkpointer=memory_checkpointer())
     thread_id = f"p6-{datetime.now().strftime('%H%M%S')}"
     cfg = {"configurable": {"thread_id": thread_id}, "recursion_limit": 30}
@@ -215,7 +214,9 @@ def main() -> int:
     # 打分（只打印，不回传给图）
     score = None
     if target:
-        score = tools.score(target, obs or None)
+        from depot_vln.scoring import score_observation
+
+        score = score_observation(target, obs or None)
         print(f"打分(真值) {json.dumps(score, ensure_ascii=False)[:400]}")
         if score.get("occupied_match") is False:
             print("⚠️ 占用判定与真值不符（verify 判错了）")

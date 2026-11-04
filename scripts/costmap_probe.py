@@ -34,7 +34,7 @@ import math
 import sys
 
 LEHTAL = 99          # nav2_costmap_2d 的 LETHAL_OBSTACLE
-SPAWN_X = -31.0      # 世界原点与 odom 原点的差（见 static_map_pub 的 --spawn-x）
+SPAWN_X = float(__import__("depot_vln.catalog", fromlist=["get_catalog"]).get_catalog().spawn["x"])  # 来自 catalog
 
 
 def stats(msg, tx: float, ty: float, radius: float) -> dict:

@@ -1,7 +1,0 @@
-{"run": "p6-154322", "i": 0, "node": "understand", "utterance": "去 C-L-21-1", "reason_code": "VERIFY_MISMATCH", "target": "C-L-21-1", "wall_s": 365.68}
-{"run": "p6-154322", "i": 1, "node": "resolve", "utterance": "去 C-L-21-1", "reason_code": "VERIFY_MISMATCH", "target": "C-L-21-1", "wall_s": 365.68}
-{"run": "p6-154322", "i": 2, "node": "plan", "utterance": "去 C-L-21-1", "reason_code": "VERIFY_MISMATCH", "target": "C-L-21-1", "wall_s": 365.68}
-{"run": "p6-154322", "i": 3, "node": "act", "utterance": "去 C-L-21-1", "reason_code": "VERIFY_MISMATCH", "target": "C-L-21-1", "wall_s": 365.68}
-{"run": "p6-154322", "i": 4, "node": "verify", "utterance": "去 C-L-21-1", "reason_code": "VERIFY_MISMATCH", "target": "C-L-21-1", "wall_s": 365.68}
-{"run": "p6-154322", "i": 5, "node": "recover", "utterance": "去 C-L-21-1", "reason_code": "VERIFY_MISMATCH", "target": "C-L-21-1", "wall_s": 365.68}
-{"run": "p6-154322", "i": 6, "node": "respond", "utterance": "去 C-L-21-1", "reason_code": "VERIFY_MISMATCH", "target": "C-L-21-1", "wall_s": 365.68}

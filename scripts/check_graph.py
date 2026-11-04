@@ -28,7 +28,10 @@ from verify_world import parse_sdf  # noqa: E402
 
 RES = 0.20
 ROBOT_R = 0.26
-START = (-31.0, 0.0)   # 与 launch 默认出生点一致
+from depot_vln.catalog import get_catalog
+
+_SPAWN = get_catalog().spawn
+START = (float(_SPAWN["x"]), float(_SPAWN["y"]))   # 出生点来自 catalog，不再手抄
 
 DIRS = [(-1, 0, 1.0), (1, 0, 1.0), (0, -1, 1.0), (0, 1, 1.0),
         (-1, -1, 1.4142), (-1, 1, 1.4142), (1, -1, 1.4142), (1, 1, 1.4142)]

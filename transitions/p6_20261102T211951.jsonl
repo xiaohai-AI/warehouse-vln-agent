@@ -1,3 +1,0 @@
-{"run": "p6-211951", "i": 0, "node": "understand", "utterance": "去 C-L-99-1", "reason_code": "NO_SLOT", "target": "", "wall_s": 0.01}
-{"run": "p6-211951", "i": 1, "node": "resolve", "utterance": "去 C-L-99-1", "reason_code": "NO_SLOT", "target": "", "wall_s": 0.01}
-{"run": "p6-211951", "i": 2, "node": "respond", "utterance": "去 C-L-99-1", "reason_code": "NO_SLOT", "target": "", "wall_s": 0.01}

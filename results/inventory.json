@@ -1,0 +1,387 @@
+{
+  "schema": "depot-vln/inventory@1",
+  "provenance": {
+    "provider": "perception",
+    "sources": [
+      {
+        "source": "results/seg2.json",
+        "n": 46
+      }
+    ],
+    "built_at": "2026-11-04T13:13:51",
+    "note": "只包含真实观测过的货位；未观测的货位在运行时是 'unknown'，不是 '空'"
+  },
+  "now": 0.0,
+  "n_observed": 46,
+  "n_known": 46,
+  "slots": {
+    "A-L-01-1": {
+      "occupied": true,
+      "class": "carton_m",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-02-1": {
+      "occupied": true,
+      "class": "carton_s",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-03-1": {
+      "occupied": true,
+      "class": "carton_m",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-04-1": {
+      "occupied": true,
+      "class": "carton_s",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-05-1": {
+      "occupied": true,
+      "class": "carton_m",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-06-1": {
+      "occupied": true,
+      "class": "pallet",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-07-1": {
+      "occupied": true,
+      "class": "tote",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-08-1": {
+      "occupied": true,
+      "class": "tote",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-09-1": {
+      "occupied": true,
+      "class": "carton_l",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-10-1": {
+      "occupied": true,
+      "class": "pallet",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-11-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-12-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-13-1": {
+      "occupied": true,
+      "class": "carton_s",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-14-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-15-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-16-1": {
+      "occupied": true,
+      "class": "carton_m",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-17-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-18-1": {
+      "occupied": true,
+      "class": "carton_m",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-19-1": {
+      "occupied": true,
+      "class": "carton_m",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-20-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-21-1": {
+      "occupied": true,
+      "class": "pallet",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-22-1": {
+      "occupied": true,
+      "class": "carton_m",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-23-1": {
+      "occupied": true,
+      "class": "carton_l",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-L-24-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-01-1": {
+      "occupied": true,
+      "class": "carton_s",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-02-1": {
+      "occupied": true,
+      "class": "carton_s",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-03-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-04-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-05-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-06-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-07-1": {
+      "occupied": true,
+      "class": "pallet",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-08-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-09-1": {
+      "occupied": true,
+      "class": "tote",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-10-1": {
+      "occupied": true,
+      "class": "carton_l",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-11-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-13-1": {
+      "occupied": true,
+      "class": "carton_s",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-14-1": {
+      "occupied": true,
+      "class": "carton_l",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-15-1": {
+      "occupied": true,
+      "class": "carton_s",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-16-1": {
+      "occupied": true,
+      "class": "tote",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-17-1": {
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-18-1": {
+      "occupied": true,
+      "class": "carton_l",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-19-1": {
+      "occupied": true,
+      "class": "carton_m",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-20-1": {
+      "occupied": true,
+      "class": "carton_l",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-21-1": {
+      "occupied": true,
+      "class": "carton_m",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-22-1": {
+      "occupied": true,
+      "class": "tote",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-23-1": {
+      "occupied": true,
+      "class": "carton_s",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    }
+  }
+}

@@ -16,6 +16,7 @@ from rclpy.node import Node
 from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPolicy
 from geometry_msgs.msg import TransformStamped
 from tf2_ros import StaticTransformBroadcaster
+from depot_vln.catalog import get_catalog
 
 
 def read_pgm(path: str) -> tuple[bytes, int, int]:
@@ -109,8 +110,8 @@ def main() -> int:
     # 出生点：odom 从 (0,0) 起算，但机器人在世界/图里的位置是 (spawn_x, spawn_y)。
     # 不补这个偏移，Nav2 会以为车站在 map 的原点（本世界 (0,0) 在货架带里）->
     # 规划器判定起点在障碍中，一路 recoveries 却不走（实测 recoveries=14、落点误差 18.5 m）。
-    ap.add_argument("--spawn-x", type=float, default=-31.0)
-    ap.add_argument("--spawn-y", type=float, default=0.0)
+    ap.add_argument("--spawn-x", type=float, default=float(get_catalog().spawn["x"]))
+    ap.add_argument("--spawn-y", type=float, default=float(get_catalog().spawn["y"]))
     ap.add_argument("--spawn-yaw", type=float, default=0.0)
     # **默认改为按车当前真值位姿算偏移**（2026-11-03 事故）：
     # 写死 (-31,0) 的前提是"起栈时车正好在出生点"。一旦车在别处（手动开过、

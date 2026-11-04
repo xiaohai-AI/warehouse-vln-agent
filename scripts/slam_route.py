@@ -33,6 +33,7 @@ from rclpy.executors import SingleThreadedExecutor
 from rclpy.node import Node
 from rclpy.parameter import Parameter
 from tf2_ros import Buffer, TransformListener
+from depot_vln.catalog import get_catalog
 
 W, WORLD = "depot_bot", "depot"
 AISLE_Y = {"A": -10.75, "B": -6.45, "C": -2.15, "D": 2.15, "E": 6.45, "F": 10.75}
@@ -252,8 +253,9 @@ def main() -> int:
     # 出发点自检：判据脚本一律从出生点 (-31,0) 开跑。若真值读到了**别的坐标系**的位姿，
     # 这里会立刻拦下（踩过：PosePublisher 发的是偏移 +31 m 的位姿，脚本以为车没动，
     # 一路朝 -x 撞墙，238 m 路线与地图整条作废）。
-    if math.hypot(p0[0] + 31.0, p0[1]) > 2.0:
-        print(f"[route] 起点异常：真值 ({p0[0]:+.2f},{p0[1]:+.2f}) 不在出生点 (-31.0,0.0) 2 m 内")
+    spawn = get_catalog().spawn
+    if math.hypot(p0[0] - spawn["x"], p0[1] - spawn["y"]) > 2.0:
+        print(f"[route] 起点异常：真值 ({p0[0]:+.2f},{p0[1]:+.2f}) 不在出生点 ({spawn['x']:+.2f},{spawn['y']:+.2f}) 2 m 内")
         print("[route] 真值通道有问题，拒绝开跑（本次不产生数据）")
         return 2
 
