@@ -1,0 +1,313 @@
+# depot-vln Nav2 全向配置（SPEC §4.3）
+# 要点（都不是默认值，改错就会退化成"差速车"）：
+#   * 全局规划器用栅格搜索（NavFn/SmacPlanner2D）—— 全局层不编码运动学，
+#     不要用 Smac Hybrid-A*（那是给阿克曼种曲线的，对能横移的底盘是错误约束）
+#   * 局部控制器 MPPI + motion_model: Omni（Humble 的 libmppi_controller.so 里确有 OmniMotionModel）
+#   * PreferForwardCritic 权重压到 0：全向底盘不该被"必须朝前"惩罚
+#   * 足迹用真实多边形 0.52×0.46，不用圆近似
+controller_server:
+  ros__parameters:
+    use_sim_time: true
+    controller_frequency: 20.0
+    min_x_velocity_threshold: 0.001
+    min_y_velocity_threshold: 0.001
+    min_theta_velocity_threshold: 0.001
+    failure_tolerance: 0.3
+    progress_checker_plugin: "progress_checker"
+    goal_checker_plugins: ["general_goal_checker"]
+    controller_plugins: ["FollowPath"]
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.30
+      movement_time_allowance: 20.0
+    general_goal_checker:
+      plugin: "nav2_controller::SimpleGoalChecker"
+      # 判据是 0.10 m（真值），控制器容差原来也是 0.10 -> 叠加 odom 每轮 1.5-2 cm 漂移，
+      # 实测落点误差分布 0.06/0.08/0.12/0.13/0.14（5 轮里只有 2 轮进线）。
+      # 控制器必须比判据更严，才能把"odom 漂移"的预算留给定位误差本身。
+      xy_goal_tolerance: 0.04
+      yaw_goal_tolerance: 0.10
+      stateful: true
+    FollowPath:
+      plugin: "nav2_mppi_controller::MPPIController"
+      motion_model: "Omni"
+      time_steps: 56
+      model_dt: 0.05
+      batch_size: 1000
+      vx_std: 0.20
+      # 0.20 → 0.10：横移候选采样减半。不是禁止横移（DWB/MPPI 仍可在需要时用 vy），
+      # 而是不再"偏爱"横移。实测症状：车体相对巷道斜 ~45° 沿路径平移（横着走），
+      # 用 scripts/cmd_audit.py 量"滑移角 |atan2(vy,vx)|"，改前/改后对比。
+      vy_std: 0.05
+      wz_std: 0.40
+      # M2 实测：复合动作下真值位移比轮速少约 40%（轮子转够、车滑）。
+      # 按 SPEC §4.2 补救② 先把速度压下来 —— 打滑随速度超线性增长。
+      # 打滑随速度超线性增长（见上注）：M2 的每一次起停都在攒 odom 漂移，
+      # 再压一档把每轮漂移从 1.5-2 cm 降到 1 cm 以内，5 轮累积才不会吃掉判据。
+      vx_max: 0.18
+      vx_min: -0.22          # 负值 = 允许后退（全向底盘不需要掉头）
+      vy_max: 0.14
+      wz_max: 0.40
+      # 加速度也压：起步瞬间轮子最容易空转（实测一次起停打滑可达 0.10 m 量级）
+      acc_lim_x: 0.6
+      acc_lim_y: 0.6
+      acc_lim_theta: 1.2
+      iteration_count: 1
+      prune_distance: 1.7
+      transform_tolerance: 0.2
+      temperature: 0.3
+      gamma: 0.015
+      visualize: false
+      TrajectoryVisualizer:
+        trajectory_step: 5
+        time_step: 3
+      critics: ["ObstaclesCritic", "GoalCritic", "GoalAngleCritic", "PathAlignCritic",
+                "PathFollowCritic", "PathAngleCritic", "PreferForwardCritic"]
+      ObstaclesCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 5.0
+        critical_weight: 20.0
+        consider_footprint: true
+        collision_cost: 10000.0
+        collision_margin_distance: 0.05
+        near_goal_distance: 0.5
+      GoalCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 5.0
+        threshold_to_consider: 1.4
+      GoalAngleCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 3.0
+        threshold_to_consider: 0.5
+      PathAlignCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 14.0
+        max_path_occupancy_ratio: 0.05
+        trajectory_point_step: 4
+        threshold_to_consider: 0.5
+        offset_from_furthest: 20
+        use_path_orientations: false
+      PathFollowCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 5.0
+        offset_from_furthest: 5
+        threshold_to_consider: 1.4
+      PathAngleCritic:
+        enabled: true
+        cost_power: 1
+        # **2.0 → 12.0**：这是"车头要对准路径切向"的唯一一项代价。
+        # 原来只有 PathAlignCritic(14.0) 的 1/7，配合 Omni 模型 + PreferForward 权重 0，
+        # 最优解就是"车头不动、用 vy 横移贴路径"—— 视觉上就是车斜着 45° 走（用户实测截图）。
+        # 拉到与 PathAlign 同量级后，横向平移变贵、转身对正变便宜；仍保留横移能力
+        # （PreferForward 依旧 0，需要时 MPPI 仍可用 vy）。
+        cost_weight: 20.0
+        offset_from_furthest: 4
+        threshold_to_consider: 0.5
+        max_angle_to_furthest: 1.0
+        mode: 0
+      PreferForwardCritic:
+        enabled: true
+        cost_power: 1
+        cost_weight: 0.0     # 全向底盘：不惩罚横移/后退
+        threshold_to_consider: 0.5
+
+planner_server:
+  ros__parameters:
+    use_sim_time: true
+    expected_planner_frequency: 5.0
+    planner_plugins: ["GridBased"]
+    GridBased:
+      plugin: "nav2_smac_planner/SmacPlanner2D"
+      tolerance: 0.20
+      downsample_costmap: false
+      allow_unknown: true
+      max_iterations: 2000000
+      max_on_approach_iterations: 1000
+      max_planning_time: 3.0
+      cost_travel_multiplier: 2.0
+      use_final_approach_orientation: false
+
+smoother_server:
+  ros__parameters:
+    use_sim_time: true
+    smoother_plugins: ["simple_smoother"]
+    simple_smoother:
+      plugin: "nav2_smoother::SimpleSmoother"
+      tolerance: 1.0e-10
+      max_its: 1000
+      do_refinement: true
+
+behavior_server:
+  ros__parameters:
+    use_sim_time: true
+    local_costmap_topic: local_costmap/costmap_raw
+    global_costmap_topic: global_costmap/costmap_raw
+    local_footprint_topic: local_costmap/published_footprint
+    global_footprint_topic: global_costmap/published_footprint
+    cycle_frequency: 10.0
+    behavior_plugins: ["spin", "backup", "drive_on_heading", "wait"]
+    spin:
+      plugin: "nav2_behaviors/Spin"
+    backup:
+      plugin: "nav2_behaviors/BackUp"
+    drive_on_heading:
+      plugin: "nav2_behaviors/DriveOnHeading"
+    wait:
+      plugin: "nav2_behaviors/Wait"
+    global_frame: odom
+    robot_base_frame: base_footprint
+    transform_tolerance: 0.5
+    simulate_ahead_time: 2.0
+    max_rotational_vel: 1.0
+    min_rotational_vel: 0.2
+    rotational_acc_lim: 2.0
+
+robot_state_publisher:
+  ros__parameters:
+    use_sim_time: true
+
+bt_navigator:
+  ros__parameters:
+    use_sim_time: true
+    global_frame: map
+    robot_base_frame: base_footprint
+    odom_topic: /odom
+    bt_loop_duration: 10
+    default_server_timeout: 20
+    navigators: ["navigate_to_pose", "navigate_through_poses"]
+    navigate_to_pose:
+      plugin: "nav2_bt_navigator/NavigateToPoseNavigator"
+    navigate_through_poses:
+      plugin: "nav2_bt_navigator/NavigateThroughPosesNavigator"
+
+waypoint_follower:
+  ros__parameters:
+    use_sim_time: true
+    loop_rate: 20
+    stop_on_failure: false
+    waypoint_task_executor_plugin: "wait_at_waypoint"
+    wait_at_waypoint:
+      plugin: "nav2_waypoint_follower::WaitAtWaypoint"
+      enabled: true
+      waypoint_pause_duration: 200
+
+velocity_smoother:
+  ros__parameters:
+    use_sim_time: true
+    smoothing_frequency: 20.0
+    scale_velocities: false
+    feedback: "OPEN_LOOP"
+    # 与 MPPI 的 vx_max/vy_max/wz_max 对齐（之前 0.40 高于 MPPI 的 0.25，等于没起到限幅作用），
+    # 并把加减速压小：起停瞬间的轮子空转是 odom 漂移的主要来源。
+    max_velocity: [0.20, 0.16, 0.45]
+    min_velocity: [-0.22, -0.16, -0.45]
+    max_accel: [0.6, 0.6, 1.2]
+    max_decel: [-0.8, -0.8, -1.5]
+    odom_topic: /odom
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      use_sim_time: true
+      update_frequency: 10.0
+      publish_frequency: 5.0
+      global_frame: odom
+      robot_base_frame: base_footprint
+      rolling_window: true
+      width: 8
+      height: 8
+      resolution: 0.05
+      robot_radius: 0.34
+      footprint: "[[0.26, 0.23], [0.26, -0.23], [-0.26, -0.23], [-0.26, 0.23]]"
+      # **局部层原来整个是死的**（REPORT §5.3 的两条，一起修）：
+      #   ① `topic: /lidar3d` 配 `data_type: PointCloud2` —— 但 `/lidar3d` 是 **LaserScan**
+      #      （点云在 `/lidar3d/points`）。类型不符 → 一个点都不标 → 局部避障为空。
+      #   ② `z_voxels: 40` 超过 VoxelLayer 的实现上限 16 → 层初始化失败。
+      # 改成 2D ObstacleLayer 吃 `/scan`（由 `scripts/scan_relay.py --type ring` 从多线激光
+      # 抽一层并改写 frame_id；slam 用的就是这条路，已经跑过 200 m）。
+      # 为什么不用 VoxelLayer：本机只有一层可用的水平扫描；3D 体素除了多花 CPU，
+      # 对"别撞上货架/叉车"没有额外信息（Dan：简单 > 复杂）。
+      plugins: ["obstacle_layer", "inflation_layer"]
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: true
+        observation_sources: scan
+        scan:
+          topic: /scan
+          data_type: "LaserScan"
+          clearing: true
+          marking: true
+          raytrace_max_range: 8.0
+          raytrace_min_range: 0.0
+          obstacle_max_range: 4.0
+          obstacle_min_range: 0.0
+          max_obstacle_height: 2.2
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        # 3.0 → 2.0：代价衰减慢一点，规划器会走**可绕行带的中线**而不是贴着障碍的膨胀边界。
+        # 实测（D31）：3.0 时路径只偏出 0.44–0.57 m（刚过不碰线），MPPI 判定"贴太近"就停着
+        # 不动；受控台里偏出 0.66 m 时能正常跟随。膨胀半径仍是 0.35（真正的致死边界没动）。
+        cost_scaling_factor: 2.0
+        # **0.55 会把 3.2 m 巷道整条封死**：推车停在巷中央时，膨胀后占 y∈[−2.46,−0.74]，
+        # 北侧货架面 −0.55+0.55 挡到 −1.10、南侧 −3.75+0.55 挡到 −3.20 → 只剩 0.74 m，
+        # 足迹放不进去 → 全局规划器无路可绕，只能等（实测"停车等待"，推进 +0.49 m）。
+        # 0.35 ≈ 机器人半径：南侧留出 [−3.40, −2.26] = 1.14 m 的真缝隙。
+        # 软代价仍由 cost_scaling_factor 提供，不靠把半径放大来"求安全"。
+        inflation_radius: 0.35
+      always_send_full_costmap: true
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      use_sim_time: true
+      update_frequency: 1.0
+      publish_frequency: 1.0
+      global_frame: map
+      robot_base_frame: base_footprint
+      track_unknown_space: true
+      resolution: 0.05
+      robot_radius: 0.34
+      footprint: "[[0.26, 0.23], [0.26, -0.23], [-0.26, -0.23], [-0.26, 0.23]]"
+      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: true
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: true
+        # 同局部层：`/lidar3d` 是 LaserScan，不是 PointCloud2；真正的 /scan 来自 scan_relay
+        observation_sources: scan
+        # **与局部层对齐**（实测依据 D31 续 5）：同一个推车，车心 0.48 m 内 ——
+        #   局部层：附近致命格 182 个、最近 **0.08 m** → 标上了
+        #   全局层：附近 284 个但最近 **0.48 m**（> 车半宽 0.26）→ **没标上**
+        # 后果：全局规划器看不见障碍 → 规划出穿过推车的直线；局部控制器看得见 → 冲突停滞。
+        # 把局部层那套（已证明能标）镜像过来，并且把范围/高度显式写全，不吃默认值。
+        scan:
+          topic: /scan
+          data_type: "LaserScan"
+          clearing: true
+          marking: true
+          raytrace_max_range: 8.0
+          raytrace_min_range: 0.0
+          obstacle_max_range: 4.0
+          obstacle_min_range: 0.0
+          max_obstacle_height: 2.2
+          inf_is_valid: false
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        # 3.0 → 2.0：代价衰减慢一点，规划器会走**可绕行带的中线**而不是贴着障碍的膨胀边界。
+        # 实测（D31）：3.0 时路径只偏出 0.44–0.57 m（刚过不碰线），MPPI 判定"贴太近"就停着
+        # 不动；受控台里偏出 0.66 m 时能正常跟随。膨胀半径仍是 0.35（真正的致死边界没动）。
+        cost_scaling_factor: 2.0
+        # **0.55 会把 3.2 m 巷道整条封死**：推车停在巷中央时，膨胀后占 y∈[−2.46,−0.74]，
+        # 北侧货架面 −0.55+0.55 挡到 −1.10、南侧 −3.75+0.55 挡到 −3.20 → 只剩 0.74 m，
+        # 足迹放不进去 → 全局规划器无路可绕，只能等（实测"停车等待"，推进 +0.49 m）。
+        # 0.35 ≈ 机器人半径：南侧留出 [−3.40, −2.26] = 1.14 m 的真缝隙。
+        # 软代价仍由 cost_scaling_factor 提供，不靠把半径放大来"求安全"。
+        inflation_radius: 0.35
+      always_send_full_costmap: true

@@ -1,0 +1,47 @@
+# S2：轮速 + IMU 的 EKF 融合（robot_localization），输出 odom->base_footprint
+#
+# 在 SLAM-1 里的角色（SPEC §6 配置 S2）：检验"加惯性能不能压住横移不可观测"。
+#   S1 纯激光的实测基线：地图一致性 92.9%、ATE 2.24 m / 203 m（沿轴整 bay 跳格）。
+#   S2 把 IMU 的偏航与角速度加进里程计，让 map->odom 之外的那条链更稳一点。
+#
+# 关键约定
+#   * 必须 `--no-tf` 跑 mecanum_odom：否则它和 EKF 同时发 odom->base_footprint，
+#     两条 TF 打架（slam 会看到位姿来回跳）。本仓的 slam1_run.sh CFG=s2 会自动带上。
+#   * two_d_mode=true：平面仓库，z/roll/pitch 锁死。
+#   * IMU 的 yaw 当作绝对偏航用（仿真里就是世界偏航），角速度只取 vyaw。
+ekf_filter_node:
+  ros__parameters:
+    use_sim_time: true
+    frequency: 30.0
+    sensor_timeout: 0.1
+    two_d_mode: true
+    publish_tf: true
+    print_diagnostics: false
+
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_footprint
+    world_frame: odom          # 输出的是 odom 系下的位姿 -> 负责 odom->base_footprint
+
+    # 轮式里程计：位置 x,y,yaw + 速度 vx,vy,vyaw
+    odom0: /odom
+    odom0_config: [true, true, false,
+                   false, false, true,
+                   true, true, false,
+                   false, false, true,
+                   false, false, false]
+    odom0_differential: false
+    odom0_relative: false
+    odom0_queue_size: 10
+
+    # IMU：偏航角 + 偏航角速度 + 前向加速度
+    imu0: /imu
+    imu0_config: [false, false, false,
+                  false, false, true,
+                  false, false, false,
+                  false, false, true,
+                  true, false, false]
+    imu0_differential: false
+    imu0_relative: true
+    imu0_queue_size: 20
+    imu0_remove_gravitational_acceleration: true

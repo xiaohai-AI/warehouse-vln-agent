@@ -1,0 +1,76 @@
+# slam_toolbox（S1 纯激光基线）+ 3D 点云压成 2D 切片
+# 注意：这一层故意只吃 /scan（由 /lidar3d 切片而来），
+# 因为 S1 的定位就是"只用激光在 60 m 尺度会怎样"，加任何东西都会让基线失效。
+slam_toolbox:
+  ros__parameters:
+    use_sim_time: true
+    solver_plugin: solver_plugins::CeresSolver
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
+    ceres_preconditioner: SCHUR_JACOBI
+    ceres_trust_strategy: LEVENBERG_MARQUARDT
+    ceres_dogleg_type: TRADITIONAL_DOGLEG
+    ceres_loss_function: None
+
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_footprint
+    scan_topic: /scan
+    mode: mapping
+
+    debug_logging: false
+    throttle_scans: 1
+    transform_publish_period: 0.02
+    map_update_interval: 2.0
+    resolution: 0.05
+    max_laser_range: 22.0
+    minimum_time_interval: 0.2
+    transform_timeout: 0.4
+    tf_buffer_duration: 30.0
+    stack_size_to_use: 40000000
+    enable_interactive_mode: false
+
+    # 60 m 尺度的仓库：回环搜索要更远更密
+    use_scan_matching: true
+    use_scan_barycenter: true
+    # SLAM-1 首次实测（224 m，ATE 3.58 m）：误差是**整 bay 跳格**（bay 间距 2.4 m），
+    # 因为 2D 切片只看到货架台面、沿巷每 2.4 m 完全同构。对策不是"搜更大范围"，
+    # 而是**更信 odom、少做激进跳变**：把相关搜索窗收小、采样间隔拉大、回环判定收严。
+    # 若这组更差，回退到 0.3 / 0.3 / 10.0 / 0.45（见 docs/TROUBLESHOOTING.md §22）。
+    minimum_travel_distance: 0.45
+    minimum_travel_heading: 0.3
+    scan_buffer_size: 20
+    scan_buffer_maximum_scan_distance: 12.0
+    link_match_minimum_response_fine: 0.1
+    link_scan_maximum_distance: 3.0
+    loop_search_maximum_distance: 12.0
+    do_loop_closing: true
+    loop_match_minimum_chain_size: 10
+    loop_match_maximum_variance_coarse: 3.0
+    loop_match_minimum_response_coarse: 0.40
+    loop_match_minimum_response_fine: 0.55
+
+    # 0.30 -> **0.60**（2026-10-31）：四配置共有的横向偏置 dy ≈ −0.2…−0.4 m、yaw 误差 <0.3°、
+    # 无跳变 —— 形状像"里程计带着横向偏差进来，匹配窗够不着，只能停在窗边"。
+    # 0.30 只给 ±0.15 m，正好小于观测到的偏差；0.60 给 ±0.30 m，仍远小于 bay 间距 2.4 m，
+    # 不会重新打开历史上"整 bay 跳格"（那次是 2.4 m 的错配）。
+    # 若这组更差，回退到 0.30（见 docs/TROUBLESHOOTING.md §22）。
+    # **0.60 → 0.30（D20）**：0.60 是为了救当时 2.8 m 的烂里程计（匹配窗够不着只能停在窗边）。
+    # 现在里程计链已到 0.233 m / 202 m，宽窗的唯一效果是在周期性货架里招错匹配 ——
+    # 实测第 6/8/9 段 slam_toolbox 的 map->base（0.43/0.57/0.46 m）**比原始里程计
+    # （0.16/0.07/0.04 m）还差**，即后端在主动拉坏位姿。±0.15 m 对 0.23 m 的里程计足够。
+    correlation_search_space_dimension: 0.30
+    correlation_search_space_resolution: 0.01
+    correlation_search_space_smear_deviation: 0.1
+
+    loop_search_space_dimension: 8.0
+    loop_search_space_resolution: 0.05
+    loop_search_space_smear_deviation: 0.03
+
+    distance_variance_penalty: 0.5
+    angle_variance_penalty: 1.0
+    fine_search_angle_offset: 0.00349
+    coarse_search_angle_offset: 0.349
+    coarse_angle_resolution: 0.0349
+    minimum_angle_penalty: 0.9
+    minimum_distance_penalty: 0.5
+    use_response_expansion: true

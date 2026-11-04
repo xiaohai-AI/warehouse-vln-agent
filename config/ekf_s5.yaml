@@ -1,0 +1,98 @@
+# S5：地面光流 + 轮速 + IMU 的 EKF 融合（robot_localization）-> odom->base_footprint
+#
+# 「每个量只有一个权威」—— 这是 S5 **第二版**，直接针对 v1 的病（docs/DECISIONS.md D14）：
+#
+#   v1（config/ekf_s5_v1.yaml，实测 ATE 0.367 / 漂移 0.133 / 地图 91.8%）让**两路都当
+#   绝对位置权威**（轮速位姿 + 视觉位姿都融合 x,y）。结果：净位移 99.8%、终点漂移 0.133 m
+#   是五配置最好，但**估计路径 313 m vs 真值 202 m = 154.8%** —— 轨迹在货架间来回抖，
+#   最大误差 1.232 m。两路在 200 m 尺度上分歧可达 ~1 m，卡尔曼在两者之间来回加权，
+#   odom 抖动，slam_toolbox 的 map->odom 跟着抖（净位移没错、路径长 55% 就是这个签名）。
+#
+#   v2（本文件）的分工 —— 一个量只给一路：
+#     位置   <- 地面光流（不打滑；分段还原实测 98–102%）
+#     偏航   <- **IMU 的偏航角速度**（陀螺；mecanum 的 yaw 不可用，见 D18）
+#     速度   <- 轮速 twist + IMU 的偏航角速度
+#   轮速**不再**提供 x,y —— 位置权威唯一，抖动源消失。
+#
+# 关键约定
+#   * 仿真 `odom_tf:=false`：mecanum_odom 不发 TF，EKF 独占 odom->base_footprint；
+#   * `floorflow_odom --publish-tf 0`：它也不许发 TF（两个发布者会打架）；
+#   * two_d_mode=true：平面仓库，z/roll/pitch 锁死；
+#   * 两路都发 odom 系绝对量 -> `relative: false`（relative 要查 odom->base_footprint，
+#     而它的唯一发布者就是 EKF 自己 —— 自引用会发散/NaN，踩过）；
+#   * 传感器协方差**绝不留 0**（0 在 RL 里 = "绝对确信" = 奇异矩阵 = NaN，踩过）。
+ekf_filter_node:
+  ros__parameters:
+    use_sim_time: true
+    frequency: 30.0
+    sensor_timeout: 0.2
+    two_d_mode: true
+    publish_tf: true
+    print_diagnostics: true      # 发到 /diagnostics 话题（不打控制台），排障 ros2 topic echo
+
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_footprint
+    world_frame: odom
+
+    # --- 轮速：**只要 vx**（位置归视觉、航向归 IMU）
+    odom0: /odom
+    # 轮速 twist 只取 **vx + vyaw**：麦克纳姆的**横向速度 vy 不可信**（辊子退化），
+    # 实测冒烟里纯轴向段轮速位移报成 (dx +4.97, dy −3.41)（方向偏 34°）——那是 vy 的
+    # 幻影分量，喂进滤波器会制造假的横向速度。横向速度只用视觉的。
+    # **姿态 yaw 也不取**：mecanum 的 yaw 是从四个轮角差分重建的，横移后实测会漂
+    # −10° ~ −84°（三轮冒烟），而且绕 wz 旋转时方向是反的（真值 +89°，它报 −84.7°）。
+    # 一旦被当绝对测量融合，整个 EKF 的坐标系跟着转（实测轴向腿位移方向变成 −84°）。
+    # **twist 的 vyaw 也不要**（同一原因：横移/旋转时符号都不对）。轮速**只提供 vx**。
+    # 航向权威**只给 IMU 的偏航角速度**（陀螺）。
+    odom0_config: [false, false, false,
+                   false, false, false,
+                   true, false, false,
+                   false, false, false,
+                   false, false, false]
+    odom0_differential: false
+    odom0_relative: false
+    odom0_queue_size: 20
+
+    # --- 地面光流：只取**体坐标速度 vx,vy**，不取位姿
+    #
+    # v3（取位姿 x,y）实测里程计链 2.837 m：视觉内部把 (dx,dy) 积进世界系时用的航向
+    # 自己漂了 8°/600 s，于是纯前进被转出 2-3 m 的横向误差，EKF 照收。
+    # 改成只取**体坐标速度**后，世界系旋转由 EKF 自己的航向权威（轮速 yaw + IMU vyaw，
+    # 实测整条路线 ≤0.13°）负责 —— 视觉的航向漂移从结构上不再能污染位置。
+    # 这也是通用规矩：**测量传感器只发体坐标量，世界系旋转只由融合层做**。
+    odom1: /odometry/floorflow
+    odom1_config: [false, false, false,
+                   false, false, false,
+                   true, true, false,
+                   false, false, false,
+                   false, false, false]
+    odom1_differential: false
+    odom1_relative: false
+    odom1_queue_size: 10
+
+    # --- IMU：只取偏航角速度（vyaw）
+    # **必须用中继后的 /imu_tf**：桥出来的原始 /imu 的 header.frame_id 是 gz 作用域名
+    # （depot_bot/imu_link → 全局 /depot_bot/imu_link），而 robot_state_publisher 发的是
+    # imu_link，TF 查不到时 RL **静默丢掉这一路**（不报错）—— 这就是 S2 "加 IMU 无改善"
+    # 的隐藏原因。
+    # **吃去偏后的角速度**：`/imu_debiased` 由 floorflow_odom 发布（wz − 安静样本中位数）。
+    # 原始 /imu 的零偏有 ~0.4 mrad/s 的缓慢游走，纯积分 600 s 漂 5.6° → 横向 3.4 m。
+    # 为什么不在 EKF 里直接吃原始值：robot_localization **不估计陀螺零偏**，
+    # `imu0_relative: true` 又只拿一帧当参考（噪声原封不动进系统）。
+    imu0: /imu_debiased
+    imu0_config: [false, false, false,
+                  false, false, false,
+                  false, false, false,
+                  false, false, true,
+                  false, false, false]
+    imu0_differential: false
+    # **必须是 false**：`relative: true` 会把**第一帧**的角速度当零偏减掉，而单帧噪声
+    # σ=0.9 mrad/s —— 等于凭空注入一个最多 0.9 mrad/s 的假零偏（600 s 可累积 31°）。
+    # 偏航角速度是体坐标系下的绝对量，没有"参考帧"可言，语义上也该是 false。
+    imu0_relative: false
+    imu0_queue_size: 20
+    imu0_remove_gravitational_acceleration: true
+
+    # 不设 initial_estimate_covariance（默认值够用）。回看：第一版设了 15 元对角阵列，
+    # 同时改 relative —— 两个"独有变量"一起引入，排障时被迫拆开验证。以后一次只改一个。

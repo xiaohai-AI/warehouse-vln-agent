@@ -1,0 +1,95 @@
+# depot-vln — 世界生成器唯一配置源
+# 禁止手改 world/warehouse.sdf；改这个文件，然后 `make world`。
+# 所有派生量（footprint、block 位置、slot 位姿）由 depot_vln/layout.py 计算，
+# 生成器与自检脚本都用同一份代码，避免"配置说一套、SDF 是另一套"。
+
+seed: 20261026          # 占用/货类的确定性种子；改它会改 ground_truth
+
+units: m
+
+# 视觉细节（实测：视觉件数 >~2000 会让 ogre2 初始化把仿真卡死）
+#   medium = 货架全细节（立柱/横梁/X 斜撑/防撞护栏/顶横撑）+ 每件货 2 个视觉件（默认，能跑）
+#   full   = 货物也做足细节（每件 5~8 个视觉件）—— 只有换网格实例化之后才敢开
+#   low    = 全方块（排查性能用）
+# 任何一档都只影响外观，碰撞/语义/判据数字完全不变。
+visual_detail: medium
+
+# 传感器渲染引擎：ogre2（默认，画质好）/ ogre（1.x，老驱动兼容）/ 都不行就用
+#   ros2 launch launch/depot_sim.launch.py software_render:=true
+# 你机器上 ogre2 会报 `libEGL warning: egl: failed to create dri2 screen`，
+# 若 lidar 一直没数据，先把这里改成 ogre 再 `make world` 对比。
+render_engine: ogre2
+
+# 阴影：实测开/关差 2.3 倍 RTF（0.27 -> 0.62）。仓库是室内均匀泛光场景，
+# 关掉阴影在视觉上几乎看不出来，但能省掉每帧一张 67x40 m 的阴影贴图。
+shadows: false
+
+walls:
+  thickness: 0.20
+  height: 8.0
+  material: wall_grey
+
+racks:
+  aisle_names: [A, B, C, D, E, F]
+  aisle_clear_width: 3.20     # 巷道净宽（两排货架面之间的自由间距）—— 判据 P1: 3.20 ± 0.05
+  rack_depth: 1.10            # 单侧货架进深（block 由两侧背靠背组成时即为 block 深度）
+  bays_per_aisle: 24          # 沿巷道每 bay_pitch 一个 bay
+  bay_pitch: 2.40
+  post_size: 0.08             # 立柱截面
+  post_every_n_bays: 2        # 每隔几个 bay 立一对立柱
+  deck_thickness: 0.05
+  # 层板进深 = rack_depth（层板面就是巷道净宽的量测基准），
+  # 沿 X 每片层板两端各留 post_size + 0.02 的缝，避免与立柱 AABB 重叠。
+  levels:
+    - level: 1
+      deck_z: 0.15            # 层板顶面高度
+      clear_height: 1.60
+    - level: 2
+      deck_z: 1.75
+      clear_height: 1.80
+  top_z: 3.55                 # 立柱顶面（= 第二层 clear + 顶横梁）
+
+cross_aisles:
+  count: 2                    # 巷道两端各一条主横通道
+  width: 4.50                 # 净宽
+
+columns:                      # 承重柱：只沿外墙排布，绝不进入巷道（判据里会被检查）
+  size: 0.30
+  spacing: 12.0
+  offset_from_wall: 1.60      # 柱心到外墙内表面的距离
+
+markings:
+  center_line_width: 0.10
+  rack_end_zone_width: 0.20
+  bay_barcode: true           # 每个 bay 地面印二进制条纹：给视觉提供真实纹理，且机器可读
+  barcode_stripe: 0.06
+  barcode_gap: 0.10
+
+lights:
+  ambient: [0.62, 0.62, 0.60]
+  background: [0.28, 0.30, 0.33]
+  directional_intensity: 0.55
+  # 每巷 1 盏（原来是每 14.4 m 一盏 = 18 盏）。灯数直接决定 ogre2 初始化成本，
+  # 均匀照度主要靠 ambient + 方向光，不靠堆灯。
+  aisle_lamp: {intensity: 2.6, z: 6.8, per_aisle: 1, range: 34.0}
+
+obstacles:                    # 静态障碍（不做动态避让）：一台叉车 + 2 个周转箱
+  forklift: {at_aisle: C, bay: 5, side: R}
+  totes: 2
+
+semantics:
+  classes:
+    carton_s: {size: [0.35, 0.30, 0.30], color: [0.72, 0.55, 0.34]}
+    carton_m: {size: [0.50, 0.40, 0.40], color: [0.66, 0.48, 0.28]}
+    # 深度(y)按半深货位 0.55 m 收缩：原来 0.60/0.90 m 的深度塞不进半格，会探到另一侧的货位，
+    # 导致从对侧巷道也能看见（正是"两巷货位几何重合"那个 bug 的连带问题）
+    carton_l: {size: [0.70, 0.52, 0.55], color: [0.58, 0.42, 0.24]}
+    tote:     {size: [0.45, 0.35, 0.30], color: [0.20, 0.35, 0.62]}
+    pallet:   {size: [1.05, 0.52, 0.15], color: [0.78, 0.70, 0.48]}
+    drum:     {size: [0.56, 0.56, 0.85], color: [0.30, 0.45, 0.40], shape: cylinder}
+  occupancy_prob: 0.62
+  # 第二层离地 1.75 m，观测位只能从货架前方仰视 -> 上层占用略低，模拟真实仓库
+  level2_occ_scale: 0.85
+
+blocked:                      # 不可达判据用：这些巷道段在 ground_truth 里标记为封堵
+  - {aisle: F, bay_from: 18, bay_to: 24, reason: BLOCKED}

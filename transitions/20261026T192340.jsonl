@@ -1,0 +1,409 @@
+{"run": "20261026T192340", "id": "D01", "node": "understand", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D01", "node": "resolve", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D01", "node": "plan", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D01", "node": "act", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D01", "node": "verify", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D01", "node": "respond", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D02", "node": "understand", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D02", "node": "resolve", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D02", "node": "plan", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D02", "node": "act", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D02", "node": "verify", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D02", "node": "respond", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D03", "node": "understand", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D03", "node": "resolve", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D03", "node": "plan", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D03", "node": "act", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D03", "node": "verify", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D03", "node": "respond", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D04", "node": "understand", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D04", "node": "resolve", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D04", "node": "plan", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D04", "node": "act", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D04", "node": "verify", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D04", "node": "respond", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D05", "node": "understand", "utterance": "go to B-L-08-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D05", "node": "resolve", "utterance": "go to B-L-08-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D05", "node": "plan", "utterance": "go to B-L-08-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D05", "node": "act", "utterance": "go to B-L-08-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D05", "node": "verify", "utterance": "go to B-L-08-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D05", "node": "respond", "utterance": "go to B-L-08-2", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D06", "node": "understand", "utterance": "麻烦到 C-R-04-1 一趟", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D06", "node": "resolve", "utterance": "麻烦到 C-R-04-1 一趟", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D06", "node": "plan", "utterance": "麻烦到 C-R-04-1 一趟", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D06", "node": "act", "utterance": "麻烦到 C-R-04-1 一趟", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D06", "node": "verify", "utterance": "麻烦到 C-R-04-1 一趟", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D06", "node": "respond", "utterance": "麻烦到 C-R-04-1 一趟", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D07", "node": "understand", "utterance": "去 D-R-22-1", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D07", "node": "resolve", "utterance": "去 D-R-22-1", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D07", "node": "plan", "utterance": "去 D-R-22-1", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D07", "node": "act", "utterance": "去 D-R-22-1", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D07", "node": "verify", "utterance": "去 D-R-22-1", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D07", "node": "respond", "utterance": "去 D-R-22-1", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "D08", "node": "understand", "utterance": "到 C-R-02-2 那个货位看看", "reason_code": "", "t_wall": 0.02}
+{"run": "20261026T192340", "id": "D08", "node": "resolve", "utterance": "到 C-R-02-2 那个货位看看", "reason_code": "", "t_wall": 0.02}
+{"run": "20261026T192340", "id": "D08", "node": "plan", "utterance": "到 C-R-02-2 那个货位看看", "reason_code": "", "t_wall": 0.02}
+{"run": "20261026T192340", "id": "D08", "node": "act", "utterance": "到 C-R-02-2 那个货位看看", "reason_code": "", "t_wall": 0.02}
+{"run": "20261026T192340", "id": "D08", "node": "verify", "utterance": "到 C-R-02-2 那个货位看看", "reason_code": "", "t_wall": 0.02}
+{"run": "20261026T192340", "id": "D08", "node": "respond", "utterance": "到 C-R-02-2 那个货位看看", "reason_code": "", "t_wall": 0.02}
+{"run": "20261026T192340", "id": "D09", "node": "understand", "utterance": "带我去 E-L-12-1", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D09", "node": "resolve", "utterance": "带我去 E-L-12-1", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D09", "node": "plan", "utterance": "带我去 E-L-12-1", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D09", "node": "act", "utterance": "带我去 E-L-12-1", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D09", "node": "verify", "utterance": "带我去 E-L-12-1", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D09", "node": "respond", "utterance": "带我去 E-L-12-1", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D10", "node": "understand", "utterance": "A-L-23-2 怎么走", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D10", "node": "resolve", "utterance": "A-L-23-2 怎么走", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D10", "node": "plan", "utterance": "A-L-23-2 怎么走", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D10", "node": "act", "utterance": "A-L-23-2 怎么走", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D10", "node": "verify", "utterance": "A-L-23-2 怎么走", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D10", "node": "respond", "utterance": "A-L-23-2 怎么走", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D11", "node": "understand", "utterance": "go to A-L-17-1", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D11", "node": "resolve", "utterance": "go to A-L-17-1", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D11", "node": "plan", "utterance": "go to A-L-17-1", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D11", "node": "act", "utterance": "go to A-L-17-1", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D11", "node": "verify", "utterance": "go to A-L-17-1", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D11", "node": "respond", "utterance": "go to A-L-17-1", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "D12", "node": "understand", "utterance": "麻烦到 D-L-02-2 一趟", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D12", "node": "resolve", "utterance": "麻烦到 D-L-02-2 一趟", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D12", "node": "plan", "utterance": "麻烦到 D-L-02-2 一趟", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D12", "node": "act", "utterance": "麻烦到 D-L-02-2 一趟", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D12", "node": "verify", "utterance": "麻烦到 D-L-02-2 一趟", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D12", "node": "respond", "utterance": "麻烦到 D-L-02-2 一趟", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "D13", "node": "understand", "utterance": "去 B-L-19-1", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D13", "node": "resolve", "utterance": "去 B-L-19-1", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D13", "node": "plan", "utterance": "去 B-L-19-1", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D13", "node": "act", "utterance": "去 B-L-19-1", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D13", "node": "verify", "utterance": "去 B-L-19-1", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D13", "node": "respond", "utterance": "去 B-L-19-1", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D14", "node": "understand", "utterance": "到 B-L-08-1 那个货位看看", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D14", "node": "resolve", "utterance": "到 B-L-08-1 那个货位看看", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D14", "node": "plan", "utterance": "到 B-L-08-1 那个货位看看", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D14", "node": "act", "utterance": "到 B-L-08-1 那个货位看看", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D14", "node": "verify", "utterance": "到 B-L-08-1 那个货位看看", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D14", "node": "respond", "utterance": "到 B-L-08-1 那个货位看看", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "D15", "node": "understand", "utterance": "带我去 B-R-02-1", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D15", "node": "resolve", "utterance": "带我去 B-R-02-1", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D15", "node": "plan", "utterance": "带我去 B-R-02-1", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D15", "node": "act", "utterance": "带我去 B-R-02-1", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D15", "node": "verify", "utterance": "带我去 B-R-02-1", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D15", "node": "respond", "utterance": "带我去 B-R-02-1", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "D16", "node": "understand", "utterance": "C-L-09-1 怎么走", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D16", "node": "resolve", "utterance": "C-L-09-1 怎么走", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D16", "node": "plan", "utterance": "C-L-09-1 怎么走", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D16", "node": "act", "utterance": "C-L-09-1 怎么走", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D16", "node": "verify", "utterance": "C-L-09-1 怎么走", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D16", "node": "respond", "utterance": "C-L-09-1 怎么走", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D17", "node": "understand", "utterance": "go to E-L-01-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D17", "node": "resolve", "utterance": "go to E-L-01-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D17", "node": "plan", "utterance": "go to E-L-01-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D17", "node": "act", "utterance": "go to E-L-01-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D17", "node": "verify", "utterance": "go to E-L-01-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D17", "node": "respond", "utterance": "go to E-L-01-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D18", "node": "understand", "utterance": "麻烦到 C-L-09-2 一趟", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D18", "node": "resolve", "utterance": "麻烦到 C-L-09-2 一趟", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D18", "node": "plan", "utterance": "麻烦到 C-L-09-2 一趟", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D18", "node": "act", "utterance": "麻烦到 C-L-09-2 一趟", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D18", "node": "verify", "utterance": "麻烦到 C-L-09-2 一趟", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "D18", "node": "respond", "utterance": "麻烦到 C-L-09-2 一趟", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A01", "node": "understand", "utterance": "去 A 巷放油桶的那面货架", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "A01", "node": "resolve", "utterance": "去 A 巷放油桶的那面货架", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "A01", "node": "plan", "utterance": "去 A 巷放油桶的那面货架", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "A01", "node": "act", "utterance": "去 A 巷放油桶的那面货架", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "A01", "node": "verify", "utterance": "去 A 巷放油桶的那面货架", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "A01", "node": "respond", "utterance": "去 A 巷放油桶的那面货架", "reason_code": "", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "A02", "node": "understand", "utterance": "去放纸箱最多的那排货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A02", "node": "resolve", "utterance": "去放纸箱最多的那排货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A02", "node": "plan", "utterance": "去放纸箱最多的那排货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A02", "node": "act", "utterance": "去放纸箱最多的那排货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A02", "node": "verify", "utterance": "去放纸箱最多的那排货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A02", "node": "respond", "utterance": "去放纸箱最多的那排货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A03", "node": "understand", "utterance": "去 C 巷左边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A03", "node": "resolve", "utterance": "去 C 巷左边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A03", "node": "plan", "utterance": "去 C 巷左边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A03", "node": "act", "utterance": "去 C 巷左边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A03", "node": "verify", "utterance": "去 C 巷左边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A03", "node": "respond", "utterance": "去 C 巷左边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A04", "node": "understand", "utterance": "去 D 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A04", "node": "resolve", "utterance": "去 D 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A04", "node": "plan", "utterance": "去 D 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A04", "node": "act", "utterance": "去 D 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A04", "node": "verify", "utterance": "去 D 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A04", "node": "respond", "utterance": "去 D 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A05", "node": "understand", "utterance": "去 E 巷右边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A05", "node": "resolve", "utterance": "去 E 巷右边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A05", "node": "plan", "utterance": "去 E 巷右边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A05", "node": "act", "utterance": "去 E 巷右边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A05", "node": "verify", "utterance": "去 E 巷右边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A05", "node": "respond", "utterance": "去 E 巷右边最里面第二层那个空位", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "A06", "node": "understand", "utterance": "去 B 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A06", "node": "resolve", "utterance": "去 B 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A06", "node": "plan", "utterance": "去 B 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A06", "node": "act", "utterance": "去 B 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A06", "node": "verify", "utterance": "去 B 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A06", "node": "respond", "utterance": "去 B 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A07", "node": "understand", "utterance": "去 A 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "A07", "node": "resolve", "utterance": "去 A 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "A07", "node": "plan", "utterance": "去 A 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "A07", "node": "act", "utterance": "去 A 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "A07", "node": "verify", "utterance": "去 A 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "A07", "node": "respond", "utterance": "去 A 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "A08", "node": "understand", "utterance": "去 E 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A08", "node": "resolve", "utterance": "去 E 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A08", "node": "plan", "utterance": "去 E 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A08", "node": "act", "utterance": "去 E 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A08", "node": "verify", "utterance": "去 E 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A08", "node": "respond", "utterance": "去 E 巷左边最里面第一层那个空位", "reason_code": "", "t_wall": 0.017}
+{"run": "20261026T192340", "id": "A09", "node": "understand", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "A09", "node": "resolve", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "A09", "node": "plan", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "A09", "node": "act", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "A09", "node": "verify", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "A09", "node": "respond", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "A10", "node": "understand", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A10", "node": "resolve", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A10", "node": "plan", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A10", "node": "act", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A10", "node": "verify", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A10", "node": "respond", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A11", "node": "understand", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A11", "node": "resolve", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A11", "node": "plan", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A11", "node": "act", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A11", "node": "verify", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A11", "node": "respond", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A12", "node": "understand", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A12", "node": "resolve", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A12", "node": "plan", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A12", "node": "act", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A12", "node": "verify", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A12", "node": "respond", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "A13", "node": "understand", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "A13", "node": "resolve", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "A13", "node": "plan", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "A13", "node": "act", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "A13", "node": "verify", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "A13", "node": "respond", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.01}
+{"run": "20261026T192340", "id": "A14", "node": "understand", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A14", "node": "resolve", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A14", "node": "plan", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A14", "node": "act", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A14", "node": "verify", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A14", "node": "respond", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A15", "node": "understand", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A15", "node": "resolve", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A15", "node": "plan", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A15", "node": "act", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A15", "node": "verify", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A15", "node": "respond", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A16", "node": "understand", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A16", "node": "resolve", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A16", "node": "plan", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A16", "node": "act", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A16", "node": "verify", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A16", "node": "respond", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A17", "node": "understand", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A17", "node": "resolve", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A17", "node": "plan", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A17", "node": "act", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A17", "node": "verify", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A17", "node": "respond", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "A18", "node": "understand", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "A18", "node": "resolve", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "A18", "node": "plan", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "A18", "node": "act", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "A18", "node": "verify", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "A18", "node": "respond", "utterance": "A 巷油桶都在哪一面货架", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "M01", "node": "understand", "utterance": "去 10 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M01", "node": "resolve", "utterance": "去 10 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M01", "node": "clarify", "utterance": "去 10 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M01", "node": "resolve", "utterance": "去 10 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M01", "node": "plan", "utterance": "去 10 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M01", "node": "act", "utterance": "去 10 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M01", "node": "verify", "utterance": "去 10 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M01", "node": "respond", "utterance": "去 10 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M02", "node": "understand", "utterance": "去 03 号位", "reason_code": "", "t_wall": 0.013}
+{"run": "20261026T192340", "id": "M02", "node": "resolve", "utterance": "去 03 号位", "reason_code": "", "t_wall": 0.013}
+{"run": "20261026T192340", "id": "M02", "node": "clarify", "utterance": "去 03 号位", "reason_code": "", "t_wall": 0.013}
+{"run": "20261026T192340", "id": "M02", "node": "resolve", "utterance": "去 03 号位", "reason_code": "", "t_wall": 0.013}
+{"run": "20261026T192340", "id": "M02", "node": "plan", "utterance": "去 03 号位", "reason_code": "", "t_wall": 0.013}
+{"run": "20261026T192340", "id": "M02", "node": "act", "utterance": "去 03 号位", "reason_code": "", "t_wall": 0.013}
+{"run": "20261026T192340", "id": "M02", "node": "verify", "utterance": "去 03 号位", "reason_code": "", "t_wall": 0.013}
+{"run": "20261026T192340", "id": "M02", "node": "respond", "utterance": "去 03 号位", "reason_code": "", "t_wall": 0.013}
+{"run": "20261026T192340", "id": "M03", "node": "understand", "utterance": "去 11 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M03", "node": "resolve", "utterance": "去 11 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M03", "node": "clarify", "utterance": "去 11 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M03", "node": "resolve", "utterance": "去 11 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M03", "node": "plan", "utterance": "去 11 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M03", "node": "act", "utterance": "去 11 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M03", "node": "verify", "utterance": "去 11 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M03", "node": "respond", "utterance": "去 11 号位", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M04", "node": "understand", "utterance": "去 21 号位", "reason_code": "", "t_wall": 0.019}
+{"run": "20261026T192340", "id": "M04", "node": "resolve", "utterance": "去 21 号位", "reason_code": "", "t_wall": 0.019}
+{"run": "20261026T192340", "id": "M04", "node": "clarify", "utterance": "去 21 号位", "reason_code": "", "t_wall": 0.019}
+{"run": "20261026T192340", "id": "M04", "node": "resolve", "utterance": "去 21 号位", "reason_code": "", "t_wall": 0.019}
+{"run": "20261026T192340", "id": "M04", "node": "plan", "utterance": "去 21 号位", "reason_code": "", "t_wall": 0.019}
+{"run": "20261026T192340", "id": "M04", "node": "act", "utterance": "去 21 号位", "reason_code": "", "t_wall": 0.019}
+{"run": "20261026T192340", "id": "M04", "node": "verify", "utterance": "去 21 号位", "reason_code": "", "t_wall": 0.019}
+{"run": "20261026T192340", "id": "M04", "node": "respond", "utterance": "去 21 号位", "reason_code": "", "t_wall": 0.019}
+{"run": "20261026T192340", "id": "M05", "node": "understand", "utterance": "去 16 号位", "reason_code": "", "t_wall": 0.022}
+{"run": "20261026T192340", "id": "M05", "node": "resolve", "utterance": "去 16 号位", "reason_code": "", "t_wall": 0.022}
+{"run": "20261026T192340", "id": "M05", "node": "clarify", "utterance": "去 16 号位", "reason_code": "", "t_wall": 0.022}
+{"run": "20261026T192340", "id": "M05", "node": "resolve", "utterance": "去 16 号位", "reason_code": "", "t_wall": 0.022}
+{"run": "20261026T192340", "id": "M05", "node": "plan", "utterance": "去 16 号位", "reason_code": "", "t_wall": 0.022}
+{"run": "20261026T192340", "id": "M05", "node": "act", "utterance": "去 16 号位", "reason_code": "", "t_wall": 0.022}
+{"run": "20261026T192340", "id": "M05", "node": "verify", "utterance": "去 16 号位", "reason_code": "", "t_wall": 0.022}
+{"run": "20261026T192340", "id": "M05", "node": "respond", "utterance": "去 16 号位", "reason_code": "", "t_wall": 0.022}
+{"run": "20261026T192340", "id": "M06", "node": "understand", "utterance": "去 04 号位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M06", "node": "resolve", "utterance": "去 04 号位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M06", "node": "clarify", "utterance": "去 04 号位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M06", "node": "resolve", "utterance": "去 04 号位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M06", "node": "plan", "utterance": "去 04 号位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M06", "node": "act", "utterance": "去 04 号位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M06", "node": "verify", "utterance": "去 04 号位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M06", "node": "respond", "utterance": "去 04 号位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M07", "node": "understand", "utterance": "去 B 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M07", "node": "resolve", "utterance": "去 B 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M07", "node": "clarify", "utterance": "去 B 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M07", "node": "resolve", "utterance": "去 B 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M07", "node": "plan", "utterance": "去 B 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M07", "node": "act", "utterance": "去 B 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M07", "node": "verify", "utterance": "去 B 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M07", "node": "respond", "utterance": "去 B 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M08", "node": "understand", "utterance": "去 F 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M08", "node": "resolve", "utterance": "去 F 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M08", "node": "clarify", "utterance": "去 F 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M08", "node": "resolve", "utterance": "去 F 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M08", "node": "plan", "utterance": "去 F 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M08", "node": "act", "utterance": "去 F 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M08", "node": "verify", "utterance": "去 F 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M08", "node": "respond", "utterance": "去 F 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M09", "node": "understand", "utterance": "去 E 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M09", "node": "resolve", "utterance": "去 E 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M09", "node": "clarify", "utterance": "去 E 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M09", "node": "resolve", "utterance": "去 E 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M09", "node": "plan", "utterance": "去 E 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M09", "node": "act", "utterance": "去 E 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M09", "node": "verify", "utterance": "去 E 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M09", "node": "respond", "utterance": "去 E 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M10", "node": "understand", "utterance": "去 D 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M10", "node": "resolve", "utterance": "去 D 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M10", "node": "clarify", "utterance": "去 D 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M10", "node": "resolve", "utterance": "去 D 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M10", "node": "plan", "utterance": "去 D 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M10", "node": "act", "utterance": "去 D 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M10", "node": "verify", "utterance": "去 D 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M10", "node": "respond", "utterance": "去 D 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.015}
+{"run": "20261026T192340", "id": "M11", "node": "understand", "utterance": "去 C 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "M11", "node": "resolve", "utterance": "去 C 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "M11", "node": "clarify", "utterance": "去 C 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "M11", "node": "resolve", "utterance": "去 C 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "M11", "node": "plan", "utterance": "去 C 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "M11", "node": "act", "utterance": "去 C 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "M11", "node": "verify", "utterance": "去 C 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "M11", "node": "respond", "utterance": "去 C 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.016}
+{"run": "20261026T192340", "id": "M12", "node": "understand", "utterance": "去 A 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M12", "node": "resolve", "utterance": "去 A 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M12", "node": "clarify", "utterance": "去 A 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M12", "node": "resolve", "utterance": "去 A 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M12", "node": "plan", "utterance": "去 A 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M12", "node": "act", "utterance": "去 A 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M12", "node": "verify", "utterance": "去 A 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M12", "node": "respond", "utterance": "去 A 巷放纸箱的那面货架", "reason_code": "", "t_wall": 0.014}
+{"run": "20261026T192340", "id": "M13", "node": "understand", "utterance": "去 B 巷最里面那个位", "reason_code": "", "t_wall": 0.033}
+{"run": "20261026T192340", "id": "M13", "node": "resolve", "utterance": "去 B 巷最里面那个位", "reason_code": "", "t_wall": 0.033}
+{"run": "20261026T192340", "id": "M13", "node": "clarify", "utterance": "去 B 巷最里面那个位", "reason_code": "", "t_wall": 0.033}
+{"run": "20261026T192340", "id": "M13", "node": "resolve", "utterance": "去 B 巷最里面那个位", "reason_code": "", "t_wall": 0.033}
+{"run": "20261026T192340", "id": "M13", "node": "plan", "utterance": "去 B 巷最里面那个位", "reason_code": "", "t_wall": 0.033}
+{"run": "20261026T192340", "id": "M13", "node": "act", "utterance": "去 B 巷最里面那个位", "reason_code": "", "t_wall": 0.033}
+{"run": "20261026T192340", "id": "M13", "node": "verify", "utterance": "去 B 巷最里面那个位", "reason_code": "", "t_wall": 0.033}
+{"run": "20261026T192340", "id": "M13", "node": "respond", "utterance": "去 B 巷最里面那个位", "reason_code": "", "t_wall": 0.033}
+{"run": "20261026T192340", "id": "M14", "node": "understand", "utterance": "去 C 巷最里面那个位", "reason_code": "NO_SLOT", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M14", "node": "resolve", "utterance": "去 C 巷最里面那个位", "reason_code": "NO_SLOT", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M14", "node": "clarify", "utterance": "去 C 巷最里面那个位", "reason_code": "NO_SLOT", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M14", "node": "resolve", "utterance": "去 C 巷最里面那个位", "reason_code": "NO_SLOT", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M14", "node": "respond", "utterance": "去 C 巷最里面那个位", "reason_code": "NO_SLOT", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M15", "node": "understand", "utterance": "去 F 巷最里面那个位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M15", "node": "resolve", "utterance": "去 F 巷最里面那个位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M15", "node": "clarify", "utterance": "去 F 巷最里面那个位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M15", "node": "resolve", "utterance": "去 F 巷最里面那个位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M15", "node": "plan", "utterance": "去 F 巷最里面那个位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M15", "node": "act", "utterance": "去 F 巷最里面那个位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M15", "node": "verify", "utterance": "去 F 巷最里面那个位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "M15", "node": "respond", "utterance": "去 F 巷最里面那个位", "reason_code": "", "t_wall": 0.023}
+{"run": "20261026T192340", "id": "U01", "node": "understand", "utterance": "去 F-R-18-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U01", "node": "resolve", "utterance": "去 F-R-18-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U01", "node": "plan", "utterance": "去 F-R-18-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U01", "node": "act", "utterance": "去 F-R-18-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U01", "node": "verify", "utterance": "去 F-R-18-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U01", "node": "respond", "utterance": "去 F-R-18-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U02", "node": "understand", "utterance": "去 F-R-22-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U02", "node": "resolve", "utterance": "去 F-R-22-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U02", "node": "plan", "utterance": "去 F-R-22-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U02", "node": "act", "utterance": "去 F-R-22-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U02", "node": "verify", "utterance": "去 F-R-22-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U02", "node": "respond", "utterance": "去 F-R-22-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U03", "node": "understand", "utterance": "去 F-R-23-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U03", "node": "resolve", "utterance": "去 F-R-23-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U03", "node": "plan", "utterance": "去 F-R-23-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U03", "node": "act", "utterance": "去 F-R-23-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U03", "node": "verify", "utterance": "去 F-R-23-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U03", "node": "respond", "utterance": "去 F-R-23-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U04", "node": "understand", "utterance": "去 F-L-24-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U04", "node": "resolve", "utterance": "去 F-L-24-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U04", "node": "plan", "utterance": "去 F-L-24-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U04", "node": "act", "utterance": "去 F-L-24-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U04", "node": "verify", "utterance": "去 F-L-24-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U04", "node": "respond", "utterance": "去 F-L-24-2", "reason_code": "", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U05", "node": "understand", "utterance": "去 F-R-23-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U05", "node": "resolve", "utterance": "去 F-R-23-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U05", "node": "plan", "utterance": "去 F-R-23-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U05", "node": "act", "utterance": "去 F-R-23-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U05", "node": "verify", "utterance": "去 F-R-23-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U05", "node": "respond", "utterance": "去 F-R-23-1", "reason_code": "", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U06", "node": "understand", "utterance": "去封住的那条 F 巷", "reason_code": "BLOCKED", "t_wall": 0.004}
+{"run": "20261026T192340", "id": "U06", "node": "resolve", "utterance": "去封住的那条 F 巷", "reason_code": "BLOCKED", "t_wall": 0.004}
+{"run": "20261026T192340", "id": "U06", "node": "recover", "utterance": "去封住的那条 F 巷", "reason_code": "BLOCKED", "t_wall": 0.004}
+{"run": "20261026T192340", "id": "U06", "node": "respond", "utterance": "去封住的那条 F 巷", "reason_code": "BLOCKED", "t_wall": 0.004}
+{"run": "20261026T192340", "id": "U07", "node": "understand", "utterance": "去 Z-L-01-1", "reason_code": "NO_SLOT", "t_wall": 0.003}
+{"run": "20261026T192340", "id": "U07", "node": "resolve", "utterance": "去 Z-L-01-1", "reason_code": "NO_SLOT", "t_wall": 0.003}
+{"run": "20261026T192340", "id": "U07", "node": "respond", "utterance": "去 Z-L-01-1", "reason_code": "NO_SLOT", "t_wall": 0.003}
+{"run": "20261026T192340", "id": "U08", "node": "understand", "utterance": "去 A-L-30-1", "reason_code": "NO_SLOT", "t_wall": 0.003}
+{"run": "20261026T192340", "id": "U08", "node": "resolve", "utterance": "去 A-L-30-1", "reason_code": "NO_SLOT", "t_wall": 0.003}
+{"run": "20261026T192340", "id": "U08", "node": "respond", "utterance": "去 A-L-30-1", "reason_code": "NO_SLOT", "t_wall": 0.003}
+{"run": "20261026T192340", "id": "U09", "node": "understand", "utterance": "去 A-L-01-3", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "U09", "node": "resolve", "utterance": "去 A-L-01-3", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "U09", "node": "plan", "utterance": "去 A-L-01-3", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "U09", "node": "act", "utterance": "去 A-L-01-3", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "U09", "node": "verify", "utterance": "去 A-L-01-3", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "U09", "node": "respond", "utterance": "去 A-L-01-3", "reason_code": "", "t_wall": 0.008}
+{"run": "20261026T192340", "id": "U10", "node": "understand", "utterance": "去 Q 巷", "reason_code": "NO_SLOT", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U10", "node": "resolve", "utterance": "去 Q 巷", "reason_code": "NO_SLOT", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U10", "node": "respond", "utterance": "去 Q 巷", "reason_code": "NO_SLOT", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U11", "node": "understand", "utterance": "去 64 号位", "reason_code": "NO_SLOT", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U11", "node": "resolve", "utterance": "去 64 号位", "reason_code": "NO_SLOT", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U11", "node": "respond", "utterance": "去 64 号位", "reason_code": "NO_SLOT", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U12", "node": "understand", "utterance": "去 A 巷放冰箱的那面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "U12", "node": "resolve", "utterance": "去 A 巷放冰箱的那面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "U12", "node": "plan", "utterance": "去 A 巷放冰箱的那面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "U12", "node": "act", "utterance": "去 A 巷放冰箱的那面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "U12", "node": "verify", "utterance": "去 A 巷放冰箱的那面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "U12", "node": "respond", "utterance": "去 A 巷放冰箱的那面货架", "reason_code": "", "t_wall": 0.009}
+{"run": "20261026T192340", "id": "U13", "node": "understand", "utterance": "去 D 巷 14 号位第一层放油桶的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U13", "node": "resolve", "utterance": "去 D 巷 14 号位第一层放油桶的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U13", "node": "respond", "utterance": "去 D 巷 14 号位第一层放油桶的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U14", "node": "understand", "utterance": "去 E 巷 15 号位第一层放托盘的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U14", "node": "resolve", "utterance": "去 E 巷 15 号位第一层放托盘的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U14", "node": "respond", "utterance": "去 E 巷 15 号位第一层放托盘的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U15", "node": "understand", "utterance": "去 F 巷 06 号位第一层放纸箱的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U15", "node": "resolve", "utterance": "去 F 巷 06 号位第一层放纸箱的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U15", "node": "respond", "utterance": "去 F 巷 06 号位第一层放纸箱的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.005}
+{"run": "20261026T192340", "id": "U16", "node": "understand", "utterance": "去 A 巷 17 号位第一层放托盘的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U16", "node": "resolve", "utterance": "去 A 巷 17 号位第一层放托盘的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U16", "node": "respond", "utterance": "去 A 巷 17 号位第一层放托盘的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U17", "node": "understand", "utterance": "去 B 巷 02 号位第一层放托盘的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U17", "node": "resolve", "utterance": "去 B 巷 02 号位第一层放托盘的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U17", "node": "respond", "utterance": "去 B 巷 02 号位第一层放托盘的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.006}
+{"run": "20261026T192340", "id": "U18", "node": "understand", "utterance": "去 F 巷 22 号位第一层放纸箱的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "U18", "node": "resolve", "utterance": "去 F 巷 22 号位第一层放纸箱的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.007}
+{"run": "20261026T192340", "id": "U18", "node": "respond", "utterance": "去 F 巷 22 号位第一层放纸箱的那格", "reason_code": "EMPTY_BAY", "t_wall": 0.007}

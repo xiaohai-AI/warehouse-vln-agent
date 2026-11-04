@@ -1,0 +1,24 @@
+{"run": "20261031T154447", "id": "D01", "node": "understand", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 35.959}
+{"run": "20261031T154447", "id": "D01", "node": "resolve", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 35.959}
+{"run": "20261031T154447", "id": "D01", "node": "plan", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 35.959}
+{"run": "20261031T154447", "id": "D01", "node": "act", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 35.959}
+{"run": "20261031T154447", "id": "D01", "node": "verify", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 35.959}
+{"run": "20261031T154447", "id": "D01", "node": "respond", "utterance": "去 C-L-21-1", "reason_code": "", "t_wall": 35.959}
+{"run": "20261031T154447", "id": "D02", "node": "understand", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 26.645}
+{"run": "20261031T154447", "id": "D02", "node": "resolve", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 26.645}
+{"run": "20261031T154447", "id": "D02", "node": "plan", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 26.645}
+{"run": "20261031T154447", "id": "D02", "node": "act", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 26.645}
+{"run": "20261031T154447", "id": "D02", "node": "verify", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 26.645}
+{"run": "20261031T154447", "id": "D02", "node": "respond", "utterance": "到 A-R-12-2 那个货位看看", "reason_code": "", "t_wall": 26.645}
+{"run": "20261031T154447", "id": "D03", "node": "understand", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 31.908}
+{"run": "20261031T154447", "id": "D03", "node": "resolve", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 31.908}
+{"run": "20261031T154447", "id": "D03", "node": "plan", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 31.908}
+{"run": "20261031T154447", "id": "D03", "node": "act", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 31.908}
+{"run": "20261031T154447", "id": "D03", "node": "verify", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 31.908}
+{"run": "20261031T154447", "id": "D03", "node": "respond", "utterance": "带我去 C-L-05-2", "reason_code": "", "t_wall": 31.908}
+{"run": "20261031T154447", "id": "D04", "node": "understand", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 25.171}
+{"run": "20261031T154447", "id": "D04", "node": "resolve", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 25.171}
+{"run": "20261031T154447", "id": "D04", "node": "plan", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 25.171}
+{"run": "20261031T154447", "id": "D04", "node": "act", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 25.171}
+{"run": "20261031T154447", "id": "D04", "node": "verify", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 25.171}
+{"run": "20261031T154447", "id": "D04", "node": "respond", "utterance": "F-R-08-2 怎么走", "reason_code": "", "t_wall": 25.171}

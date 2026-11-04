@@ -1,0 +1,51 @@
+# S3：rtabmap 双目视觉里程计参数（rtabmap_odom::stereo_odometry）
+#
+# 只放开必要的几项，其余用 rtabmap 默认值 —— 参数越多越难定位"为什么不出 odom"。
+# 关键三条（写错任何一条都会静默失败或尺度错）：
+#   1. frame_id / odom_frame_id：它发的是 odom -> base_footprint（map->odom 归 slam_toolbox）
+#   2. publish_tf: true —— 否则 slam_toolbox 拿不到 odom->base_footprint，TF 树断掉
+#   3. 内参由 scripts/stereo_info.py 提供，右目 P[3] = -fx*0.12（尺度全在这里）
+stereo_odometry:
+  ros__parameters:
+    use_sim_time: true
+    frame_id: "base_footprint"
+    odom_frame_id: "odom"
+    publish_tf: true
+    # S3 是"双目**惯性**"：IMU 必须真的接上。之前 false = 纯视觉，沿光轴 3 cm/帧
+    # 的位移测不出（leg2 还原 0~22%）。true 时 rtabmap 会等 IMU 再开始，并融合姿态/重力。
+    wait_imu_to_init: true
+    approx_sync: true
+    # 只在左右目戳差 ≤20 ms 时才配对。gz 的相机是软同步，同相启动后戳完全相同（差 0），
+    # 所以这条严格阈值只会挡掉"错位一两帧"的坏对子 —— 那种对子会让视差和尺度一起错。
+    approx_sync_max_interval: 0.02
+    queue_size: 20
+    subscribe_stereo: true
+    subscribe_depth: false
+    subscribe_rgb: false
+    # 里程计：0=帧到地图（走廊里更稳，抑制沿轴漂），1=帧到帧
+    Odom/Strategy: "0"
+    Odom/ResetCountdown: "1"
+    Odom/GuessMotion: "true"
+    OdomF2M/MaxSize: "4000"
+    OdomF2M/BundleAdjustment: "1"
+    # 特征：仓库货架纹理是程序化贴图，默认 GFTT/BRIEF 够用；特征数放宽一点
+    Vis/MinInliers: "20"
+    Vis/EstimationType: "1"
+    # **小位移必须用光流**：本机 0.35 m/s ÷ 11 Hz ≈ 3.2 cm/帧，在 3–10 m 距离上只对应
+    # 约 1 px 视差，已接近特征定位噪声；特征匹配在这种情况下会被噪声压缩成"走得少"
+    # （实测沿巷前进只还原 22%、单帧 std dev 0.11 m 而真实位移 0.032 m）。
+    # Vis/CorType=1 走 KLT 光流，亚像素精度，专为这种小位移设计。
+    # CorType=0 特征匹配。试过 CorType=1（KLT 光流，本想救小位移），实测 leg2 从 22% 退到 0%，
+    # 已撤回 —— 光流在这个重复地面上会锁错对应，不如特征匹配。
+    Vis/CorType: "0"
+    Vis/CorGuessWinSize: "40"
+    Vis/MaxFeatures: "2000"
+    GFTT/MinDistance: "3.0"
+    GFTT/QualityLevel: "0.001"
+    # 双目稠密匹配（rtabmap 自己算视差，与 SGBM 参数对齐思路一致）
+    Stereo/MaxDisparity: "128"
+    Stereo/MinDisparity: "0"
+    # 静止时不要瞎更新
+    Odom/KeyFrameThr: "0.3"
+    RGBD/LinearUpdate: "0.05"
+    RGBD/AngularUpdate: "0.05"

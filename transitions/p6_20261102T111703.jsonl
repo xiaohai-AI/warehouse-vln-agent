@@ -1,0 +1,6 @@
+{"run": "p6-111655", "i": 0, "node": "understand", "utterance": "去 A-R-01-1", "reason_code": "MOTION_NO_POSE", "target": "A-R-01-1", "wall_s": 8.14}
+{"run": "p6-111655", "i": 1, "node": "resolve", "utterance": "去 A-R-01-1", "reason_code": "MOTION_NO_POSE", "target": "A-R-01-1", "wall_s": 8.14}
+{"run": "p6-111655", "i": 2, "node": "plan", "utterance": "去 A-R-01-1", "reason_code": "MOTION_NO_POSE", "target": "A-R-01-1", "wall_s": 8.14}
+{"run": "p6-111655", "i": 3, "node": "act", "utterance": "去 A-R-01-1", "reason_code": "MOTION_NO_POSE", "target": "A-R-01-1", "wall_s": 8.14}
+{"run": "p6-111655", "i": 4, "node": "recover", "utterance": "去 A-R-01-1", "reason_code": "MOTION_NO_POSE", "target": "A-R-01-1", "wall_s": 8.14}
+{"run": "p6-111655", "i": 5, "node": "respond", "utterance": "去 A-R-01-1", "reason_code": "MOTION_NO_POSE", "target": "A-R-01-1", "wall_s": 8.14}

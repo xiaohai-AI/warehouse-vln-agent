@@ -1,0 +1,50 @@
+# S3 变体 A/B：帧到帧 + SIFT + 更多特征
+#
+# 为什么要这一份：基线配置（rtabmap_stereo.yaml）在 A 巷里
+#   * 横向位移还原 65–91%（能测）
+#   * **沿光轴前进 20 m 只还原 0–3%**（测不出）
+# 退化形态集中在"前进"，所以先怀疑两件事，而不是急着改世界：
+#   1. Odom/Strategy=0（帧到地图）：地图里已经累积了沿途所有 bay，
+#      而各 bay 外观几乎一样 -> 当前帧可能被匹配到**已经过的那一格**上，
+#      增量就被判成 0。帧到帧（Strategy=1）没有这个"历史吸附"。
+#   2. GFTT/BRIEF 这类角点+短描述子，在重复纹理上区分度不足；
+#      换 SIFT（128 维、尺度空间）试试。
+#
+# 用法：ODOM_PARAMS=config/rtabmap_stereo_ff.yaml \
+#         CHECK=scripts/s3_diag.py bash scripts/s3_smoke.sh
+#
+# 判读：如果 leg2（沿巷 20 m）的还原率从 0–3% 跳到 ≥70%，说明是估计器选型问题，
+#       世界不必改；如果仍是 0–3%，而图像帧差明显（说明画面在变），
+#       那就是世界视觉信息本身有歧义 -> 需要给货架/地面加**逐 bay 唯一**的标识。
+stereo_odometry:
+  ros__parameters:
+    use_sim_time: true
+    frame_id: "base_footprint"
+    odom_frame_id: "odom"
+    publish_tf: true
+    wait_imu_to_init: false
+    approx_sync: true
+    approx_sync_max_interval: 0.02
+    queue_size: 20
+    subscribe_stereo: true
+    subscribe_depth: false
+    subscribe_rgb: false
+    # 关键差异 1：帧到帧，不做"帧到已建地图"，避免吸附到走过的相同 bay
+    Odom/Strategy: "1"
+    Odom/ResetCountdown: "1"
+    Odom/GuessMotion: "false"
+    # 关键差异 2：SIFT（1）+ 多特征 + 放宽内点下限
+    Vis/FeatureType: "1"
+    Vis/MaxFeatures: "2500"
+    Vis/MinInliers: "15"
+    Vis/EstimationType: "1"
+    Vis/CorGuessWinSize: "40"
+    Kp/MaxFeatures: "2500"
+    Kp/DetectorStrategy: "1"
+    GFTT/MinDistance: "3.0"
+    GFTT/QualityLevel: "0.001"
+    Stereo/MaxDisparity: "128"
+    Stereo/MinDisparity: "0"
+    Odom/KeyFrameThr: "0.3"
+    RGBD/LinearUpdate: "0.05"
+    RGBD/AngularUpdate: "0.05"

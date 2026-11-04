@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<!-- 由 scripts/gen_rollers.py 生成，勿手改（make robot 会重新生成）。
+     几何约束见该脚本文件头：辊子包络 = 轮半径、轴线 45°、左右镜像。 -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="mecanum_rollers_l">
+    <visual name="roller_l0"><origin xyz="0.05663 0 0" rpy="0.78540 0 3.14159"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_l1"><origin xyz="0.04338 0 0.03640" rpy="0.78540 0.69813 3.14159"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_l2"><origin xyz="0.00983 0 0.05577" rpy="0.78540 1.39626 3.14159"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_l3"><origin xyz="-0.02832 0 0.04904" rpy="-2.35619 1.04720 0"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_l4"><origin xyz="-0.05322 0 0.01937" rpy="-2.35619 0.34907 0"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_l5"><origin xyz="-0.05322 0 -0.01937" rpy="-2.35619 -0.34907 0"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_l6"><origin xyz="-0.02832 0 -0.04904" rpy="-2.35619 -1.04720 0"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_l7"><origin xyz="0.00983 0 -0.05577" rpy="0.78540 -1.39626 3.14159"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_l8"><origin xyz="0.04338 0 -0.03640" rpy="0.78540 -0.69813 3.14159"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+  </xacro:macro>
+
+  <xacro:macro name="mecanum_rollers_r">
+    <visual name="roller_r0"><origin xyz="0.05663 0 0" rpy="-2.35619 0 0"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_r1"><origin xyz="0.04338 0 0.03640" rpy="-2.35619 -0.69813 0"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_r2"><origin xyz="0.00983 0 0.05577" rpy="-2.35619 -1.39626 0"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_r3"><origin xyz="-0.02832 0 0.04904" rpy="0.78540 -1.04720 3.14159"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_r4"><origin xyz="-0.05322 0 0.01937" rpy="0.78540 -0.34907 3.14159"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_r5"><origin xyz="-0.05322 0 -0.01937" rpy="0.78540 0.34907 3.14159"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_r6"><origin xyz="-0.02832 0 -0.04904" rpy="0.78540 1.04720 3.14159"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_r7"><origin xyz="0.00983 0 -0.05577" rpy="-2.35619 1.39626 0"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+    <visual name="roller_r8"><origin xyz="0.04338 0 -0.03640" rpy="-2.35619 0.69813 0"/><geometry><cylinder radius="0.01937" length="0.07071"/></geometry><material name="amr_grey_lt"/></visual>
+  </xacro:macro>
+
+</robot>

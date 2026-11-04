@@ -1,0 +1,2902 @@
+<sdf version='1.7'>
+  <model name='depot_bot'>
+    <link name='base_footprint'>
+      <inertial>
+        <pose>0 0 0.076 0 -0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.251333</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.300333</iyy>
+          <iyz>0</iyz>
+          <izz>0.401667</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_footprint_fixed_joint_lump__chassis_collision_collision'>
+        <pose>0 0 0.24 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.52 0.46 0.3</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='base_footprint_fixed_joint_lump__skirt_visual'>
+        <pose>0 0 0.12 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.5 0.33 0.06</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__body_main_visual_1'>
+        <pose>0 0 0.215 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.51 0.46 0.12</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.840 0.100 0.090 1</ambient>
+          <diffuse>0.840 0.100 0.090 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.45</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__nose_slope_visual_2'>
+        <pose>0.161 0 0.212 0 0.62 0</pose>
+        <geometry>
+          <box>
+            <size>0.14 0.45 0.11</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.840 0.100 0.090 1</ambient>
+          <diffuse>0.840 0.100 0.090 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.45</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__tail_slope_visual_3'>
+        <pose>-0.161 0 0.212 0 -0.62 0</pose>
+        <geometry>
+          <box>
+            <size>0.14 0.45 0.11</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.560 0.050 0.050 1</ambient>
+          <diffuse>0.560 0.050 0.050 1</diffuse>
+          <specular>0.250 0.250 0.250 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.55</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__deck_visual_4'>
+        <pose>0 0 0.29 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.45 0.4 0.04</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__deck_stripe_l_visual_5'>
+        <pose>0 0.09 0.312 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.38 0.05 0.004</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__deck_stripe_r_visual_6'>
+        <pose>0 -0.09 0.312 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.38 0.05 0.004</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__bumper_front_visual_7'>
+        <pose>0.24 0 0.135 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.06 0.32 0.07</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.090 0.090 0.100 1</ambient>
+          <diffuse>0.090 0.090 0.100 1</diffuse>
+          <specular>0.100 0.100 0.100 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.70</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__bumper_rear_visual_8'>
+        <pose>-0.24 0 0.135 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.06 0.32 0.07</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.090 0.090 0.100 1</ambient>
+          <diffuse>0.090 0.090 0.100 1</diffuse>
+          <specular>0.100 0.100 0.100 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.70</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__corner_fl_visual_9'>
+        <pose>0.225 0.2 0.21 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.12</length>
+            <radius>0.03</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.840 0.100 0.090 1</ambient>
+          <diffuse>0.840 0.100 0.090 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.45</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__corner_fr_visual_10'>
+        <pose>0.225 -0.2 0.21 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.12</length>
+            <radius>0.03</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.840 0.100 0.090 1</ambient>
+          <diffuse>0.840 0.100 0.090 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.45</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__corner_rl_visual_11'>
+        <pose>-0.225 0.2 0.21 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.12</length>
+            <radius>0.03</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.560 0.050 0.050 1</ambient>
+          <diffuse>0.560 0.050 0.050 1</diffuse>
+          <specular>0.250 0.250 0.250 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.55</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__corner_rr_visual_12'>
+        <pose>-0.225 -0.2 0.21 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.12</length>
+            <radius>0.03</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.560 0.050 0.050 1</ambient>
+          <diffuse>0.560 0.050 0.050 1</diffuse>
+          <specular>0.250 0.250 0.250 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.55</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__waist_l_visual_13'>
+        <pose>0 0.231 0.245 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.38 0.006 0.012</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.840 0.860 0.900 1</ambient>
+          <diffuse>0.840 0.860 0.900 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>1.00</metalness>
+              <roughness>0.12</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__waist_r_visual_14'>
+        <pose>0 -0.231 0.245 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.38 0.006 0.012</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.840 0.860 0.900 1</ambient>
+          <diffuse>0.840 0.860 0.900 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>1.00</metalness>
+              <roughness>0.12</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__slot_l_visual_15'>
+        <pose>0 0.232 0.128 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.3 0.005 0.026</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.090 0.090 0.100 1</ambient>
+          <diffuse>0.090 0.090 0.100 1</diffuse>
+          <specular>0.100 0.100 0.100 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.70</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__slot_r_visual_16'>
+        <pose>0 -0.232 0.128 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.3 0.005 0.026</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.090 0.090 0.100 1</ambient>
+          <diffuse>0.090 0.090 0.100 1</diffuse>
+          <specular>0.100 0.100 0.100 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.70</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__lamp_front_l_visual_17'>
+        <pose>0.252 0.15 0.17 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.014 0.11 0.038</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>1.000 0.620 0.080 1</ambient>
+          <diffuse>1.000 0.620 0.080 1</diffuse>
+          <specular>0.500 0.500 0.500 1</specular>
+          <emissive>0.400 0.400 0.400 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.25</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__lamp_front_r_visual_18'>
+        <pose>0.252 -0.15 0.17 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.014 0.11 0.038</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>1.000 0.620 0.080 1</ambient>
+          <diffuse>1.000 0.620 0.080 1</diffuse>
+          <specular>0.500 0.500 0.500 1</specular>
+          <emissive>0.400 0.400 0.400 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.25</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__lamp_rear_visual_19'>
+        <pose>-0.252 0 0.175 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.014 0.26 0.032</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>1.000 0.120 0.060 1</ambient>
+          <diffuse>1.000 0.120 0.060 1</diffuse>
+          <specular>0.500 0.500 0.500 1</specular>
+          <emissive>0.400 0.400 0.400 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.25</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__fender_fl_visual_20'>
+        <pose>0.2 0.22 0.172 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.2 0.07 0.02</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__fender_fr_visual_21'>
+        <pose>0.2 -0.22 0.172 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.2 0.07 0.02</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__fender_rl_visual_22'>
+        <pose>-0.2 0.22 0.172 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.2 0.07 0.02</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__fender_rr_visual_23'>
+        <pose>-0.2 -0.22 0.172 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.2 0.07 0.02</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__cam_hood_visual_24'>
+        <pose>0.27 0 0.35 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.09 0.24 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__cam_visor_visual_25'>
+        <pose>0.305 0 0.402 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.11 0.25 0.014</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.090 0.090 0.100 1</ambient>
+          <diffuse>0.090 0.090 0.100 1</diffuse>
+          <specular>0.100 0.100 0.100 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.70</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__lens_ring_l_visual_26'>
+        <pose>0.312 0.06 0.35 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.018</length>
+            <radius>0.03</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.840 0.860 0.900 1</ambient>
+          <diffuse>0.840 0.860 0.900 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>1.00</metalness>
+              <roughness>0.12</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__lens_ring_r_visual_27'>
+        <pose>0.312 -0.06 0.35 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.018</length>
+            <radius>0.03</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.840 0.860 0.900 1</ambient>
+          <diffuse>0.840 0.860 0.900 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>1.00</metalness>
+              <roughness>0.12</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__lens_l_visual_28'>
+        <pose>0.322 0.06 0.35 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.006</length>
+            <radius>0.021</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.050 0.070 0.110 1</ambient>
+          <diffuse>0.050 0.070 0.110 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.05</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__lens_r_visual_29'>
+        <pose>0.322 -0.06 0.35 0 1.5708 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.006</length>
+            <radius>0.021</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.050 0.070 0.110 1</ambient>
+          <diffuse>0.050 0.070 0.110 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.05</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__tof_window_visual_30'>
+        <pose>0.316 0 0.348 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.012 0.05 0.028</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.050 0.070 0.110 1</ambient>
+          <diffuse>0.050 0.070 0.110 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.05</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__tower_base_visual_31'>
+        <pose>-0.1 0 0.318 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.03</length>
+            <radius>0.068</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__tower_post_visual_32'>
+        <pose>-0.1 0 0.4 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.14</length>
+            <radius>0.03</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__tower_body_visual_33'>
+        <pose>-0.1 0 0.505 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.078</length>
+            <radius>0.052</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.090 0.090 0.100 1</ambient>
+          <diffuse>0.090 0.090 0.100 1</diffuse>
+          <specular>0.100 0.100 0.100 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.70</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__tower_win_a_visual_34'>
+        <pose>-0.1 0 0.514 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.01</length>
+            <radius>0.0535</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.050 0.070 0.110 1</ambient>
+          <diffuse>0.050 0.070 0.110 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.05</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__tower_win_b_visual_35'>
+        <pose>-0.1 0 0.534 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.01</length>
+            <radius>0.0535</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.050 0.070 0.110 1</ambient>
+          <diffuse>0.050 0.070 0.110 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.05</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__tower_cap_visual_36'>
+        <pose>-0.1 0 0.552 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.012</length>
+            <radius>0.048</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__antenna_visual_37'>
+        <pose>-0.14 0.03 0.61 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.1</length>
+            <radius>0.006</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.840 0.860 0.900 1</ambient>
+          <diffuse>0.840 0.860 0.900 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>1.00</metalness>
+              <roughness>0.12</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__beacon_pole_visual_38'>
+        <pose>-0.2 0.17 0.56 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.5</length>
+            <radius>0.01</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.840 0.860 0.900 1</ambient>
+          <diffuse>0.840 0.860 0.900 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>1.00</metalness>
+              <roughness>0.12</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__beacon_lamp_visual_39'>
+        <pose>-0.2 0.17 0.83 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.055</length>
+            <radius>0.03</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>1.000 0.120 0.060 1</ambient>
+          <diffuse>1.000 0.120 0.060 1</diffuse>
+          <specular>0.500 0.500 0.500 1</specular>
+          <emissive>0.400 0.400 0.400 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.25</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__cam_gusset_l_visual_40'>
+        <pose>0.2755 0.1 0.2475 0 0.485 0</pose>
+        <geometry>
+          <box>
+            <size>0.04 0.01 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__cam_gusset_r_visual_41'>
+        <pose>0.2755 -0.1 0.2475 0 0.485 0</pose>
+        <geometry>
+          <box>
+            <size>0.04 0.01 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__cam_rail_visual_42'>
+        <pose>0.2725 0 0.298 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.085 0.215 0.01</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__cam_foot_visual_43'>
+        <pose>0.2525 0 0.2 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.008 0.215 0.05</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__hazard_y0_visual_44'>
+        <pose>-0.1 0.2325 0.2 0 0.55 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.005 0.105</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.930 0.720 0.060 1</ambient>
+          <diffuse>0.930 0.720 0.060 1</diffuse>
+          <specular>0.350 0.350 0.350 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.55</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__hazard_k0_visual_45'>
+        <pose>-0.045 0.2325 0.2 0 0.55 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.005 0.105</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.100 0.100 0.100 1</ambient>
+          <diffuse>0.100 0.100 0.100 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.65</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__hazard_y1_visual_46'>
+        <pose>0.01 0.2325 0.2 0 0.55 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.005 0.105</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.930 0.720 0.060 1</ambient>
+          <diffuse>0.930 0.720 0.060 1</diffuse>
+          <specular>0.350 0.350 0.350 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.55</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__hazard_k1_visual_47'>
+        <pose>0.065 0.2325 0.2 0 0.55 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.005 0.105</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.100 0.100 0.100 1</ambient>
+          <diffuse>0.100 0.100 0.100 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.65</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__hazard_y2_visual_48'>
+        <pose>0.12 0.2325 0.2 0 0.55 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.005 0.105</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.930 0.720 0.060 1</ambient>
+          <diffuse>0.930 0.720 0.060 1</diffuse>
+          <specular>0.350 0.350 0.350 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.55</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__hazard_y3_visual_49'>
+        <pose>-0.1 -0.2325 0.2 0 0.55 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.005 0.105</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.930 0.720 0.060 1</ambient>
+          <diffuse>0.930 0.720 0.060 1</diffuse>
+          <specular>0.350 0.350 0.350 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.55</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__hazard_k2_visual_50'>
+        <pose>-0.045 -0.2325 0.2 0 0.55 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.005 0.105</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.100 0.100 0.100 1</ambient>
+          <diffuse>0.100 0.100 0.100 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.65</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__hazard_y4_visual_51'>
+        <pose>0.01 -0.2325 0.2 0 0.55 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.005 0.105</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.930 0.720 0.060 1</ambient>
+          <diffuse>0.930 0.720 0.060 1</diffuse>
+          <specular>0.350 0.350 0.350 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.55</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__hazard_k3_visual_52'>
+        <pose>0.065 -0.2325 0.2 0 0.55 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.005 0.105</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.100 0.100 0.100 1</ambient>
+          <diffuse>0.100 0.100 0.100 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.65</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__hazard_y5_visual_53'>
+        <pose>0.12 -0.2325 0.2 0 0.55 0</pose>
+        <geometry>
+          <box>
+            <size>0.02 0.005 0.105</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.930 0.720 0.060 1</ambient>
+          <diffuse>0.930 0.720 0.060 1</diffuse>
+          <specular>0.350 0.350 0.350 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.55</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__led_strip_front_visual_54'>
+        <pose>0.216 0 0.3135 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.01 0.38 0.008</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.050 0.700 0.850 1</ambient>
+          <diffuse>0.050 0.700 0.850 1</diffuse>
+          <specular>0.400 0.400 0.400 1</specular>
+          <emissive>0.550 0.550 0.550 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.30</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__led_strip_rear_visual_55'>
+        <pose>-0.216 0 0.3135 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.01 0.38 0.008</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.050 0.700 0.850 1</ambient>
+          <diffuse>0.050 0.700 0.850 1</diffuse>
+          <specular>0.400 0.400 0.400 1</specular>
+          <emissive>0.550 0.550 0.550 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.30</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__led_strip_left_visual_56'>
+        <pose>0 0.191 0.3135 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.43 0.01 0.008</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.050 0.700 0.850 1</ambient>
+          <diffuse>0.050 0.700 0.850 1</diffuse>
+          <specular>0.400 0.400 0.400 1</specular>
+          <emissive>0.550 0.550 0.550 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.30</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__led_strip_right_visual_57'>
+        <pose>0 -0.191 0.3135 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.43 0.01 0.008</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.050 0.700 0.850 1</ambient>
+          <diffuse>0.050 0.700 0.850 1</diffuse>
+          <specular>0.400 0.400 0.400 1</specular>
+          <emissive>0.550 0.550 0.550 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.30</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__crate_body_visual_58'>
+        <pose>0.09 0 0.3425 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.23 0.26 0.065</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.620 0.470 0.300 1</ambient>
+          <diffuse>0.620 0.470 0.300 1</diffuse>
+          <specular>0.150 0.150 0.150 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.85</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__crate_lid_visual_59'>
+        <pose>0.09 0 0.38 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.24 0.27 0.01</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.720 0.580 0.400 1</ambient>
+          <diffuse>0.720 0.580 0.400 1</diffuse>
+          <specular>0.150 0.150 0.150 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.85</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__crate_strap_1_visual_60'>
+        <pose>0.035 0 0.3425 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.006 0.262 0.065</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.250 0.220 0.180 1</ambient>
+          <diffuse>0.250 0.220 0.180 1</diffuse>
+          <specular>0.150 0.150 0.150 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.80</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='base_footprint_fixed_joint_lump__crate_strap_2_visual_61'>
+        <pose>0.145 0 0.3425 0 -0 0</pose>
+        <geometry>
+          <box>
+            <size>0.006 0.262 0.065</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.250 0.220 0.180 1</ambient>
+          <diffuse>0.250 0.220 0.180 1</diffuse>
+          <specular>0.150 0.150 0.150 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.80</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <sensor name='imu' type='imu'>
+        <update_rate>200</update_rate>
+        <always_on>1</always_on>
+        <topic>imu</topic>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.0009</stddev>
+                <dynamic_bias_stddev>4e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>200</dynamic_bias_correlation_time>
+              </noise>
+            </x>
+            <y>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.0009</stddev>
+                <dynamic_bias_stddev>4e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>200</dynamic_bias_correlation_time>
+              </noise>
+            </y>
+            <z>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.0009</stddev>
+                <dynamic_bias_stddev>4e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>200</dynamic_bias_correlation_time>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.012</stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.012</stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type='gaussian'>
+                <mean>0</mean>
+                <stddev>0.012</stddev>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+        <pose>0 0 0.21 0 -0 0</pose>
+      </sensor>
+      <sensor name='lidar3d' type='gpu_lidar'>
+        <update_rate>5</update_rate>
+        <always_on>1</always_on>
+        <visualize>0</visualize>
+        <topic>lidar3d</topic>
+        <lidar>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>16</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.43633</min_angle>
+              <max_angle>0.2618</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.3</min>
+            <max>25</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0</mean>
+            <stddev>0.01</stddev>
+          </noise>
+        </lidar>
+        <pose>-0.1 0 0.55 0 -0 0</pose>
+      </sensor>
+      <sensor name='rgbd' type='rgbd_camera'>
+        <update_rate>5</update_rate>
+        <always_on>0</always_on>
+        <visualize>0</visualize>
+        <topic>rgbd</topic>
+        <camera>
+          <horizontal_fov>1.5708</horizontal_fov>
+          <image>
+            <width>320</width>
+            <height>240</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>25</far>
+          </clip>
+        </camera>
+        <pose>0.265 0 0.36 0 -0 0</pose>
+      </sensor>
+      <sensor name='stereo_left' type='camera'>
+        <update_rate>5</update_rate>
+        <always_on>0</always_on>
+        <visualize>0</visualize>
+        <topic>stereo_left</topic>
+        <camera>
+          <horizontal_fov>1.5708</horizontal_fov>
+          <image>
+            <width>320</width>
+            <height>240</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>25</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0</mean>
+            <stddev>0.004</stddev>
+          </noise>
+        </camera>
+        <pose>0.26 0.06 0.35 0 -0 0</pose>
+      </sensor>
+      <sensor name='stereo_right' type='camera'>
+        <update_rate>5</update_rate>
+        <always_on>0</always_on>
+        <visualize>0</visualize>
+        <topic>stereo_right</topic>
+        <camera>
+          <horizontal_fov>1.5708</horizontal_fov>
+          <image>
+            <width>320</width>
+            <height>240</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>25</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0</mean>
+            <stddev>0.004</stddev>
+          </noise>
+        </camera>
+        <pose>0.26 -0.06 0.35 0 -0 0</pose>
+      </sensor>
+    </link>
+    <joint name='wheel_fl_joint' type='revolute'>
+      <pose relative_to='base_footprint'>0.2 0.21 0.076 0 -0 0</pose>
+      <parent>base_footprint</parent>
+      <child>wheel_fl_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>50</effort>
+          <velocity>30</velocity>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.05</damping>
+          <friction>0.02</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wheel_fl_link'>
+      <pose relative_to='wheel_fl_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.000826167</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.000826167</iyy>
+          <iyz>0</iyz>
+          <izz>0.001444</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_fl_link_fixed_joint_lump__tire_collision_collision'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.05</length>
+            <radius>0.076</radius>
+          </cylinder>
+        </geometry>
+      <surface>
+          <friction>
+            <ode>
+              <mu>3.0</mu>
+              <mu2>0.0</mu2>
+              <fdir1 ignition:expressed_in="base_footprint">1 -1 0</fdir1>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000.0</kp>
+              <kd>100.0</kd>
+              <min_depth>0.001</min_depth>
+              <max_vel>0.0</max_vel>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='wheel_fl_link_fixed_joint_lump__rim_o_visual'>
+        <pose>0 0.0225 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__rim_i_visual_1'>
+        <pose>0 -0.0225 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__hub_core_visual_2'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.04</length>
+            <radius>0.032</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.660 0.680 0.720 1</ambient>
+          <diffuse>0.660 0.680 0.720 1</diffuse>
+          <specular>0.750 0.750 0.750 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.90</metalness>
+              <roughness>0.35</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__hub_cap_visual_3'>
+        <pose>0 0.026 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.006</length>
+            <radius>0.016</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.840 0.860 0.900 1</ambient>
+          <diffuse>0.840 0.860 0.900 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>1.00</metalness>
+              <roughness>0.12</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__roller_l0_visual_4'>
+        <pose>0.05663 0 0 0.7854 0 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__roller_l1_visual_5'>
+        <pose>0.04338 0 0.0364 0.7854 0.69813 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__roller_l2_visual_6'>
+        <pose>0.00983 0 0.05577 0.7854 1.39626 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__roller_l3_visual_7'>
+        <pose>-0.02832 0 0.04904 -2.35619 1.0472 -0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__roller_l4_visual_8'>
+        <pose>-0.05322 0 0.01937 -2.35619 0.34907 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__roller_l5_visual_9'>
+        <pose>-0.05322 0 -0.01937 -2.35619 -0.34907 -0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__roller_l6_visual_10'>
+        <pose>-0.02832 0 -0.04904 -2.35619 -1.0472 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__roller_l7_visual_11'>
+        <pose>0.00983 0 -0.05577 0.7854 -1.39626 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fl_link_fixed_joint_lump__roller_l8_visual_12'>
+        <pose>0.04338 0 -0.0364 0.7854 -0.69813 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+    </link>
+    <joint name='wheel_fr_joint' type='revolute'>
+      <pose relative_to='base_footprint'>0.2 -0.21 0.076 0 -0 0</pose>
+      <parent>base_footprint</parent>
+      <child>wheel_fr_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>50</effort>
+          <velocity>30</velocity>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.05</damping>
+          <friction>0.02</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wheel_fr_link'>
+      <pose relative_to='wheel_fr_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.000826167</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.000826167</iyy>
+          <iyz>0</iyz>
+          <izz>0.001444</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_fr_link_fixed_joint_lump__tire_collision_collision'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.05</length>
+            <radius>0.076</radius>
+          </cylinder>
+        </geometry>
+      <surface>
+          <friction>
+            <ode>
+              <mu>3.0</mu>
+              <mu2>0.0</mu2>
+              <fdir1 ignition:expressed_in="base_footprint">1 1 0</fdir1>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000.0</kp>
+              <kd>100.0</kd>
+              <min_depth>0.001</min_depth>
+              <max_vel>0.0</max_vel>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='wheel_fr_link_fixed_joint_lump__rim_o_visual'>
+        <pose>0 0.0225 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__rim_i_visual_1'>
+        <pose>0 -0.0225 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__hub_core_visual_2'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.04</length>
+            <radius>0.032</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.660 0.680 0.720 1</ambient>
+          <diffuse>0.660 0.680 0.720 1</diffuse>
+          <specular>0.750 0.750 0.750 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.90</metalness>
+              <roughness>0.35</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__hub_cap_visual_3'>
+        <pose>0 0.026 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.006</length>
+            <radius>0.016</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.840 0.860 0.900 1</ambient>
+          <diffuse>0.840 0.860 0.900 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>1.00</metalness>
+              <roughness>0.12</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__roller_r0_visual_4'>
+        <pose>0.05663 0 0 -2.35619 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__roller_r1_visual_5'>
+        <pose>0.04338 0 0.0364 -2.35619 -0.69813 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__roller_r2_visual_6'>
+        <pose>0.00983 0 0.05577 -2.35619 -1.39626 -0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__roller_r3_visual_7'>
+        <pose>-0.02832 0 0.04904 0.7854 -1.0472 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__roller_r4_visual_8'>
+        <pose>-0.05322 0 0.01937 0.7854 -0.34907 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__roller_r5_visual_9'>
+        <pose>-0.05322 0 -0.01937 0.7854 0.34907 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__roller_r6_visual_10'>
+        <pose>-0.02832 0 -0.04904 0.7854 1.0472 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__roller_r7_visual_11'>
+        <pose>0.00983 0 -0.05577 -2.35619 1.39626 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_fr_link_fixed_joint_lump__roller_r8_visual_12'>
+        <pose>0.04338 0 -0.0364 -2.35619 0.69813 -0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+    </link>
+    <joint name='wheel_rl_joint' type='revolute'>
+      <pose relative_to='base_footprint'>-0.2 0.21 0.076 0 -0 0</pose>
+      <parent>base_footprint</parent>
+      <child>wheel_rl_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>50</effort>
+          <velocity>30</velocity>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.05</damping>
+          <friction>0.02</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wheel_rl_link'>
+      <pose relative_to='wheel_rl_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.000826167</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.000826167</iyy>
+          <iyz>0</iyz>
+          <izz>0.001444</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_rl_link_fixed_joint_lump__tire_collision_collision'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.05</length>
+            <radius>0.076</radius>
+          </cylinder>
+        </geometry>
+      <surface>
+          <friction>
+            <ode>
+              <mu>3.0</mu>
+              <mu2>0.0</mu2>
+              <fdir1 ignition:expressed_in="base_footprint">1 1 0</fdir1>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000.0</kp>
+              <kd>100.0</kd>
+              <min_depth>0.001</min_depth>
+              <max_vel>0.0</max_vel>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='wheel_rl_link_fixed_joint_lump__rim_o_visual'>
+        <pose>0 0.0225 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__rim_i_visual_1'>
+        <pose>0 -0.0225 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__hub_core_visual_2'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.04</length>
+            <radius>0.032</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.660 0.680 0.720 1</ambient>
+          <diffuse>0.660 0.680 0.720 1</diffuse>
+          <specular>0.750 0.750 0.750 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.90</metalness>
+              <roughness>0.35</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__hub_cap_visual_3'>
+        <pose>0 0.026 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.006</length>
+            <radius>0.016</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.840 0.860 0.900 1</ambient>
+          <diffuse>0.840 0.860 0.900 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>1.00</metalness>
+              <roughness>0.12</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__roller_l0_visual_4'>
+        <pose>0.05663 0 0 0.7854 0 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__roller_l1_visual_5'>
+        <pose>0.04338 0 0.0364 0.7854 0.69813 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__roller_l2_visual_6'>
+        <pose>0.00983 0 0.05577 0.7854 1.39626 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__roller_l3_visual_7'>
+        <pose>-0.02832 0 0.04904 -2.35619 1.0472 -0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__roller_l4_visual_8'>
+        <pose>-0.05322 0 0.01937 -2.35619 0.34907 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__roller_l5_visual_9'>
+        <pose>-0.05322 0 -0.01937 -2.35619 -0.34907 -0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__roller_l6_visual_10'>
+        <pose>-0.02832 0 -0.04904 -2.35619 -1.0472 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__roller_l7_visual_11'>
+        <pose>0.00983 0 -0.05577 0.7854 -1.39626 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rl_link_fixed_joint_lump__roller_l8_visual_12'>
+        <pose>0.04338 0 -0.0364 0.7854 -0.69813 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+    </link>
+    <joint name='wheel_rr_joint' type='revolute'>
+      <pose relative_to='base_footprint'>-0.2 -0.21 0.076 0 -0 0</pose>
+      <parent>base_footprint</parent>
+      <child>wheel_rr_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <effort>50</effort>
+          <velocity>30</velocity>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <damping>0.05</damping>
+          <friction>0.02</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wheel_rr_link'>
+      <pose relative_to='wheel_rr_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.000826167</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.000826167</iyy>
+          <iyz>0</iyz>
+          <izz>0.001444</izz>
+        </inertia>
+      </inertial>
+      <collision name='wheel_rr_link_fixed_joint_lump__tire_collision_collision'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.05</length>
+            <radius>0.076</radius>
+          </cylinder>
+        </geometry>
+      <surface>
+          <friction>
+            <ode>
+              <mu>3.0</mu>
+              <mu2>0.0</mu2>
+              <fdir1 ignition:expressed_in="base_footprint">1 -1 0</fdir1>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000.0</kp>
+              <kd>100.0</kd>
+              <min_depth>0.001</min_depth>
+              <max_vel>0.0</max_vel>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='wheel_rr_link_fixed_joint_lump__rim_o_visual'>
+        <pose>0 0.0225 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__rim_i_visual_1'>
+        <pose>0 -0.0225 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.005</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.220 0.230 0.250 1</ambient>
+          <diffuse>0.220 0.230 0.250 1</diffuse>
+          <specular>0.200 0.200 0.200 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.60</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__hub_core_visual_2'>
+        <pose>0 0 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.04</length>
+            <radius>0.032</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.660 0.680 0.720 1</ambient>
+          <diffuse>0.660 0.680 0.720 1</diffuse>
+          <specular>0.750 0.750 0.750 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.90</metalness>
+              <roughness>0.35</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__hub_cap_visual_3'>
+        <pose>0 0.026 0 1.5708 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.006</length>
+            <radius>0.016</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.840 0.860 0.900 1</ambient>
+          <diffuse>0.840 0.860 0.900 1</diffuse>
+          <specular>1.000 1.000 1.000 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>1.00</metalness>
+              <roughness>0.12</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__roller_r0_visual_4'>
+        <pose>0.05663 0 0 -2.35619 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__roller_r1_visual_5'>
+        <pose>0.04338 0 0.0364 -2.35619 -0.69813 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__roller_r2_visual_6'>
+        <pose>0.00983 0 0.05577 -2.35619 -1.39626 -0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__roller_r3_visual_7'>
+        <pose>-0.02832 0 0.04904 0.7854 -1.0472 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__roller_r4_visual_8'>
+        <pose>-0.05322 0 0.01937 0.7854 -0.34907 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__roller_r5_visual_9'>
+        <pose>-0.05322 0 -0.01937 0.7854 0.34907 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__roller_r6_visual_10'>
+        <pose>-0.02832 0 -0.04904 0.7854 1.0472 3.14159</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__roller_r7_visual_11'>
+        <pose>0.00983 0 -0.05577 -2.35619 1.39626 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+      <visual name='wheel_rr_link_fixed_joint_lump__roller_r8_visual_12'>
+        <pose>0.04338 0 -0.0364 -2.35619 0.69813 -0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.07071</length>
+            <radius>0.01937</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.450 0.460 0.490 1</ambient>
+          <diffuse>0.450 0.460 0.490 1</diffuse>
+          <specular>0.300 0.300 0.300 1</specular>
+          <emissive>0.000 0.000 0.000 1</emissive>
+          <pbr>
+            <metal>
+              <metalness>0.00</metalness>
+              <roughness>0.50</roughness>
+            </metal>
+          </pbr>
+        </material>
+
+      </visual>
+    </link>
+    <static>0</static>
+    <plugin name='ignition::gazebo::systems::MecanumDrive' filename='ignition-gazebo-mecanum-drive-system'>
+      <front_left_joint>wheel_fl_joint</front_left_joint>
+      <back_left_joint>wheel_rl_joint</back_left_joint>
+      <front_right_joint>wheel_fr_joint</front_right_joint>
+      <back_right_joint>wheel_rr_joint</back_right_joint>
+      <wheel_radius>0.076</wheel_radius>
+      <wheel_separation>0.42</wheel_separation>
+      <wheelbase>0.4</wheelbase>
+      <odom_publish_frequency>50</odom_publish_frequency>
+      <odom_topic>/model/depot_bot/odom</odom_topic>
+    </plugin>
+    <plugin name='ignition::gazebo::systems::JointStatePublisher' filename='ignition-gazebo-joint-state-publisher-system'>
+      <topic>joint_states</topic>
+    </plugin>
+  </model>
+</sdf>

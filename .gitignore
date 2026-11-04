@@ -1,0 +1,25 @@
+# ---- 生成物（可由 `make world` 复现，不入库）
+.venv/
+__pycache__/
+*.pyc
+world/warehouse.sdf
+world/layout.json
+# 货位编号牌贴图（576 张，make world 生成）
+world/textures/slot_labels/
+
+# ---- 原始传感器数据 / 建图中断产物（SPEC §12「不交付」）
+data/
+bags/
+maps/*.pgm
+maps/*.db
+results/raw/
+
+# ---- 真值轨迹是运行时产物，但 slots.json / aisles.json 入库（可复现、体量小）
+ground_truth/poses.csv
+
+# ---- 评测产物按目录保留最新，但逐次运行的大文件忽略
+transitions/*.jsonl.tmp
+logs/
+*.log
+# 例外：results/ 下的判据日志是被文档引用的证据（如 world_perf.log），必须入库
+!results/*.log

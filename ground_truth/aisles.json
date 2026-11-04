@@ -1,0 +1,1858 @@
+{
+  "schema": "depot-vln/ground_truth_aisles@1",
+  "blocked": [
+    {
+      "aisle": "F",
+      "bay_from": 18,
+      "bay_to": 24,
+      "x0": 12.0,
+      "x1": 28.8,
+      "barrier_xs": [
+        11.65,
+        28.45
+      ],
+      "center_y": 10.75,
+      "width": 3.2,
+      "reason": "BLOCKED"
+    }
+  ],
+  "rack_faces": {
+    "A-L": {
+      "carton_m": 11,
+      "carton_s": 7,
+      "pallet": 4,
+      "tote": 4,
+      "carton_l": 4
+    },
+    "A-R": {
+      "carton_s": 9,
+      "carton_m": 7,
+      "pallet": 2,
+      "tote": 5,
+      "drum": 2,
+      "carton_l": 8
+    },
+    "B-L": {
+      "pallet": 4,
+      "carton_s": 10,
+      "carton_m": 8,
+      "tote": 3,
+      "carton_l": 3,
+      "drum": 1
+    },
+    "B-R": {
+      "carton_s": 9,
+      "carton_l": 3,
+      "drum": 2,
+      "carton_m": 11,
+      "tote": 1,
+      "pallet": 2
+    },
+    "C-L": {
+      "carton_m": 10,
+      "carton_l": 5,
+      "carton_s": 7,
+      "tote": 2,
+      "pallet": 4,
+      "drum": 2
+    },
+    "C-R": {
+      "carton_l": 3,
+      "drum": 4,
+      "carton_m": 7,
+      "carton_s": 5,
+      "tote": 3,
+      "pallet": 1
+    },
+    "D-L": {
+      "tote": 2,
+      "drum": 4,
+      "carton_l": 6,
+      "carton_s": 7,
+      "carton_m": 5,
+      "pallet": 3
+    },
+    "D-R": {
+      "carton_s": 4,
+      "carton_m": 11,
+      "tote": 7,
+      "carton_l": 3,
+      "pallet": 1,
+      "drum": 1
+    },
+    "E-L": {
+      "carton_m": 11,
+      "pallet": 1,
+      "tote": 3,
+      "carton_l": 3,
+      "carton_s": 5,
+      "drum": 3
+    },
+    "E-R": {
+      "carton_m": 3,
+      "pallet": 6,
+      "carton_l": 10,
+      "tote": 6,
+      "carton_s": 4,
+      "drum": 2
+    },
+    "F-L": {
+      "drum": 4,
+      "carton_m": 8,
+      "carton_s": 9,
+      "tote": 2,
+      "pallet": 2,
+      "carton_l": 3
+    },
+    "F-R": {
+      "tote": 6,
+      "carton_s": 4,
+      "drum": 4,
+      "carton_l": 6,
+      "pallet": 4,
+      "carton_m": 6
+    }
+  },
+  "carton_totals": {
+    "A-L": 22,
+    "A-R": 24,
+    "B-L": 21,
+    "B-R": 23,
+    "C-L": 22,
+    "C-R": 15,
+    "D-L": 18,
+    "D-R": 18,
+    "E-L": 19,
+    "E-R": 17,
+    "F-L": 20,
+    "F-R": 16
+  },
+  "bays": {
+    "A-01": {
+      "aisle": "A",
+      "bay": 1,
+      "center_x": -27.6,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_m": 2,
+        "carton_s": 2
+      },
+      "reachable": true
+    },
+    "A-02": {
+      "aisle": "A",
+      "bay": 2,
+      "center_x": -25.2,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_s": 4
+      },
+      "reachable": true
+    },
+    "A-03": {
+      "aisle": "A",
+      "bay": 3,
+      "center_x": -22.8,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "A-04": {
+      "aisle": "A",
+      "bay": 4,
+      "center_x": -20.4,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "A-05": {
+      "aisle": "A",
+      "bay": 5,
+      "center_x": -18.0,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 2
+      },
+      "reachable": true
+    },
+    "A-06": {
+      "aisle": "A",
+      "bay": 6,
+      "center_x": -15.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "pallet": 2,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "A-07": {
+      "aisle": "A",
+      "bay": 7,
+      "center_x": -13.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "tote": 1,
+        "pallet": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "A-08": {
+      "aisle": "A",
+      "bay": 8,
+      "center_x": -10.8,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "tote": 2
+      },
+      "reachable": true
+    },
+    "A-09": {
+      "aisle": "A",
+      "bay": 9,
+      "center_x": -8.4,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_l": 1,
+        "tote": 1,
+        "drum": 1
+      },
+      "reachable": true
+    },
+    "A-10": {
+      "aisle": "A",
+      "bay": 10,
+      "center_x": -6.0,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "pallet": 1,
+        "carton_l": 2
+      },
+      "reachable": true
+    },
+    "A-11": {
+      "aisle": "A",
+      "bay": 11,
+      "center_x": -3.6,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "A-12": {
+      "aisle": "A",
+      "bay": 12,
+      "center_x": -1.2,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "A-13": {
+      "aisle": "A",
+      "bay": 13,
+      "center_x": 1.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_s": 2,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "A-14": {
+      "aisle": "A",
+      "bay": 14,
+      "center_x": 3.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_l": 2
+      },
+      "reachable": true
+    },
+    "A-15": {
+      "aisle": "A",
+      "bay": 15,
+      "center_x": 6.0,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "A-16": {
+      "aisle": "A",
+      "bay": 16,
+      "center_x": 8.4,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "A-17": {
+      "aisle": "A",
+      "bay": 17,
+      "center_x": 10.8,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "A-18": {
+      "aisle": "A",
+      "bay": 18,
+      "center_x": 13.2,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_m": 1,
+        "tote": 1,
+        "carton_l": 1,
+        "pallet": 1
+      },
+      "reachable": true
+    },
+    "A-19": {
+      "aisle": "A",
+      "bay": 19,
+      "center_x": 15.6,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_m": 3,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "A-20": {
+      "aisle": "A",
+      "bay": 20,
+      "center_x": 18.0,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_l": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "A-21": {
+      "aisle": "A",
+      "bay": 21,
+      "center_x": 20.4,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "pallet": 1,
+        "carton_m": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "A-22": {
+      "aisle": "A",
+      "bay": 22,
+      "center_x": 22.8,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_m": 2,
+        "carton_l": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "A-23": {
+      "aisle": "A",
+      "bay": 23,
+      "center_x": 25.2,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_l": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "A-24": {
+      "aisle": "A",
+      "bay": 24,
+      "center_x": 27.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_s": 1,
+        "drum": 1
+      },
+      "reachable": true
+    },
+    "B-01": {
+      "aisle": "B",
+      "bay": 1,
+      "center_x": -27.6,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "pallet": 1,
+        "carton_s": 3
+      },
+      "reachable": true
+    },
+    "B-02": {
+      "aisle": "B",
+      "bay": 2,
+      "center_x": -25.2,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "B-03": {
+      "aisle": "B",
+      "bay": 3,
+      "center_x": -22.8,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_s": 2,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "B-04": {
+      "aisle": "B",
+      "bay": 4,
+      "center_x": -20.4,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "drum": 1
+      },
+      "reachable": true
+    },
+    "B-05": {
+      "aisle": "B",
+      "bay": 5,
+      "center_x": -18.0,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_m": 1,
+        "tote": 1,
+        "carton_s": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "B-06": {
+      "aisle": "B",
+      "bay": 6,
+      "center_x": -15.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "B-07": {
+      "aisle": "B",
+      "bay": 7,
+      "center_x": -13.2,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "B-08": {
+      "aisle": "B",
+      "bay": 8,
+      "center_x": -10.8,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_l": 1,
+        "carton_m": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "B-09": {
+      "aisle": "B",
+      "bay": 9,
+      "center_x": -8.4,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "pallet": 1
+      },
+      "reachable": true
+    },
+    "B-10": {
+      "aisle": "B",
+      "bay": 10,
+      "center_x": -6.0,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "drum": 2,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "B-11": {
+      "aisle": "B",
+      "bay": 11,
+      "center_x": -3.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 2,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "B-12": {
+      "aisle": "B",
+      "bay": 12,
+      "center_x": -1.2,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "B-13": {
+      "aisle": "B",
+      "bay": 13,
+      "center_x": 1.2,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "pallet": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "B-14": {
+      "aisle": "B",
+      "bay": 14,
+      "center_x": 3.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "B-15": {
+      "aisle": "B",
+      "bay": 15,
+      "center_x": 6.0,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "pallet": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "B-16": {
+      "aisle": "B",
+      "bay": 16,
+      "center_x": 8.4,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 3
+      },
+      "reachable": true
+    },
+    "B-17": {
+      "aisle": "B",
+      "bay": 17,
+      "center_x": 10.8,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "B-18": {
+      "aisle": "B",
+      "bay": 18,
+      "center_x": 13.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "tote": 1,
+        "carton_s": 2
+      },
+      "reachable": true
+    },
+    "B-19": {
+      "aisle": "B",
+      "bay": 19,
+      "center_x": 15.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "B-20": {
+      "aisle": "B",
+      "bay": 20,
+      "center_x": 18.0,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "B-21": {
+      "aisle": "B",
+      "bay": 21,
+      "center_x": 20.4,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "B-22": {
+      "aisle": "B",
+      "bay": 22,
+      "center_x": 22.8,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_l": 1,
+        "carton_m": 2,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "B-23": {
+      "aisle": "B",
+      "bay": 23,
+      "center_x": 25.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_s": 1,
+        "pallet": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "B-24": {
+      "aisle": "B",
+      "bay": 24,
+      "center_x": 27.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_s": 1,
+        "carton_m": 1,
+        "pallet": 1
+      },
+      "reachable": true
+    },
+    "C-01": {
+      "aisle": "C",
+      "bay": 1,
+      "center_x": -27.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_l": 2
+      },
+      "reachable": true
+    },
+    "C-02": {
+      "aisle": "C",
+      "bay": 2,
+      "center_x": -25.2,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "drum": 1
+      },
+      "reachable": true
+    },
+    "C-03": {
+      "aisle": "C",
+      "bay": 3,
+      "center_x": -22.8,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 2,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "C-04": {
+      "aisle": "C",
+      "bay": 4,
+      "center_x": -20.4,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "tote": 1,
+        "pallet": 1,
+        "carton_m": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "C-05": {
+      "aisle": "C",
+      "bay": 5,
+      "center_x": -18.0,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_s": 1,
+        "carton_m": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "C-06": {
+      "aisle": "C",
+      "bay": 6,
+      "center_x": -15.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_l": 1,
+        "carton_s": 2
+      },
+      "reachable": true
+    },
+    "C-07": {
+      "aisle": "C",
+      "bay": 7,
+      "center_x": -13.2,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "drum": 1
+      },
+      "reachable": true
+    },
+    "C-08": {
+      "aisle": "C",
+      "bay": 8,
+      "center_x": -10.8,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_l": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "C-09": {
+      "aisle": "C",
+      "bay": 9,
+      "center_x": -8.4,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "C-10": {
+      "aisle": "C",
+      "bay": 10,
+      "center_x": -6.0,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "C-11": {
+      "aisle": "C",
+      "bay": 11,
+      "center_x": -3.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 2,
+        "drum": 1
+      },
+      "reachable": true
+    },
+    "C-12": {
+      "aisle": "C",
+      "bay": 12,
+      "center_x": -1.2,
+      "occupied_slots": 0,
+      "empty_slots": 4,
+      "class_counts": {},
+      "reachable": true
+    },
+    "C-13": {
+      "aisle": "C",
+      "bay": 13,
+      "center_x": 1.2,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_m": 2,
+        "carton_l": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "C-14": {
+      "aisle": "C",
+      "bay": 14,
+      "center_x": 3.6,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "pallet": 1
+      },
+      "reachable": true
+    },
+    "C-15": {
+      "aisle": "C",
+      "bay": 15,
+      "center_x": 6.0,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "C-16": {
+      "aisle": "C",
+      "bay": 16,
+      "center_x": 8.4,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "drum": 1,
+        "carton_m": 2
+      },
+      "reachable": true
+    },
+    "C-17": {
+      "aisle": "C",
+      "bay": 17,
+      "center_x": 10.8,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "pallet": 1
+      },
+      "reachable": true
+    },
+    "C-18": {
+      "aisle": "C",
+      "bay": 18,
+      "center_x": 13.2,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "C-19": {
+      "aisle": "C",
+      "bay": 19,
+      "center_x": 15.6,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "C-20": {
+      "aisle": "C",
+      "bay": 20,
+      "center_x": 18.0,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "pallet": 2
+      },
+      "reachable": true
+    },
+    "C-21": {
+      "aisle": "C",
+      "bay": 21,
+      "center_x": 20.4,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "C-22": {
+      "aisle": "C",
+      "bay": 22,
+      "center_x": 22.8,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_s": 2,
+        "drum": 1
+      },
+      "reachable": true
+    },
+    "C-23": {
+      "aisle": "C",
+      "bay": 23,
+      "center_x": 25.2,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "C-24": {
+      "aisle": "C",
+      "bay": 24,
+      "center_x": 27.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 2,
+        "drum": 1
+      },
+      "reachable": true
+    },
+    "D-01": {
+      "aisle": "D",
+      "bay": 1,
+      "center_x": -27.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "tote": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "D-02": {
+      "aisle": "D",
+      "bay": 2,
+      "center_x": -25.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "drum": 1,
+        "carton_l": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "D-03": {
+      "aisle": "D",
+      "bay": 3,
+      "center_x": -22.8,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_s": 2,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "D-04": {
+      "aisle": "D",
+      "bay": 4,
+      "center_x": -20.4,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "D-05": {
+      "aisle": "D",
+      "bay": 5,
+      "center_x": -18.0,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "D-06": {
+      "aisle": "D",
+      "bay": 6,
+      "center_x": -15.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "D-07": {
+      "aisle": "D",
+      "bay": 7,
+      "center_x": -13.2,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "D-08": {
+      "aisle": "D",
+      "bay": 8,
+      "center_x": -10.8,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_l": 1,
+        "carton_m": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "D-09": {
+      "aisle": "D",
+      "bay": 9,
+      "center_x": -8.4,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "pallet": 1,
+        "carton_l": 1,
+        "tote": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "D-10": {
+      "aisle": "D",
+      "bay": 10,
+      "center_x": -6.0,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "D-11": {
+      "aisle": "D",
+      "bay": 11,
+      "center_x": -3.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "D-12": {
+      "aisle": "D",
+      "bay": 12,
+      "center_x": -1.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_l": 2,
+        "pallet": 1
+      },
+      "reachable": true
+    },
+    "D-13": {
+      "aisle": "D",
+      "bay": 13,
+      "center_x": 1.2,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "D-14": {
+      "aisle": "D",
+      "bay": 14,
+      "center_x": 3.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_l": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "D-15": {
+      "aisle": "D",
+      "bay": 15,
+      "center_x": 6.0,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "D-16": {
+      "aisle": "D",
+      "bay": 16,
+      "center_x": 8.4,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "drum": 1,
+        "pallet": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "D-17": {
+      "aisle": "D",
+      "bay": 17,
+      "center_x": 10.8,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "D-18": {
+      "aisle": "D",
+      "bay": 18,
+      "center_x": 13.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_s": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "D-19": {
+      "aisle": "D",
+      "bay": 19,
+      "center_x": 15.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "drum": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "D-20": {
+      "aisle": "D",
+      "bay": 20,
+      "center_x": 18.0,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 3
+      },
+      "reachable": true
+    },
+    "D-21": {
+      "aisle": "D",
+      "bay": 21,
+      "center_x": 20.4,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "drum": 1,
+        "tote": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "D-22": {
+      "aisle": "D",
+      "bay": 22,
+      "center_x": 22.8,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "pallet": 1,
+        "drum": 1
+      },
+      "reachable": true
+    },
+    "D-23": {
+      "aisle": "D",
+      "bay": 23,
+      "center_x": 25.2,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 2
+      },
+      "reachable": true
+    },
+    "D-24": {
+      "aisle": "D",
+      "bay": 24,
+      "center_x": 27.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "tote": 1,
+        "carton_s": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "E-01": {
+      "aisle": "E",
+      "bay": 1,
+      "center_x": -27.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 2,
+        "pallet": 1
+      },
+      "reachable": true
+    },
+    "E-02": {
+      "aisle": "E",
+      "bay": 2,
+      "center_x": -25.2,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "pallet": 1
+      },
+      "reachable": true
+    },
+    "E-03": {
+      "aisle": "E",
+      "bay": 3,
+      "center_x": -22.8,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "E-04": {
+      "aisle": "E",
+      "bay": 4,
+      "center_x": -20.4,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "pallet": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "E-05": {
+      "aisle": "E",
+      "bay": 5,
+      "center_x": -18.0,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 2
+      },
+      "reachable": true
+    },
+    "E-06": {
+      "aisle": "E",
+      "bay": 6,
+      "center_x": -15.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "tote": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "E-07": {
+      "aisle": "E",
+      "bay": 7,
+      "center_x": -13.2,
+      "occupied_slots": 0,
+      "empty_slots": 4,
+      "class_counts": {},
+      "reachable": true
+    },
+    "E-08": {
+      "aisle": "E",
+      "bay": 8,
+      "center_x": -10.8,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "tote": 1,
+        "carton_l": 2
+      },
+      "reachable": true
+    },
+    "E-09": {
+      "aisle": "E",
+      "bay": 9,
+      "center_x": -8.4,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_m": 2,
+        "tote": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "E-10": {
+      "aisle": "E",
+      "bay": 10,
+      "center_x": -6.0,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "E-11": {
+      "aisle": "E",
+      "bay": 11,
+      "center_x": -3.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_l": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "E-12": {
+      "aisle": "E",
+      "bay": 12,
+      "center_x": -1.2,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "tote": 1,
+        "carton_s": 1,
+        "pallet": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "E-13": {
+      "aisle": "E",
+      "bay": 13,
+      "center_x": 1.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_s": 1,
+        "drum": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "E-14": {
+      "aisle": "E",
+      "bay": 14,
+      "center_x": 3.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "drum": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "E-15": {
+      "aisle": "E",
+      "bay": 15,
+      "center_x": 6.0,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "E-16": {
+      "aisle": "E",
+      "bay": 16,
+      "center_x": 8.4,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "E-17": {
+      "aisle": "E",
+      "bay": 17,
+      "center_x": 10.8,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "drum": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "E-18": {
+      "aisle": "E",
+      "bay": 18,
+      "center_x": 13.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_s": 1,
+        "carton_l": 2
+      },
+      "reachable": true
+    },
+    "E-19": {
+      "aisle": "E",
+      "bay": 19,
+      "center_x": 15.6,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "drum": 1,
+        "carton_m": 1,
+        "tote": 2
+      },
+      "reachable": true
+    },
+    "E-20": {
+      "aisle": "E",
+      "bay": 20,
+      "center_x": 18.0,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "drum": 1,
+        "pallet": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "E-21": {
+      "aisle": "E",
+      "bay": 21,
+      "center_x": 20.4,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 2
+      },
+      "reachable": true
+    },
+    "E-22": {
+      "aisle": "E",
+      "bay": 22,
+      "center_x": 22.8,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_m": 2,
+        "pallet": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "E-23": {
+      "aisle": "E",
+      "bay": 23,
+      "center_x": 25.2,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_l": 1,
+        "pallet": 1
+      },
+      "reachable": true
+    },
+    "E-24": {
+      "aisle": "E",
+      "bay": 24,
+      "center_x": 27.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "F-01": {
+      "aisle": "F",
+      "bay": 1,
+      "center_x": -27.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "drum": 1,
+        "carton_m": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "F-02": {
+      "aisle": "F",
+      "bay": 2,
+      "center_x": -25.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_s": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "F-03": {
+      "aisle": "F",
+      "bay": 3,
+      "center_x": -22.8,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 2,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "F-04": {
+      "aisle": "F",
+      "bay": 4,
+      "center_x": -20.4,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "tote": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "F-05": {
+      "aisle": "F",
+      "bay": 5,
+      "center_x": -18.0,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "drum": 1
+      },
+      "reachable": true
+    },
+    "F-06": {
+      "aisle": "F",
+      "bay": 6,
+      "center_x": -15.6,
+      "occupied_slots": 0,
+      "empty_slots": 4,
+      "class_counts": {},
+      "reachable": true
+    },
+    "F-07": {
+      "aisle": "F",
+      "bay": 7,
+      "center_x": -13.2,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "F-08": {
+      "aisle": "F",
+      "bay": 8,
+      "center_x": -10.8,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "drum": 1,
+        "carton_s": 1,
+        "tote": 2
+      },
+      "reachable": true
+    },
+    "F-09": {
+      "aisle": "F",
+      "bay": 9,
+      "center_x": -8.4,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 1,
+        "drum": 1,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "F-10": {
+      "aisle": "F",
+      "bay": 10,
+      "center_x": -6.0,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 1,
+        "pallet": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "F-11": {
+      "aisle": "F",
+      "bay": 11,
+      "center_x": -3.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "pallet": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "F-12": {
+      "aisle": "F",
+      "bay": 12,
+      "center_x": -1.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_m": 2,
+        "carton_l": 1
+      },
+      "reachable": true
+    },
+    "F-13": {
+      "aisle": "F",
+      "bay": 13,
+      "center_x": 1.2,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_l": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "F-14": {
+      "aisle": "F",
+      "bay": 14,
+      "center_x": 3.6,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_m": 1,
+        "carton_s": 1
+      },
+      "reachable": true
+    },
+    "F-15": {
+      "aisle": "F",
+      "bay": 15,
+      "center_x": 6.0,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "pallet": 1
+      },
+      "reachable": true
+    },
+    "F-16": {
+      "aisle": "F",
+      "bay": 16,
+      "center_x": 8.4,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "carton_s": 1,
+        "carton_m": 1
+      },
+      "reachable": true
+    },
+    "F-17": {
+      "aisle": "F",
+      "bay": 17,
+      "center_x": 10.8,
+      "occupied_slots": 2,
+      "empty_slots": 2,
+      "class_counts": {
+        "pallet": 1,
+        "tote": 1
+      },
+      "reachable": true
+    },
+    "F-18": {
+      "aisle": "F",
+      "bay": 18,
+      "center_x": 13.2,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_s": 2,
+        "drum": 1
+      },
+      "reachable": false
+    },
+    "F-19": {
+      "aisle": "F",
+      "bay": 19,
+      "center_x": 15.6,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_s": 1,
+        "carton_m": 2,
+        "tote": 1
+      },
+      "reachable": false
+    },
+    "F-20": {
+      "aisle": "F",
+      "bay": 20,
+      "center_x": 18.0,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_l": 2,
+        "drum": 1,
+        "pallet": 1
+      },
+      "reachable": false
+    },
+    "F-21": {
+      "aisle": "F",
+      "bay": 21,
+      "center_x": 20.4,
+      "occupied_slots": 1,
+      "empty_slots": 3,
+      "class_counts": {
+        "drum": 1
+      },
+      "reachable": false
+    },
+    "F-22": {
+      "aisle": "F",
+      "bay": 22,
+      "center_x": 22.8,
+      "occupied_slots": 0,
+      "empty_slots": 4,
+      "class_counts": {},
+      "reachable": false
+    },
+    "F-23": {
+      "aisle": "F",
+      "bay": 23,
+      "center_x": 25.2,
+      "occupied_slots": 4,
+      "empty_slots": 0,
+      "class_counts": {
+        "carton_s": 1,
+        "tote": 1,
+        "drum": 1,
+        "carton_l": 1
+      },
+      "reachable": false
+    },
+    "F-24": {
+      "aisle": "F",
+      "bay": 24,
+      "center_x": 27.6,
+      "occupied_slots": 3,
+      "empty_slots": 1,
+      "class_counts": {
+        "carton_l": 2,
+        "pallet": 1
+      },
+      "reachable": false
+    }
+  }
+}

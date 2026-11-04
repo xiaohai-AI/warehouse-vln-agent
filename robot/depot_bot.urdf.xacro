@@ -1,0 +1,492 @@
+<?xml version="1.0" ?>
+<!--
+  depot-vln 麦克纳姆全向底盘（SPEC §4）
+  外形按真实仓储 AMR 建：低重心分层车体 + 前后斜切面 + 圆角立柱 + 腰线 +
+  前后保险杠 + 四个轮罩 + 前部双目云台罩（两只镀铬镜头环）+ 后部激光雷达塔 +
+  头灯/尾灯 + 侧散热槽 + 示位杆 + 四个麦克纳姆轮（两侧轮缘盘 + 轮毂 + 9 根与轮轴成 45° 的辊子，左右镜像）
+  + 相机三角撑筋板 / 侧面黄黑警示斜纹 / 顶部 LED 状态灯带 / 上盖载荷箱
+
+  只改"看起来"，不动量测基准：
+    轮径 0.152 / 轮距 0.42 / 轴距 0.40 / 车体碰撞盒 0.52×0.46×0.30 / 12 kg
+    双目基线 0.12 @ 高 0.35 · rgbd 同机位 · 32 线雷达 @ 0.55 · IMU 200 Hz
+  所有装饰件都是纯 visual；碰撞只有车体包围盒 + 四个轮子圆柱。
+
+  参数
+    wheel_friction:=anisotropic | isotropic     （SPEC §4.2 补救① 的开关）
+    visual_detail:=high | low                   （low 只留碰撞盒，排查渲染性能用）
+-->
+<robot name="depot_bot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- 辊子布局是**算出来的**（9 辊、Rc+r=轮半径、轴线 45°、左右镜像），
+       由 scripts/gen_rollers.py 生成；make robot 会先跑它。别手改 rollers.xacro。 -->
+  <xacro:include filename="rollers.xacro"/>
+
+  <xacro:arg name="wheel_friction" default="anisotropic"/>
+  <xacro:arg name="enable_rgbd" default="true"/>
+  <xacro:arg name="visual_detail" default="high"/>
+  <xacro:property name="wheel_friction" value="$(arg wheel_friction)"/>
+  <xacro:property name="visual_detail" value="$(arg visual_detail)"/>
+  <!-- 传感器档位：这台机器的桌面和仿真共用一块 RTX 4080，headless 只是不画窗口，
+       传感器照样渲染。全开 5 个传感器（3×640x480@15Hz 相机 + 1024x32@10Hz 激光）时
+       nvidia-modeset 会被挂死（实测：内核日志每 5 s 一条 GPU progress 超时，整个桌面冻结）。
+       所以默认 nav 档：相机 always_on=false（没人订阅就不渲染，等于零开销），
+       激光降到 360x16@5Hz（点云 1 MB/帧 -> 184 KB/帧）。
+       S1 需要原始精度时用 make robot SENSORS=full 再生产一次。-->
+  <xacro:arg name="sensors" default="nav"/>
+  <xacro:property name="sensors" value="$(arg sensors)"/>
+  <xacro:property name="is_nav" value="${sensors == 'nav'}"/>
+  <xacro:property name="lidar_samples" value="${360 if is_nav else 1024}"/>
+  <xacro:property name="lidar_beams" value="${16 if is_nav else 32}"/>
+  <xacro:property name="lidar_rate" value="${5 if is_nav else 10}"/>
+  <!-- 默认 false：gz 只在有人订阅时渲染，所以"桥在跑=在渲染、桥停=零开销"。
+       这比按档位切换更可靠 —— full 档只提高分辨率/帧率，不再让相机常开。
+
+       **例外：S3 双目视觉里程计必须 cam_always_on:=true**。
+       always_on=false 时每台相机的 update 相位从"它被订阅的那一刻"开始算，
+       左右目订阅到手有先后 -> 相位永远错开半帧到一帧（实测 left=43.0 / right=43.2），
+       rtabmap 的 approx_sync 配到这种对子会当成"戳乱序"疯狂丢帧（实测 odom 只有 2 Hz）。
+       always_on=true 时两台都从 t=0 按同一周期更新 -> 同一仿真步出图、戳完全相同。 -->
+  <xacro:arg name="cam_always_on" default="false"/>
+  <xacro:property name="cam_always_on" value="$(arg cam_always_on)"/>
+  <!-- 相机分辨率/帧率做成参数：开渲染是 GPU 风险点，第一次开永远用 320x240@5Hz。
+       always_on=false + 有人订阅才渲染 —— 所以"桥不建 = 零开销"，这比改档位更可靠。 -->
+  <xacro:arg name="cam_width"  default="320"/>
+  <xacro:arg name="cam_height" default="240"/>
+  <xacro:arg name="cam_rate"   default="5"/>
+  <xacro:property name="cam_width"  value="$(arg cam_width)"/>
+  <xacro:property name="cam_height" value="$(arg cam_height)"/>
+  <xacro:property name="cam_rate"   value="$(arg cam_rate)"/>
+
+  <!-- ============================================================ 常量 -->
+  <xacro:property name="wheel_radius" value="0.076"/>
+  <xacro:property name="wheel_width"  value="0.050"/>
+  <xacro:property name="track"        value="0.42"/>
+  <xacro:property name="wheelbase"    value="0.40"/>
+  <xacro:property name="body_x"       value="0.52"/>
+  <xacro:property name="body_y"       value="0.46"/>
+  <xacro:property name="body_z"       value="0.30"/>
+  <xacro:property name="body_z0"      value="0.09"/>
+  <xacro:property name="cam_z"        value="0.35"/>
+  <!-- 相机仰角（度）。默认 0 —— 与 P3/S1 定版配置完全一致。
+       为什么需要：相机在 0.274 m、半垂直视场 36.9°，在 2.15 m 观测距离上只能看到 z≤1.89 m，
+       而第 2 层层板在 1.75 m（货位 1.75–2.6）-> 平视看不见上层（SPEC §7.1 也写明"观测位只能仰视"）。
+       SEG-2 抓取时用 CAM_PITCH=16。 -->
+  <xacro:arg name="cam_pitch" default="0"/>
+  <xacro:property name="cam_pitch_val" value="$(arg cam_pitch)"/>
+  <xacro:property name="cam_pitch_rad" value="${-float(cam_pitch_val)*3.14159265358979/180.0}"/>
+  <xacro:property name="lidar_z"      value="0.55"/>
+  <xacro:property name="mass_body"    value="10.0"/>
+  <xacro:property name="mass_wheel"   value="0.5"/>
+  <!-- base_link 原点在轮轴高度：所有"离地高度"都要减 zr -->
+  <xacro:property name="zr" value="${wheel_radius}"/>
+
+  <!-- ============================================================ 材质 -->
+  <material name="amr_red">     <color rgba="0.84 0.10 0.09 1"/></material>
+  <material name="amr_red_dk">  <color rgba="0.56 0.05 0.05 1"/></material>
+  <material name="amr_grey">    <color rgba="0.22 0.23 0.25 1"/></material>
+  <material name="amr_grey_lt"> <color rgba="0.45 0.46 0.49 1"/></material>
+  <material name="amr_black">   <color rgba="0.09 0.09 0.10 1"/></material>
+  <material name="amr_steel">   <color rgba="0.66 0.68 0.72 1"/></material>
+  <material name="amr_chrome">  <color rgba="0.84 0.86 0.90 1"/></material>
+  <material name="lamp_amber">  <color rgba="1.00 0.62 0.08 1"/></material>
+  <material name="lamp_red">    <color rgba="1.00 0.12 0.06 1"/></material>
+  <material name="lens_glass">  <color rgba="0.05 0.07 0.11 1"/></material>
+  <material name="hazard_yellow"> <color rgba="0.93 0.72 0.06 1"/></material>
+  <material name="hazard_dark">   <color rgba="0.10 0.10 0.10 1"/></material>
+  <material name="led_cyan">      <color rgba="0.05 0.70 0.85 1"/></material>
+  <material name="crate_card">    <color rgba="0.62 0.47 0.30 1"/></material>
+  <material name="crate_light">   <color rgba="0.72 0.58 0.40 1"/></material>
+  <material name="crate_strap">   <color rgba="0.25 0.22 0.18 1"/></material>
+
+  <xacro:macro name="box_inertia" params="m x y z">
+    <inertial>
+      <mass value="${m}"/>
+      <inertia ixx="${m*(y*y+z*z)/12}" ixy="0" ixz="0"
+               iyy="${m*(x*x+z*z)/12}" iyz="0"
+               izz="${m*(x*x+y*y)/12}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="cyl_inertia" params="m r l">
+    <inertial>
+      <mass value="${m}"/>
+      <inertia ixx="${m*(3*r*r+l*l)/12}" ixy="0" ixz="0"
+               iyy="${m*(3*r*r+l*l)/12}" iyz="0"
+               izz="${m*r*r/2}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="box_vis" params="name xyz size mat rpy:='0 0 0'">
+    <visual name="${name}">
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <geometry><box size="${size}"/></geometry>
+      <material name="${mat}"/>
+    </visual>
+  </xacro:macro>
+
+  <xacro:macro name="cyl_vis" params="name xyz r l mat rpy:='0 0 0'">
+    <visual name="${name}">
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <geometry><cylinder radius="${r}" length="${l}"/></geometry>
+      <material name="${mat}"/>
+    </visual>
+  </xacro:macro>
+
+  <!-- ============================================================ 车体 -->
+  <link name="base_footprint"/>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="base_link">
+    <xacro:box_inertia m="${mass_body}" x="${body_x}" y="${body_y}" z="${body_z}"/>
+
+    <!-- 唯一碰撞体：整车包围盒（细节只影响外观，不影响规划/物理） -->
+    <collision name="chassis_collision">
+      <origin xyz="0 0 ${body_z0 + body_z/2 - zr}" rpy="0 0 0"/>
+      <geometry><box size="${body_x} ${body_y} ${body_z}"/></geometry>
+    </collision>
+
+    <!-- 底盘裙边（深灰，离地 0.09~0.15） -->
+    <!-- 裙边收窄到 y±0.170：轮子视觉占 y 0.185~0.235，必须留出间隙（原来 0.22 直接插进轮子里） -->
+    <xacro:box_vis name="skirt" xyz="0 0 ${0.120 - zr}" size="0.500 0.330 0.060" mat="amr_grey"/>
+
+    <!-- 主车体（红色，0.15~0.27） -->
+    <xacro:box_vis name="body_main" xyz="0 0 ${0.215 - zr}" size="0.510 0.460 0.120" mat="amr_red"/>
+    <!-- 前后斜切面：车头/车尾不再是直角（这是"像真车"最关键的一步） -->
+    <xacro:box_vis name="nose_slope" xyz="${0.161} 0 ${0.212 - zr}" size="0.140 0.450 0.110"
+                   mat="amr_red" rpy="0 0.62 0"/>
+    <xacro:box_vis name="tail_slope" xyz="${-0.161} 0 ${0.212 - zr}" size="0.140 0.450 0.110"
+                   mat="amr_red_dk" rpy="0 -0.62 0"/>
+
+    <!-- 上盖（深灰，0.27~0.31），比主车体窄一圈 -> 收腰轮廓 -->
+    <xacro:box_vis name="deck" xyz="0 0 ${0.290 - zr}" size="0.450 0.400 0.040" mat="amr_grey"/>
+    <xacro:box_vis name="deck_stripe_l" xyz="0 0.090 ${0.312 - zr}" size="0.380 0.050 0.004" mat="amr_grey_lt"/>
+    <xacro:box_vis name="deck_stripe_r" xyz="0 -0.090 ${0.312 - zr}" size="0.380 0.050 0.004" mat="amr_grey_lt"/>
+
+    <!-- 前后保险杠（黑色橡胶 + 加强筋） -->
+    <xacro:box_vis name="bumper_front" xyz="${body_x/2 - 0.02} 0 ${0.135 - zr}" size="0.060 0.320 0.070" mat="amr_black"/>
+    <xacro:box_vis name="bumper_rear"  xyz="${-body_x/2 + 0.02} 0 ${0.135 - zr}" size="0.060 0.320 0.070" mat="amr_black"/>
+
+    <xacro:if value="${visual_detail == 'high'}">
+      <!-- 圆角立柱：把方盒子的四个直角"磨圆"（放在车体转角内侧，r=0.03） -->
+      <xacro:cyl_vis name="corner_fl" xyz="${0.225} ${0.200} ${0.210 - zr}" r="0.030" l="0.120" mat="amr_red"/>
+      <xacro:cyl_vis name="corner_fr" xyz="${0.225} ${-0.200} ${0.210 - zr}" r="0.030" l="0.120" mat="amr_red"/>
+      <xacro:cyl_vis name="corner_rl" xyz="${-0.225} ${0.200} ${0.210 - zr}" r="0.030" l="0.120" mat="amr_red_dk"/>
+      <xacro:cyl_vis name="corner_rr" xyz="${-0.225} ${-0.200} ${0.210 - zr}" r="0.030" l="0.120" mat="amr_red_dk"/>
+
+      <!-- 腰线：把车体视觉上分成上下两层 -->
+      <xacro:box_vis name="waist_l" xyz="0 0.231 ${0.245 - zr}" size="0.380 0.006 0.012" mat="amr_chrome"/>
+      <xacro:box_vis name="waist_r" xyz="0 -0.231 ${0.245 - zr}" size="0.380 0.006 0.012" mat="amr_chrome"/>
+
+      <!-- 侧散热槽 -->
+      <xacro:box_vis name="slot_l" xyz="0 0.232 ${0.128 - zr}" size="0.300 0.005 0.026" mat="amr_black"/>
+      <xacro:box_vis name="slot_r" xyz="0 -0.232 ${0.128 - zr}" size="0.300 0.005 0.026" mat="amr_black"/>
+
+      <!-- 头灯（琥珀）+ 尾灯条（红） -->
+      <xacro:box_vis name="lamp_front_l" xyz="${0.252} 0.150 ${0.170 - zr}" size="0.014 0.110 0.038" mat="lamp_amber"/>
+      <xacro:box_vis name="lamp_front_r" xyz="${0.252} -0.150 ${0.170 - zr}" size="0.014 0.110 0.038" mat="lamp_amber"/>
+      <xacro:box_vis name="lamp_rear" xyz="${-0.252} 0 ${0.175 - zr}" size="0.014 0.260 0.032" mat="lamp_red"/>
+
+      <!-- 轮罩（挡泥板），盖在四个轮子上方 -->
+      <xacro:box_vis name="fender_fl" xyz="${wheelbase/2} ${track/2 + 0.010} ${0.172 - zr}" size="0.200 0.070 0.020" mat="amr_grey"/>
+      <xacro:box_vis name="fender_fr" xyz="${wheelbase/2} ${-track/2 - 0.010} ${0.172 - zr}" size="0.200 0.070 0.020" mat="amr_grey"/>
+      <xacro:box_vis name="fender_rl" xyz="${-wheelbase/2} ${track/2 + 0.010} ${0.172 - zr}" size="0.200 0.070 0.020" mat="amr_grey"/>
+      <xacro:box_vis name="fender_rr" xyz="${-wheelbase/2} ${-track/2 - 0.010} ${0.172 - zr}" size="0.200 0.070 0.020" mat="amr_grey"/>
+
+      <!-- ===== 前部双目云台罩：罩住两只镜头（镜头位置 = 实际 stereo link 位姿） -->
+      <xacro:box_vis name="cam_hood" xyz="${body_x/2 + 0.010} 0 ${cam_z - zr}" size="0.090 0.240 0.100" mat="amr_grey"/>
+      <xacro:box_vis name="cam_visor" xyz="${body_x/2 + 0.045} 0 ${cam_z - zr + 0.052}" size="0.110 0.250 0.014" mat="amr_black"/>
+      <xacro:cyl_vis name="lens_ring_l" xyz="${body_x/2 + 0.052} 0.060 ${cam_z - zr}" r="0.030" l="0.018" mat="amr_chrome" rpy="0 1.5708 0"/>
+      <xacro:cyl_vis name="lens_ring_r" xyz="${body_x/2 + 0.052} -0.060 ${cam_z - zr}" r="0.030" l="0.018" mat="amr_chrome" rpy="0 1.5708 0"/>
+      <xacro:cyl_vis name="lens_l" xyz="${body_x/2 + 0.062} 0.060 ${cam_z - zr}" r="0.021" l="0.006" mat="lens_glass" rpy="0 1.5708 0"/>
+      <xacro:cyl_vis name="lens_r" xyz="${body_x/2 + 0.062} -0.060 ${cam_z - zr}" r="0.021" l="0.006" mat="lens_glass" rpy="0 1.5708 0"/>
+      <!-- 中间的补光/ToF 窗 -->
+      <xacro:box_vis name="tof_window" xyz="${body_x/2 + 0.056} 0 ${cam_z - zr - 0.002}" size="0.012 0.050 0.028" mat="lens_glass"/>
+
+      <!-- ===== 后部激光雷达塔（塔座 + 立柱 + 机身 + 两道扫掠窗 + 顶盖 + 天线） -->
+      <xacro:cyl_vis name="tower_base" xyz="-0.100 0 ${0.318 - zr}" r="0.068" l="0.030" mat="amr_grey"/>
+      <xacro:cyl_vis name="tower_post" xyz="-0.100 0 ${0.400 - zr}" r="0.030" l="0.140" mat="amr_grey_lt"/>
+      <xacro:cyl_vis name="tower_body" xyz="-0.100 0 ${0.505 - zr}" r="0.052" l="0.078" mat="amr_black"/>
+      <xacro:cyl_vis name="tower_win_a" xyz="-0.100 0 ${0.514 - zr}" r="0.0535" l="0.010" mat="lens_glass"/>
+      <xacro:cyl_vis name="tower_win_b" xyz="-0.100 0 ${0.534 - zr}" r="0.0535" l="0.010" mat="lens_glass"/>
+      <xacro:cyl_vis name="tower_cap" xyz="-0.100 0 ${0.552 - zr}" r="0.048" l="0.012" mat="amr_grey"/>
+      <xacro:cyl_vis name="antenna" xyz="-0.140 0.030 ${0.610 - zr}" r="0.006" l="0.100" mat="amr_chrome"/>
+
+      <!-- ===== 示位杆（67 m 厂房里一眼能找到车，纯 visual） -->
+      <xacro:cyl_vis name="beacon_pole" xyz="${-0.200} ${0.170} ${0.560 - zr}" r="0.010" l="0.500" mat="amr_chrome"/>
+      <xacro:cyl_vis name="beacon_lamp" xyz="${-0.200} ${0.170} ${0.830 - zr}" r="0.030" l="0.055" mat="lamp_red"/>
+
+      <!-- ===== 相机支架：云台罩前伸 6 cm 是纯悬臂，补一组三角撑（底脚在车体前脸、顶脚在罩底） -->
+      <!-- 两块斜板当"筋板"，加一块罩底横梁 + 一块前脸脚板 —— 侧视就是一个三角形 -->
+      <xacro:box_vis name="cam_gusset_l" xyz="${0.2755} ${0.100} ${0.1715}" size="0.040 0.010 0.100"
+                     mat="amr_grey_lt" rpy="0 0.485 0"/>
+      <xacro:box_vis name="cam_gusset_r" xyz="${0.2755} ${-0.100} ${0.1715}" size="0.040 0.010 0.100"
+                     mat="amr_grey_lt" rpy="0 0.485 0"/>
+      <xacro:box_vis name="cam_rail"     xyz="${0.2725} 0 ${0.222}" size="0.085 0.215 0.010" mat="amr_grey"/>
+      <xacro:box_vis name="cam_foot"     xyz="${0.2525} 0 ${0.124}" size="0.008 0.215 0.050" mat="amr_grey"/>
+
+      <!-- ===== 侧面警示条纹（斜纹，黄黑相间；铁皮上的安全标识） -->
+      <xacro:box_vis name="hazard_y0" xyz="${-0.100} ${0.2325} ${0.124}" size="0.020 0.005 0.105" mat="hazard_yellow" rpy="0 0.55 0"/>
+      <xacro:box_vis name="hazard_k0" xyz="${-0.045} ${0.2325} ${0.124}" size="0.020 0.005 0.105" mat="hazard_dark"   rpy="0 0.55 0"/>
+      <xacro:box_vis name="hazard_y1" xyz="${0.010} ${0.2325} ${0.124}" size="0.020 0.005 0.105" mat="hazard_yellow" rpy="0 0.55 0"/>
+      <xacro:box_vis name="hazard_k1" xyz="${0.065} ${0.2325} ${0.124}" size="0.020 0.005 0.105" mat="hazard_dark"   rpy="0 0.55 0"/>
+      <xacro:box_vis name="hazard_y2" xyz="${0.120} ${0.2325} ${0.124}" size="0.020 0.005 0.105" mat="hazard_yellow" rpy="0 0.55 0"/>
+      <xacro:box_vis name="hazard_y3" xyz="${-0.100} ${-0.2325} ${0.124}" size="0.020 0.005 0.105" mat="hazard_yellow" rpy="0 0.55 0"/>
+      <xacro:box_vis name="hazard_k2" xyz="${-0.045} ${-0.2325} ${0.124}" size="0.020 0.005 0.105" mat="hazard_dark"   rpy="0 0.55 0"/>
+      <xacro:box_vis name="hazard_y4" xyz="${0.010} ${-0.2325} ${0.124}" size="0.020 0.005 0.105" mat="hazard_yellow" rpy="0 0.55 0"/>
+      <xacro:box_vis name="hazard_k3" xyz="${0.065} ${-0.2325} ${0.124}" size="0.020 0.005 0.105" mat="hazard_dark"   rpy="0 0.55 0"/>
+      <xacro:box_vis name="hazard_y5" xyz="${0.120} ${-0.2325} ${0.124}" size="0.020 0.005 0.105" mat="hazard_yellow" rpy="0 0.55 0"/>
+
+      <!-- ===== 顶部 LED 状态灯带（上盖四边一圈，青色=自主模式） -->
+      <xacro:box_vis name="led_strip_front" xyz="${0.216} 0 ${0.2375}" size="0.010 0.380 0.008" mat="led_cyan"/>
+      <xacro:box_vis name="led_strip_rear"  xyz="${-0.216} 0 ${0.2375}" size="0.010 0.380 0.008" mat="led_cyan"/>
+      <xacro:box_vis name="led_strip_left"  xyz="0 ${0.191} ${0.2375}" size="0.430 0.010 0.008" mat="led_cyan"/>
+      <xacro:box_vis name="led_strip_right" xyz="0 ${-0.191} ${0.2375}" size="0.430 0.010 0.008" mat="led_cyan"/>
+
+      <!-- ===== 载荷箱（上盖前部，纯 visual；顶面 0.49 m 低于激光 0.55 m，不挡扫描） -->
+      <!-- 载荷箱顶 0.385 < 激光 −25° 环在箱体远端(0.305 m)的 0.408 → 不挡扫描 -->
+      <xacro:box_vis name="crate_body"  xyz="${0.090} 0 ${0.3425 - zr}" size="0.230 0.260 0.065" mat="crate_card"/>
+      <xacro:box_vis name="crate_lid"   xyz="${0.090} 0 ${0.380 - zr}" size="0.240 0.270 0.010" mat="crate_light"/>
+      <xacro:box_vis name="crate_strap_1" xyz="${0.035} 0 ${0.3425 - zr}" size="0.006 0.262 0.065" mat="crate_strap"/>
+      <xacro:box_vis name="crate_strap_2" xyz="${0.145} 0 ${0.3425 - zr}" size="0.006 0.262 0.065" mat="crate_strap"/>
+    </xacro:if>
+  </link>
+
+  <!-- ============================================================ 传感器 -->
+  <!-- 双目：两台 camera 手动摆基线 0.12 m（Fortress 没有 stereo_camera 类型） -->
+  <link name="stereo_left_link"/>
+  <joint name="stereo_left_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="stereo_left_link"/>
+    <origin xyz="${body_x/2} ${0.06} ${cam_z - zr}" rpy="0 ${cam_pitch_rad} 0"/>
+  </joint>
+  <gazebo reference="stereo_left_link">
+    <sensor type="camera" name="stereo_left">
+      <update_rate>${cam_rate}</update_rate>
+      <always_on>${cam_always_on}</always_on>
+      <visualize>false</visualize>
+      <topic>stereo_left</topic>
+      <camera>
+        <horizontal_fov>1.5708</horizontal_fov>
+        <image><width>${cam_width}</width><height>${cam_height}</height><format>R8G8B8</format></image>
+        <clip><near>0.10</near><far>25.0</far></clip>
+        <noise><type>gaussian</type><mean>0.0</mean><stddev>0.004</stddev></noise>
+      </camera>
+    </sensor>
+  </gazebo>
+
+  <link name="stereo_right_link"/>
+  <joint name="stereo_right_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="stereo_right_link"/>
+    <origin xyz="${body_x/2} ${-0.06} ${cam_z - zr}" rpy="0 ${cam_pitch_rad} 0"/>
+  </joint>
+  <gazebo reference="stereo_right_link">
+    <sensor type="camera" name="stereo_right">
+      <update_rate>${cam_rate}</update_rate>
+      <always_on>${cam_always_on}</always_on>
+      <visualize>false</visualize>
+      <topic>stereo_right</topic>
+      <camera>
+        <horizontal_fov>1.5708</horizontal_fov>
+        <image><width>${cam_width}</width><height>${cam_height}</height><format>R8G8B8</format></image>
+        <clip><near>0.10</near><far>25.0</far></clip>
+        <noise><type>gaussian</type><mean>0.0</mean><stddev>0.004</stddev></noise>
+      </camera>
+    </sensor>
+  </gazebo>
+
+  <!-- RGB-D：只当"深度标尺"给双目打分，不参与 SLAM（SPEC §5） -->
+  <xacro:if value="$(arg enable_rgbd)">
+    <link name="rgbd_link"/>
+    <joint name="rgbd_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="rgbd_link"/>
+      <origin xyz="${body_x/2 + 0.005} 0 ${cam_z - zr + 0.01}" rpy="0 ${cam_pitch_rad} 0"/>
+    </joint>
+    <gazebo reference="rgbd_link">
+      <sensor type="rgbd_camera" name="rgbd">
+      <update_rate>${cam_rate}</update_rate>
+      <always_on>${cam_always_on}</always_on>
+        <visualize>false</visualize>
+        <topic>rgbd</topic>
+        <camera>
+          <horizontal_fov>1.5708</horizontal_fov>
+          <image><width>${cam_width}</width><height>${cam_height}</height><format>R8G8B8</format></image>
+          <clip><near>0.10</near><far>25.0</far></clip>
+        </camera>
+      </sensor>
+    </gazebo>
+  </xacro:if>
+
+  <!-- 3D 激光：32 线，竖直 −25°…+15°，装在雷达塔顶（塔体是 visual，传感器位置严格在 0.55 m） -->
+  <link name="lidar3d_link"/>
+  <joint name="lidar3d_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar3d_link"/>
+    <origin xyz="-0.100 0 ${lidar_z - zr}" rpy="0 0 0"/>
+  </joint>
+  <gazebo reference="lidar3d_link">
+    <sensor type="gpu_lidar" name="lidar3d">
+      <update_rate>${lidar_rate}</update_rate>
+      <always_on>true</always_on>
+      <visualize>false</visualize>
+      <topic>lidar3d</topic>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>${lidar_samples}</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle>3.14159</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>${lidar_beams}</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.43633</min_angle>
+            <max_angle>0.26180</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.30</min>
+          <max>25.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise><type>gaussian</type><mean>0.0</mean><stddev>0.01</stddev></noise>
+      </lidar>
+    </sensor>
+  </gazebo>
+
+  <!-- IMU：200 Hz，含噪声 + 零偏随机游走 -->
+  <link name="imu_link"/>
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 ${0.210 - zr}" rpy="0 0 0"/>
+  </joint>
+  <gazebo reference="imu_link">
+    <sensor type="imu" name="imu">
+      <update_rate>200</update_rate>
+      <always_on>true</always_on>
+      <topic>imu</topic>
+      <imu>
+        <angular_velocity>
+          <x><noise type="gaussian"><mean>0</mean><stddev>0.0009</stddev>
+              <dynamic_bias_stddev>0.00004</dynamic_bias_stddev>
+              <dynamic_bias_correlation_time>200</dynamic_bias_correlation_time></noise></x>
+          <y><noise type="gaussian"><mean>0</mean><stddev>0.0009</stddev>
+              <dynamic_bias_stddev>0.00004</dynamic_bias_stddev>
+              <dynamic_bias_correlation_time>200</dynamic_bias_correlation_time></noise></y>
+          <z><noise type="gaussian"><mean>0</mean><stddev>0.0009</stddev>
+              <dynamic_bias_stddev>0.00004</dynamic_bias_stddev>
+              <dynamic_bias_correlation_time>200</dynamic_bias_correlation_time></noise></z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x><noise type="gaussian"><mean>0</mean><stddev>0.012</stddev></noise></x>
+          <y><noise type="gaussian"><mean>0</mean><stddev>0.012</stddev></noise></y>
+          <z><noise type="gaussian"><mean>0</mean><stddev>0.012</stddev></noise></z>
+        </linear_acceleration>
+      </imu>
+    </sensor>
+  </gazebo>
+
+  <!-- ============================================================ 麦克纳姆轮 -->
+  <!-- 每个轮子 = 胎面圆柱 + 两侧轮毂 + 轮毂盖 + 9 个 45° 辊子（真实结构）。
+       辊子只是 visual：碰撞体仍是整圆，否则 40 个微小接触点会把物理拖垮并让速度跟踪失真。 -->
+  <xacro:macro name="mecanum_wheel" params="prefix x y hand">
+    <link name="wheel_${prefix}_link">
+      <xacro:cyl_inertia m="${mass_wheel}" r="${wheel_radius}" l="${wheel_width}"/>
+      <collision name="tire_collision">
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+      </collision>
+
+      <!-- 真麦克纳姆轮**没有轮胎筒**：滚动面就是那 9 根辊子。这里只放两侧轮缘盘 + 轮毂，
+           辊子由 rollers.xacro（scripts/gen_rollers.py 生成）按左右手性镜像插入。
+           碰撞体仍是整圆 cylinder（物理口径不动，见文件头与 §4.2）。 -->
+      <xacro:cyl_vis name="rim_o"    xyz="0 ${wheel_width/2 - 0.0025} 0"  r="0.050" l="0.005" mat="amr_grey"   rpy="1.5708 0 0"/>
+      <xacro:cyl_vis name="rim_i"    xyz="0 ${-wheel_width/2 + 0.0025} 0" r="0.050" l="0.005" mat="amr_grey"   rpy="1.5708 0 0"/>
+      <xacro:cyl_vis name="hub_core" xyz="0 0 0"                          r="0.032" l="${wheel_width - 0.010}" mat="amr_steel" rpy="1.5708 0 0"/>
+      <xacro:cyl_vis name="hub_cap"  xyz="0 ${wheel_width/2 + 0.001} 0"   r="0.016" l="0.006" mat="amr_chrome" rpy="1.5708 0 0"/>
+
+      <!-- 辊子：包络外沿 = 轮半径，轴线与轮轴成 45°，左侧(+y)与右侧(-y)镜像 -->
+      <xacro:if value="${visual_detail == 'high'}">
+        <xacro:if value="${hand == 'l'}">
+          <xacro:mecanum_rollers_l/>
+        </xacro:if>
+        <xacro:unless value="${hand == 'l'}">
+          <xacro:mecanum_rollers_r/>
+        </xacro:unless>
+      </xacro:if>
+    </link>
+
+    <!-- 轮轴 z 必须是 **0**（base_link 原点就在轮轴高度，见 base_joint 的 +wheel_radius）。
+         这里原来写的是 `${-body_z0}`（-0.09）→ 轮轴比 base_link 低 0.09 → 整车要抬高 0.09
+         才能让轮子落地，于是：
+           裙边底 0.18 m（设计 0.09）、轮顶 0.152 m → **车身在轮子上方悬空 0.028 m**（GUI 里一眼看到）
+           相机实际 0.45 m（代码 CAM_Z=0.35）、激光实际 0.64 m（文档 0.55）
+         改回 0 之后：base_footprint 落地 = 0 → 相机 0.35 / 雷达 0.55 / 裙边 0.09，与文档和标定常量一致。 -->
+    <joint name="wheel_${prefix}_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="wheel_${prefix}_link"/>
+      <origin xyz="${x} ${y} 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <!-- 必须显式给 effort：continuous 关节不写 limit 时，SDF 里的 limit.effort 取默认值，
+           MecanumDrive 的速度电机力上限就跟着它 —— 实测轮子只能到命令速度的 67%
+           （命令 0.2 m/s -> 轮角推算 0.134 m/s，真值也 0.134，说明轮子自己没转到位）。
+           12 kg 的车 50 N·m 已经远超需要（正常约 1 N·m 量级）。 -->
+      <limit effort="50" velocity="30"/>
+      <dynamics damping="0.05" friction="0.02"/>
+    </joint>
+
+    <!-- 摩擦：isotropic 是"默认各向同性"；anisotropic 让横向摩擦大于滚动方向，
+         近似辊子 45° 的方向性（SPEC §4.2 补救① 的第一版） -->
+    <gazebo reference="wheel_${prefix}_link">
+      <mu1>0.85</mu1>
+      <xacro:if value="${wheel_friction == 'anisotropic'}">
+        <mu2>1.70</mu2>
+      </xacro:if>
+      <xacro:unless value="${wheel_friction == 'anisotropic'}">
+        <mu2>0.85</mu2>
+      </xacro:unless>
+      <kp>1000000.0</kp>
+      <kd>1.0</kd>
+      <minDepth>0.001</minDepth>
+      <maxVel>0.0</maxVel>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- 前进方向 +X：FL(+x,+y) FR(+x,-y) RL(-x,+y) RR(-x,-y) -->
+  <xacro:mecanum_wheel prefix="fl" x="${ wheelbase/2}" y="${ track/2}" hand="l"/>
+  <xacro:mecanum_wheel prefix="fr" x="${ wheelbase/2}" y="${-track/2}" hand="r"/>
+  <xacro:mecanum_wheel prefix="rl" x="${-wheelbase/2}" y="${ track/2}" hand="l"/>
+  <xacro:mecanum_wheel prefix="rr" x="${-wheelbase/2}" y="${-track/2}" hand="r"/>
+
+  <!-- ============================================================ 驱动 -->
+  <!-- Fortress 自带 MecanumDrive：直接吃 cmd_vel 的 vx/vy/ωz（SPEC §4.2）。
+       参数名按 `strings libignition-gazebo6-mecanum-drive-system.so` 核对过；
+       写成 rear_* / left_wheel_radius / wheel_base / publish_odom 会被静默忽略。 -->
+  <gazebo>
+    <plugin filename="ignition-gazebo-mecanum-drive-system"
+            name="ignition::gazebo::systems::MecanumDrive">
+      <front_left_joint>wheel_fl_joint</front_left_joint>
+      <back_left_joint>wheel_rl_joint</back_left_joint>
+      <front_right_joint>wheel_fr_joint</front_right_joint>
+      <back_right_joint>wheel_rr_joint</back_right_joint>
+      <wheel_radius>${wheel_radius}</wheel_radius>
+      <wheel_separation>${track}</wheel_separation>
+      <wheelbase>${wheelbase}</wheelbase>
+      <odom_publish_frequency>50</odom_publish_frequency>
+      <odom_topic>/model/depot_bot/odom</odom_topic>
+    </plugin>
+    <plugin filename="ignition-gazebo-joint-state-publisher-system"
+            name="ignition::gazebo::systems::JointStatePublisher">
+      <topic>joint_states</topic>
+    </plugin>
+  </gazebo>
+
+</robot>

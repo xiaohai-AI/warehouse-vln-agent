@@ -1,0 +1,4 @@
+{"run": "p6-113651", "i": 0, "node": "understand", "utterance": "去 C-L-21-1", "reason_code": "BLOCKED", "target": "", "wall_s": 0.01}
+{"run": "p6-113651", "i": 1, "node": "resolve", "utterance": "去 C-L-21-1", "reason_code": "BLOCKED", "target": "", "wall_s": 0.01}
+{"run": "p6-113651", "i": 2, "node": "recover", "utterance": "去 C-L-21-1", "reason_code": "BLOCKED", "target": "", "wall_s": 0.01}
+{"run": "p6-113651", "i": 3, "node": "respond", "utterance": "去 C-L-21-1", "reason_code": "BLOCKED", "target": "", "wall_s": 0.01}

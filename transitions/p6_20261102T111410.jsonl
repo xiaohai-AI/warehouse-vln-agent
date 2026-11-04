@@ -1,0 +1,7 @@
+{"run": "p6-111141", "i": 0, "node": "understand", "utterance": "去 A-R-01-1", "reason_code": "OBSERVE_VLM_FAILED", "target": "A-R-01-1", "wall_s": 149.32}
+{"run": "p6-111141", "i": 1, "node": "resolve", "utterance": "去 A-R-01-1", "reason_code": "OBSERVE_VLM_FAILED", "target": "A-R-01-1", "wall_s": 149.32}
+{"run": "p6-111141", "i": 2, "node": "plan", "utterance": "去 A-R-01-1", "reason_code": "OBSERVE_VLM_FAILED", "target": "A-R-01-1", "wall_s": 149.32}
+{"run": "p6-111141", "i": 3, "node": "act", "utterance": "去 A-R-01-1", "reason_code": "OBSERVE_VLM_FAILED", "target": "A-R-01-1", "wall_s": 149.32}
+{"run": "p6-111141", "i": 4, "node": "verify", "utterance": "去 A-R-01-1", "reason_code": "OBSERVE_VLM_FAILED", "target": "A-R-01-1", "wall_s": 149.32}
+{"run": "p6-111141", "i": 5, "node": "recover", "utterance": "去 A-R-01-1", "reason_code": "OBSERVE_VLM_FAILED", "target": "A-R-01-1", "wall_s": 149.32}
+{"run": "p6-111141", "i": 6, "node": "respond", "utterance": "去 A-R-01-1", "reason_code": "OBSERVE_VLM_FAILED", "target": "A-R-01-1", "wall_s": 149.32}

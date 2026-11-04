@@ -1,0 +1,56 @@
+# AMCL（全向）+ 静态世界图：M2/Nav2 的绝对定位
+#
+# 为什么必须有它
+#   之前 M2 的"定位"其实是 `map->odom` 固定常量 + 轮式里程计 —— 没有任何绝对位姿来源。
+#   实测：每轮"回起点"后 odom 认为在 −20.44，车实际在 −20.52，**每轮漂 1.5–2 cm，
+#   5 轮累积 8–12 cm**，正好把落点误差从 0.06 顶到 0.13，判据 0.10 m 时通时不通。
+#   这不是底盘问题（稳态兑现 99%）、也不是地图问题（map-check 全 PASS），是定位缺失。
+#
+#   静态图里已经有货架/立柱/墙/叉车，`/scan` 由 scan_relay 从激光抽出单环 —— 这两个东西
+#   本来就够 AMCL 用了（SLAM-1 用它建图，只是沿长直巷道有滑动；短距离定位够）。
+#
+# robot_model_type 必须是 OmniMotionModel：默认的差分模型会把横移当成噪声，M2 这种
+# "原地转向 + 纯侧移"的动作会被算成"没动"，粒子权重直接崩掉。
+amcl:
+  ros__parameters:
+    use_sim_time: true
+    alpha1: 0.2
+    alpha2: 0.2
+    alpha3: 0.2
+    alpha4: 0.2
+    alpha5: 0.2
+    base_frame_id: base_footprint
+    global_frame_id: map
+    odom_frame_id: odom
+    scan_topic: /scan
+    robot_model_type: nav2_amcl::OmniMotionModel
+    laser_model_type: likelihood_field
+    laser_likelihood_max_dist: 2.0
+    laser_max_range: 25.0
+    laser_min_range: 0.2
+    max_beams: 120
+    max_particles: 2500
+    min_particles: 500
+    pf_err: 0.05
+    pf_z: 0.99
+    update_min_a: 0.05
+    update_min_d: 0.02
+    resample_interval: 1
+    transform_tolerance: 0.5
+    recovery_alpha_slow: 0.0
+    recovery_alpha_fast: 0.0
+    # 出生点即已知：直接给初值，省掉"设初始位姿"这一步（GUI 里手点在这里不可用）
+    set_initial_pose: true
+    always_reset_initial_pose: false
+    initial_pose:
+      x: -31.0
+      y: 0.0
+      z: 0.0
+      yaw: 0.0
+    tf_broadcast: true
+    save_pose_rate: 0.5
+
+map_server:
+  ros__parameters:
+    use_sim_time: true
+    yaml_filename: ""

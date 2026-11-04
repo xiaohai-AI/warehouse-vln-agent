@@ -1,0 +1,21 @@
+# depot-vln Agent 层依赖 —— 全部锁死精确版本
+# 铁律（SPEC §8.5 / §11）：升级只允许发生在阶段边界，且必须重跑 `make bench`。
+# 实测通过的组合（2026-10-26，python3.10 + ROS Humble）：
+langgraph==1.2.18
+langgraph-checkpoint==4.3.1
+langgraph-checkpoint-sqlite==3.1.2
+langgraph-prebuilt==1.1.1
+langchain-core==1.7.0
+langchain-ollama==1.1.0
+pydantic==2.13.4
+pyyaml==6.0.2
+# 说明：np/PIL 等走系统包（python3.10 -m venv --system-site-packages 建 .venv）。
+# 安装：python3.10 -m venv --system-site-packages .venv && .venv/bin/pip install -r requirements.txt
+
+# 2026-11-01 修补说明（见 docs/TROUBLESHOOTING.md §31）：
+#   .venv 当时**没有**装上本文件的传递依赖（pydantic / anyio / httpx / tenacity / sniffio /
+#   websockets / httpcore / h11 / exceptiongroup / xxhash / pydantic-settings 等只在
+#   ~/.local 里）。因为 ~/.bashrc 有 `export PYTHONNOUSERSITE=1`，用户 shell 里就报
+#   `No module named 'pydantic'`。已从用户 site 复制补齐（离线）。
+#   有网络时请直接重装以恢复可复现性：  .venv/bin/pip install -r requirements.txt
+#   验证：  make p6-selftest   与   PYTHONNOUSERSITE=1 .venv/bin/python scripts/eval_bench.py --help
