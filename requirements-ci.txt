@@ -11,3 +11,6 @@
 
 -r requirements.txt
 numpy>=1.26,<3
+# 判据链现在就是 pytest 断言（原来那套"读日志对账"脚本已删）
+pytest>=7
+

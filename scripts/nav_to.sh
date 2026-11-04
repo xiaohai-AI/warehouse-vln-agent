@@ -121,7 +121,11 @@ if [ -f results/map_pub.log ]; then
   read_line=$(grep -o '读数 OK：[^\n]*' results/map_pub.log | tail -1)
   [ -n "$read_line" ] && echo "[nav] $read_line"
   # 偏移离出生点太远 = 仿真被手动开脏了（odom 累积误差），提示但不阻断
-  if echo "$line" | grep -q 'map->odom = (-31.000, 0.000'; then
+  # 与出生点比较：偏移≈出生点 = odom 干净（出生点由 catalog 派生，不再写死字符串）
+  if echo "$line" | grep -qE 'map->odom = \(' && awk -v sx="$SPAWN_X" -v line="$line" 'BEGIN{
+        match(line, /map->odom = \(([-0-9.]+),/, m);
+        exit !(m[1] != "" && (m[1] - sx) < 0.5 && (sx - m[1]) < 0.5)
+      }'; then
     echo "[nav] map->odom 与出生点一致（车在出生点、odom 干净）"
   else
     echo "[nav] ⚠️ map->odom 不是出生点值 —— 说明 odom 已被手动驾驶污染（本次已按真值修正）；"

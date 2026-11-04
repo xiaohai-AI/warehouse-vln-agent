@@ -32,8 +32,10 @@ GOAL_Y=${GOAL_Y:--1.60}
 #   从出生点 (-31,0) 到目标 (-21,-1.6) 的直线在 x=-26 处 y=-0.80，
 #   把车放在 y=-1.60 时机器人从北侧 0.8 m 擦过去，**根本不用绕** ——
 #   这曾让一轮试验台报出假 "BYPASSED"（路径 y 范围 -1.62~-0.87 就是那条斜线本身）。
-CART_Y=${CART_Y:-$(awk -v cx="$CART_X" -v gx="$GOAL_X" -v gy="$GOAL_Y" \
-  'BEGIN{printf "%.2f", (cx+31.0)/(gx+31.0)*gy}')}
+# 出生点 X 从 catalog 取（原来写死 +31.0，换世界就插值错）
+SPAWN_X=${SPAWN_X:-$("${PY:-python3}" -c 'from depot_vln.catalog import get_catalog; print(get_catalog().spawn["x"])')}
+CART_Y=${CART_Y:-$(awk -v cx="$CART_X" -v gx="$GOAL_X" -v gy="$GOAL_Y" -v sx="$SPAWN_X" \
+  'BEGIN{printf "%.2f", (cx-sx)/(gx-sx)*gy}')}
 HOLD=${HOLD:-40}            # 仿真秒：车停在路上多久（40 ≈ 90 墙钟秒，够机器人做决定）
 GOAL_TIMEOUT=${GOAL_TIMEOUT:-200}
 TUNE=${TUNE:-}
@@ -123,7 +125,7 @@ GOAL="{pose: {header: {frame_id: 'map'}, pose: {position: {x: $GOAL_X, y: $GOAL_
 if [ "${CONTROL:-0}" = "1" ]; then
   echo "[probe] CONTROL：**不放推车**，只测路径在 x=$CART_X 处的 y（对照基线）"
   straight=$(awk -v cx="$CART_X" -v gx="$GOAL_X" -v gy="$GOAL_Y" \
-    'BEGIN{printf "%.2f", (cx+31.0)/(gx+31.0)*gy}')
+    'BEGIN{printf "%.2f", (cx-sx)/(gx-sx)*gy}')
   ( timeout "$GOAL_TIMEOUT" ros2 action send_goal /navigate_to_pose \
       nav2_msgs/action/NavigateToPose "$GOAL" > results/probe_goal.log 2>&1 ) &
   GPID=$!

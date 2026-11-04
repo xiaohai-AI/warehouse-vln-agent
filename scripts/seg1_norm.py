@@ -26,10 +26,31 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from drive_to import drive_to_point  # noqa: E402
 from slam_route import TruthPoller  # noqa: E402
 
-# 巷道行驶中线：C 巷往北偏 0.3 m 绕开叉车（叉车占 y −3.01..−2.39）
-AISLE_LINES = [-10.75, -6.45, -1.85, 2.15, 6.45, 10.75]
-CROSS_X = 31.5
-BARRIER_X = (11.0, 12.3)          # F 巷护栏在 x 11.29–12.01
+from depot_vln.catalog import get_catalog  # noqa: E402
+from depot_vln.semantic_graph import SemanticGraph  # noqa: E402
+
+_CAT = get_catalog()
+_LAYOUT = _CAT.layout
+
+
+def _capture_offsets() -> dict[str, float]:
+    import yaml
+
+    p = _CAT.world_path
+    _ = p  # 路径只为可读性；偏移来自 config/nav.yaml
+    cfg = yaml.safe_load((__import__("pathlib").Path(__file__).resolve().parents[1]
+                          / "config" / "nav.yaml").read_text(encoding="utf-8")) or {}
+    return {str(k).upper(): float(v) for k, v in (cfg.get("capture_lane_offsets") or {}).items()}
+
+
+_OFFS = _capture_offsets()
+# 巷道行驶中线 = 巷道中心 + 该巷的采集车道偏移（config/nav.yaml:capture_lane_offsets）。
+# 原来写死 [-10.75, -6.45, -1.85, ...]，-1.85 的来历只存在于注释里。
+AISLE_LINES = [float(a["center_y"]) + _OFFS.get(str(a["name"]).upper(), 0.0)
+               for a in _LAYOUT["aisles"]]
+CROSS_X = abs(float(_CAT.spawn["x"]))          # 横通道中线 = 出生点 X（几何派生）
+_BARRIER = [s for s in _CAT.blocked_segments() if s.get("barrier_xs")]
+BARRIER_X = (_BARRIER[0]["barrier_xs"][0], _BARRIER[0]["barrier_xs"][1]) if _BARRIER else (0.0, 0.0)
 
 
 def main() -> int:

@@ -1,18 +1,10 @@
 name: verify
 
-# 只跑**离线判据链**：不需要 ROS / rclpy / Gazebo / GPU / 显示器。
-#   - 判据账本   make accept            → 16 条判据 + docs/ACCEPTANCE.md
-#   - 文档一致   make docs-check        → 9 项（合计=行数、判据版本、存档数…）
-#   - 交付自检   delivery_check.sh      → 16 条记账 + 产物齐（不硬编码 PASS 数）
-#   - 安全层自检 make guard-selftest    → 7 例纯逻辑
-# 四条都在 scripts/ci_local.sh 里，CI 和本地跑的是**同一条命令**（避免两处漂移）。
+# 只跑**离线**断言：不需要 ROS / Gazebo / GPU / 显示器。
+# 判据在 tests/ 里是断言，"读日志对账"那套已经删掉了（它不会因为代码坏了而变红）。
 #
-# 不放进 CI 的东西（以及为什么）：
-#   make world / make map-check  → 需要 opencv(cv2) 生成纹理，且会重写被跟踪的
-#                                  ground_truth/*.json；世界可复现性应在人工环节验。
-#   make sim / m2-static / slam1 / seg1 / seg2 / p6-demo
-#                                → 需要 Gazebo + GPU + 无显示器模式，不适合托管 runner；
-#                                  这些判据的证据已作为产物提交（见 docs/DELIVERY.md）。
+# 不放进 CI 的：make world / robot（要 opencv 与 xacro，且会重写被跟踪的真值）、
+# 以及一切需要 Gazebo 的判据。证据以产物形式提交，见 docs/LIMITATIONS.md。
 
 on:
   push:
@@ -28,41 +20,45 @@ permissions:
   contents: read
 
 jobs:
-  offline-criteria:
-    name: 离线判据链（无 ROS / 无 GPU）
+  offline:
+    name: 离线断言（无 ROS / 无 GPU）
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     steps:
-      - name: 检出
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Python 3.10（项目基线；Makefile 在无 .venv 时回退到 python3.10）
+      - name: Python 3.10（项目基线）
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
           cache: pip
           cache-dependency-path: requirements-ci.txt
 
-      - name: 依赖（判据链全部依赖，见 requirements-ci.txt）
+      - name: 依赖
         run: |
           python3.10 -m pip install --upgrade pip
           python3.10 -m pip install -r requirements-ci.txt
 
-      - name: 环境自检（确认没有误把 ROS 当依赖）
+      - name: 确认没有把 ROS 当依赖
         run: |
           python3.10 -c "import numpy, yaml, langgraph, pydantic; print('deps OK')"
-          python3.10 -c "import rclpy" 2>/dev/null && { echo 'rclpy 不该出现在这里'; exit 1; } || echo 'rclpy 未安装 ✓（判据链不需要）'
-          python3.10 --version
+          python3.10 -c "import rclpy" 2>/dev/null && { echo 'rclpy 不该出现在这里'; exit 1; } || echo 'rclpy 未安装 ✓'
 
-      - name: 离线判据链（4/4）
-        run: bash scripts/ci_local.sh
+      - name: 单元测试（含反硬编码 / 真值隔离守护）
+        run: python3.10 -m pytest tests -q
 
-      - name: 上传账本与审计产物
+      - name: 指令基准（静默猜错必须为 0）
+        run: python3.10 -m depot_vln.eval --backend rule --inventory sim --out results/bench.csv
+
+      - name: 前向安全层自检
+        run: python3.10 scripts/forward_guard.py --selftest
+
+      - name: 上传结果
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: acceptance
+          name: bench
           if-no-files-found: warn
           path: |
-            docs/ACCEPTANCE.md
-            results/verify_audit.json
+            results/bench.csv
+            results/bench.json
