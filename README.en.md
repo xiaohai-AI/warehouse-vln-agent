@@ -1,9 +1,9 @@
-# depot-vln
+# warehouse-vln-agent
 
 **A mecanum-wheeled warehouse robot that turns natural language into navigation — with a semantic
 map grown from perception, not copied from ground truth.**
 
-`depot-vln` is a reference implementation of an Amazon-style automated warehouse in simulation.
+`warehouse-vln-agent` is a reference implementation of an Amazon-style automated warehouse in simulation.
 A 4-wheel mecanum platform drives a 6-aisle rack warehouse (24 bays per aisle, 2 levels), plans and
 localizes with **ROS 2 Humble + Nav2**, looks at racks with a **stereo camera**, and executes commands
 such as *"go to bay 10"*, *"which rack face has the most cartons?"* or *"go to the empty slot farthest
@@ -11,6 +11,9 @@ inside aisle A"* through a **LangGraph** agent.
 
 > 中文说明（含设计细节与限制清单）见 [README.md](README.md)。自然语言输入支持中文与英文，
 > agent 的回答目前是中文。
+
+> Repository: `warehouse-vln-agent` · Python package: `depot_vln` · project/command name in the
+> code and docs: `depot-vln`.
 
 The point of the project is not the demo video. It is three boundaries that are enforced by code and
 tests, not by convention:
@@ -133,7 +136,7 @@ If `ign` is missing: `sudo apt install ignition-fortress`.
 ### 2. Python environment
 
 ```bash
-cd ~/depot-vln
+cd ~/warehouse-vln-agent
 python3.10 -m venv --system-site-packages .venv
 source .venv/bin/activate
 python -m pip install -U pip

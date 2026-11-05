@@ -1,6 +1,8 @@
-# depot-vln
+# warehouse-vln-agent
 
 > **English** · [Introduction, installation, runnable demos](README.en.md)
+>
+> 仓库名 `warehouse-vln-agent`；Python 包名 / 命令前缀仍是 `depot-vln` / `depot_vln`。
 
 亚马逊式自动化仓库里的**麦克纳姆全向车 + 组合 SLAM + 从感知长出来的语义地图 + LangGraph 指代导航**。
 底层 ROS 2 Humble / Nav2 / Gazebo Fortress，顶层 LangGraph。
