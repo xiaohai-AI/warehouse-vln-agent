@@ -22,10 +22,20 @@ import time
 from pathlib import Path
 
 import numpy as np
-import rclpy
-from rclpy.node import Node
-from rclpy.qos import QoSProfile, ReliabilityPolicy
-from sensor_msgs.msg import CameraInfo, Image
+
+try:
+    import rclpy
+    from rclpy.node import Node
+    from rclpy.qos import QoSProfile, ReliabilityPolicy
+    from sensor_msgs.msg import CameraInfo, Image
+except ModuleNotFoundError as _e:      # 最常见的误用：没 source ROS 就跑
+    if _e.name != "rclpy":
+        raise
+    raise SystemExit(
+        "找不到 rclpy —— 这个脚本要在 ROS 2 环境里跑：\n"
+        "    source /opt/ros/humble/setup.bash\n"
+        "或者直接用 `make seg2-all` / `make seg2-aisles`（Makefile 已经替你 source 了）。"
+    ) from None
 
 ROOT = Path(__file__).resolve().parents[1]
 # 让 `import depot_vln` 在任何 cwd 下都能用（脚本以 scripts/ 为 sys.path[0] 运行）
@@ -240,6 +250,11 @@ def capture_aisle(node: "Cam", poller, sg: dict, aisle: str, bays: list[int],
     print(f"[seg2] 巷道 {aisle}（y={y_line:+.2f}）bay {bays[0]}..{bays[-1]} -> "
           f"{len(views)} 个观测（每 bay 左/右各一帧）")
 
+    # **先确认相机在出帧，再动车**。原来这条检查在转场之后，于是相机桥没起时
+    # 会先把车开到巷道口、再报"拿不到 RGB-D"，白白浪费一次转场。
+    if node.fresh(20.0) is None:
+        print(f"[seg2] {aisle}：拿不到 RGB-D（`make cam-bridge` 起了吗？）-> 未跑")
+        return 0
     entry_x = min(v["x"] for v in views) - 1.2
     p0 = poller.get()
     if p0 is None or abs(p0[1] - y_line) > 0.6 or abs(p0[0] - entry_x) > 3.0:
@@ -260,9 +275,6 @@ def capture_aisle(node: "Cam", poller, sg: dict, aisle: str, bays: list[int],
     if frames:
         print(f"[seg2] {aisle} 巷续跑：断点里已有 {len(frames)} 帧（跳过已覆盖的观测）")
     t_start = time.monotonic()
-    if node.fresh(20.0) is None:
-        print("[seg2] 拿不到 RGB-D（相机桥没起？）-> 未跑")
-        return 0
     for i, v in enumerate(views):
         if (v["bay"], v["side"]) in done:
             continue

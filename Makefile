@@ -37,6 +37,8 @@ help:
 	@echo ""
 	@echo "  判据（仿真在跑时）"
 	@echo "    make m1-truth / m2-static / s1-depth / slam1 / seg1 / seg2 / p6-demo"
+	@echo "    make seg2-all           全 6 巷 SEG-2 采集（需 sim + cam-bridge；可断点续跑）"
+	@echo "    make seg2-detect-all    全巷检测评分（不需要 ROS）"
 	@echo "    make slam1-s3 / slam1-s4 / slam1-s5   视觉里程计三配置"
 
 # ---------------------------------------------------------------- 世界与机器人
@@ -178,17 +180,23 @@ seg2:
 # 全 6 条巷道的 SEG-2 采集（按巷落盘、断点续跑）。
 # 每条巷 48 帧（24 bay × 左右各一帧），F 巷 18–24 被路障封死 -> 只采到 17。
 # 需要先 `make seg2-robot && make sim && make cam-bridge`。速度按实测 RTF≈0.22 定。
+#
+# **必须 source ROS**：rclpy 在 /opt/ros/humble 里，不 source 就是
+# `ModuleNotFoundError: No module named 'rclpy'`（实测踩过）。
+# 不加 -u 的话 stdout 被缓冲，长任务看不到任何进度（也踩过）。
 seg2-all:
-	.venv/bin/python -u scripts/seg2_capture.py --aisles all --bays 1-24 --speed 0.40 \
-	  --max-seconds 5400 --pitch 16
+	bash -lc 'source $(ROS) && exec $(PY) -u scripts/seg2_capture.py --aisles all \
+	  --bays 1-24 --speed 0.40 --max-seconds 5400 --pitch 16'
 
 # 已经在仿真里、只想补某几条巷：AISLES=C,E make seg2-aisles
 seg2-aisles:
-	.venv/bin/python -u scripts/seg2_capture.py --aisles $${AISLES:?AISLES=A,B} --bays $${BAYS:-1-24} \
-	  --speed 0.40 --max-seconds 5400 --pitch 16
+	bash -lc 'source $(ROS) && exec $(PY) -u scripts/seg2_capture.py --aisles $${AISLES:?AISLES=A,B} \
+	  --bays $${BAYS:-1-24} --speed 0.40 --max-seconds 5400 --pitch 16'
 
 # 全巷检测（吃 results/seg2_frames_*.npz）
 seg2-detect-all:
+	@ls results/seg2_frames_*.npz >/dev/null 2>&1 || { \
+	  echo "没有 results/seg2_frames_*.npz —— 先跑 make seg2-all"; exit 1; }
 	$(PY) scripts/seg2_detect.py --frames $$(ls results/seg2_frames_*.npz) \
 	  --out results/seg2.json --plot
 
