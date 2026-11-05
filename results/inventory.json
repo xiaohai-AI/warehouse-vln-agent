@@ -5,15 +5,15 @@
     "sources": [
       {
         "source": "results/seg2.json",
-        "n": 46
+        "n": 48
       }
     ],
-    "built_at": "2026-11-04T13:13:51",
+    "built_at": "2026-11-04T18:25:00",
     "note": "只包含真实观测过的货位；未观测的货位在运行时是 'unknown'，不是 '空'"
   },
   "now": 0.0,
-  "n_observed": 46,
-  "n_known": 46,
+  "n_observed": 48,
+  "n_known": 48,
   "slots": {
     "A-L-01-1": {
       "occupied": true,
@@ -33,7 +33,7 @@
     },
     "A-L-03-1": {
       "occupied": true,
-      "class": "carton_m",
+      "class": "carton_s",
       "confidence": 0.9,
       "observed_at": 0.0,
       "source": "seg2/perception",
@@ -281,7 +281,7 @@
     },
     "A-R-10-1": {
       "occupied": true,
-      "class": "carton_l",
+      "class": "carton_m",
       "confidence": 0.9,
       "observed_at": 0.0,
       "source": "seg2/perception",
@@ -295,6 +295,14 @@
       "source": "seg2/perception",
       "stale": false
     },
+    "A-R-12-1": {
+      "occupied": true,
+      "class": "carton_l",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
     "A-R-13-1": {
       "occupied": true,
       "class": "carton_s",
@@ -304,9 +312,9 @@
       "stale": false
     },
     "A-R-14-1": {
-      "occupied": true,
-      "class": "carton_l",
-      "confidence": 0.9,
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
       "observed_at": 0.0,
       "source": "seg2/perception",
       "stale": false
@@ -352,17 +360,17 @@
       "stale": false
     },
     "A-R-20-1": {
-      "occupied": true,
-      "class": "carton_l",
-      "confidence": 0.9,
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
       "observed_at": 0.0,
       "source": "seg2/perception",
       "stale": false
     },
     "A-R-21-1": {
-      "occupied": true,
-      "class": "carton_m",
-      "confidence": 0.9,
+      "occupied": false,
+      "class": null,
+      "confidence": 0.75,
       "observed_at": 0.0,
       "source": "seg2/perception",
       "stale": false
@@ -376,6 +384,14 @@
       "stale": false
     },
     "A-R-23-1": {
+      "occupied": true,
+      "class": "carton_s",
+      "confidence": 0.9,
+      "observed_at": 0.0,
+      "source": "seg2/perception",
+      "stale": false
+    },
+    "A-R-24-1": {
       "occupied": true,
       "class": "carton_s",
       "confidence": 0.9,

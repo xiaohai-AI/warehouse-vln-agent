@@ -29,7 +29,7 @@ make ci         # test + bench + 安全层自检
 | unreachable | 12 | 12 | 0 |
 
 用**真实感知库存**（`make inventory` 从 SEG-2 的 46 个观测生成，覆盖率 8%）跑同一份基准：
-35/54 通过（direct 14/14、ambiguous 11/14、unreachable 10/12、attribute 0/14）、**静默猜错 0**。差距不是"退步"，而是语义层这时只能诚实地说"我没看过" ——
+36/54 通过（direct 14/14、ambiguous 11/14、unreachable 10/12、attribute 1/14）、**静默猜错 0**。差距不是"退步"，而是语义层这时只能诚实地说"我没看过" ——
 见 [docs/LIMITATIONS.md](docs/LIMITATIONS.md)。
 
 ## 架构（三层，边界是类型不是自觉）

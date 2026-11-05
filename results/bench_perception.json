@@ -6,16 +6,16 @@
     "sources": [
       {
         "source": "results/seg2.json",
-        "n": 46
+        "n": 48
       }
     ],
-    "built_at": "2026-11-04T13:13:51",
+    "built_at": "2026-11-04T18:25:00",
     "note": "只包含真实观测过的货位；未观测的货位在运行时是 'unknown'，不是 '空'",
     "file": "/home/dan/Project/depot-vln/results/inventory.json"
   },
   "n": 54,
-  "ok": 35,
-  "rate": 0.6481,
+  "ok": 36,
+  "rate": 0.6667,
   "silent_wrong": 0,
   "per_category": {
     "direct": {
@@ -26,8 +26,8 @@
     },
     "attribute": {
       "n": 14,
-      "ok": 0,
-      "rate": 0.0,
+      "ok": 1,
+      "rate": 0.0714,
       "silent_wrong": 0
     },
     "ambiguous": {
@@ -43,5 +43,5 @@
       "silent_wrong": 0
     }
   },
-  "wall_s": 2.04
+  "wall_s": 1.28
 }

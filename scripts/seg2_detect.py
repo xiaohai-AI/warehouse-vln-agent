@@ -134,10 +134,14 @@ def classify(w: float, h: float, rgb: np.ndarray) -> tuple[str, float]:
     颜色只用来分"棕(纸箱) / 绿灰(周转箱·桶) / 亮青绿(桶)"。
     """
     r, g, b = (float(v) for v in rgb)
-    greenish = g > r + 3 and abs(g - b) <= 12
-    if greenish and g > 85:
+    # 判"非棕色"用 g 相对 r/b 的位置，而不是"绿色"：
+    # 实测周转箱渲染成 (49,49,38) 的深绿灰（g≈r、g 比 b 高 11），旧判据 `g > r+3`
+    # 直接把它当成纸箱（A 巷 3 个 tote 全被判成 carton_s/m）。
+    # 纸箱是棕色，g 明显低于 r（实测 g-r ≈ −17…−35），所以这条分得很开。
+    non_brown = (g - r) > -3.0 and (g - b) > 2.0
+    if non_brown and g > 85:
         return "drum", 0.75
-    if greenish and g <= 85:
+    if non_brown:
         return "tote", 0.80
     if w > 0.85 or (h < 0.12 and w > 0.50):
         return "pallet", 0.75      # 托盘 1.05 m 宽，比任何纸箱都宽（carton_l 只有 0.70）
@@ -165,7 +169,8 @@ def rack_plane_dist(dh: np.ndarray, z: np.ndarray, z_band: tuple[float, float],
 def cargo_components(depth: np.ndarray, k: np.ndarray, pitch_deg: float, cam_h: float,
                      z_band: tuple[float, float], obs_x: float = 0.0,
                      obs_yaw: float = 0.0, d_lo: float | None = None,
-                     d_hi: float | None = None, min_px: int = 260) -> list[dict]:
+                     d_hi: float | None = None, min_px: int = 260,
+                     bay_cx: float | None = None, bay_half: float = 0.70) -> list[dict]:
     """整幅图里找**货架内部那一段**的物体（不假设它们在本 bay）。
 
     为什么不再用"画面中心 ±0.95 m"的窗口：转向误差实测到 35°，窗口会把邻 bay 的货
@@ -192,8 +197,17 @@ def cargo_components(depth: np.ndarray, k: np.ndarray, pitch_deg: float, cam_h: 
     h_, w_ = depth.shape
     uu = np.arange(w_, dtype=np.float64)[None, :]
     wx_map = obs_x + (uu - k[0, 2]) / k[0, 0] * dh * np.sin(obs_yaw)
+    # **先按本 bay 的横向窗口裁掉**，再做连通域。
+    # 不裁的话，左右邻 bay 的货、巷道口的端板都会和本 bay 连成一块：
+    # 实测 16 个漏检全是 1.5–3.6 m 的宽块，被尺寸闸门（≤1.15 m）整块丢掉。
+    if bay_cx is not None:
+        m = m & (np.abs(wx_map - float(bay_cx)) < float(bay_half))
     mm = cv2.morphologyEx((m.astype(np.uint8)) * 255, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
-    mm = cv2.morphologyEx(mm, cv2.MORPH_CLOSE, np.ones((7, 7), np.uint8))
+    # 横向闭运算比纵向宽：一个货位只放一件货，被立柱/编号牌切成两半时要能接回去
+    # （实测 B 巷的油桶被切成两段 0.17 m，小于宽度闸门 0.28 直接漏检）。
+    # 纵向保持窄：太宽会把上一层/台面粘进来。
+    mm = cv2.morphologyEx(mm, cv2.MORPH_CLOSE,
+                          np.ones((MORPH_CLOSE_V, MORPH_CLOSE_H), np.uint8))
     n, lab, stats, _ = cv2.connectedComponentsWithStats(mm, connectivity=8)
     out = []
     for i in range(1, n):
@@ -210,26 +224,71 @@ def cargo_components(depth: np.ndarray, k: np.ndarray, pitch_deg: float, cam_h: 
         # （20° 虚高 6%、35° 虚高 22%），而三种纸箱只差 0.15–0.20 m，直接毁掉分类
         # 用 1/99 分位而不是 3/97：截断会系统性吃掉 10% 的宽度，
         # 而 carton_s/m/l 只差 0.15–0.20 m，10% 偏差足以毁掉分类
-        w_m = float(np.percentile(xx, 99) - np.percentile(xx, 1))
+        wx_lo = float(np.percentile(xx, 1))
+        wx_hi = float(np.percentile(xx, 99))
+        w_m = wx_hi - wx_lo
         h_m = float(np.percentile(zz, 95) - np.percentile(zz, 5))
         c_wx = float(np.mean(xx))
         out.append({"x0": int(x), "y0": int(y), "x1": int(x + w), "y1": int(y + h),
                     "area": int(area), "d_med": float(np.median(dd)),
                     "u_c": float(x + w / 2.0), "v_c": float(y + h / 2.0),
                     "w_m": w_m, "h_m": h_m, "c_wx": c_wx,
+                    "wx_lo": wx_lo, "wx_hi": wx_hi,
                     "z_mid": float(np.mean(zz))})
     return out
 
 
-def level_bands() -> dict[int, tuple[float, float]]:
+def level_bands(z_clear: float | None = None) -> dict[int, tuple[float, float]]:
     """每个货位层的可见高度区间 (底, 顶) —— 顶压在编号牌底面以下。"""
     from depot_vln.catalog import get_catalog
     from depot_vln.slot_signs import band_z
 
+    clear = Z_DECK_CLEAR if z_clear is None else float(z_clear)
     out: dict[int, tuple[float, float]] = {}
     for lv in get_catalog().levels:
         z0, _z1 = band_z(lv.deck_z)          # 牌子底/顶
-        out[lv.index] = (round(lv.deck_z + 0.02, 3), round(z0 - 0.01, 3))
+        out[lv.index] = (round(lv.deck_z + clear, 3), round(z0 - 0.01, 3))
+    return out
+
+
+#: 层带下界相对层板台面的抬高量（m）。
+#: 台面前沿是一整条连续的前景横梁，会把整幅货架横向连成一块（实测掩码图里
+#: 那条贯穿全宽的绿带就是它）。0.02 时它压在带内，抬到 0.12 就基本消失，
+#: 而纸箱/周转箱都坐在台面上、主体在 0.30 以上，不受影响；托盘最矮（0.15），
+#: 靠宽度（1.05 m）仍然分得出来。
+Z_DECK_CLEAR = 0.20
+
+#: 连通域最小像素数（低于它的碎片连合并都不值得做：噪点/立柱反光）
+MIN_AREA_PX = 60
+
+#: 二值图闭运算核 (纵向, 横向) 像素。
+MORPH_CLOSE_V, MORPH_CLOSE_H = 5, 15
+
+
+def _merge_fragments(mine: list[dict]) -> dict:
+    """把同一个货位里**深度相近**的碎片合成一件货。
+
+    一个货位只放一件货，但实测会被立柱/编号牌切成两半（B 巷的油桶被切成两段
+    0.17 m，小于宽度闸门 0.28 直接漏检）。深度差 >0.25 m 的不合：那是前后两排货，
+    合起来尺寸会虚高。
+    """
+    if len(mine) <= 1:
+        return max(mine, key=lambda d: d["area"])
+    base = max(mine, key=lambda d: d["area"])
+    near = [c for c in mine if abs(c["d_med"] - base["d_med"]) <= 0.25]
+    if len(near) <= 1:
+        return base
+    near.sort(key=lambda c: c["c_wx"])
+    out = dict(base)
+    out["wx_lo"] = near[0]["wx_lo"]
+    out["wx_hi"] = near[-1]["wx_hi"]
+    out["w_m"] = out["wx_hi"] - out["wx_lo"]
+    out["h_m"] = max(c["h_m"] for c in near)
+    out["area"] = sum(c["area"] for c in near)
+    out["x0"] = min(c["x0"] for c in near)
+    out["x1"] = max(c["x1"] for c in near)
+    out["y0"] = min(c["y0"] for c in near)
+    out["y1"] = max(c["y1"] for c in near)
     return out
 
 
@@ -237,7 +296,8 @@ def detect_frame(rgb: np.ndarray, depth: np.ndarray, k: np.ndarray,
                  obs_x: float, obs_y: float, obs_yaw: float, bay_cx: float,
                  pitch_deg: float = 16.0, cam_h: float = 0.436,
                  bay_half_m: float = 0.70, levels: tuple[int, ...] = (1,),
-                 d_lo: float | None = None, d_hi: float | None = None) -> dict:
+                 d_lo: float | None = None, d_hi: float | None = None,
+                 z_clear: float | None = None) -> dict:
     """单帧 -> {"levels": {lvl: det|None}, "neighbors": [...] }。
 
     归属：物体的**世界 x** = obs_x + lateral·sin(yaw)，其中 lateral 是它相对光轴的横向米数。
@@ -248,31 +308,33 @@ def detect_frame(rgb: np.ndarray, depth: np.ndarray, k: np.ndarray,
     # 原来上界写 1.60，把牌整条含进去：牌子是一整排连续的前景平面，形态学闭运算后
     # 横向连成 2.4 m 的大块，尺寸闸门（≤1.15 m）于是把所有货都判成"没有"——
     # 实测新世界（有编号牌）48 帧全部检出 0 个物体。下界保持 0.17（托盘只有 0.15 高）。
-    bands = level_bands()
+    bands = level_bands(z_clear)
     out: dict = {"levels": {}, "neighbors": []}
     for lvl in levels:
         comps = cargo_components(depth, k, pitch_deg, cam_h, bands[lvl],
                                  obs_x=obs_x, obs_yaw=obs_yaw,
-                                 d_lo=d_lo, d_hi=d_hi)
-        mine = []
+                                 d_lo=d_lo, d_hi=d_hi,
+                                 bay_cx=bay_cx, bay_half=bay_half_m)
+        # **先合并同一货位里深度相近的碎片，再过尺寸闸门**。
+        # 顺序反了的话，被立柱切开的物体（每段 0.17 m）在闸门处就被丢掉，
+        # 根本没机会合并回去 —— B 巷的油桶就是这样漏检的。
+        comps = [c for c in comps if c["area"] >= MIN_AREA_PX]
         for c in comps:
-            wx = c["c_wx"]
-            c["world_x"] = float(wx)
-            c["lateral_m"] = float(wx - obs_x)
-            # 尺寸闸门：货架立柱是 0.1 m 宽、贯穿整层的细条（实测 w≈0.11 h≈0.7）；
-            # 货物是 0.35–0.70 m 宽、0.30–0.55 m 高。不加这道门，扫全图时选中的永远是立柱。
-            if (abs(wx - bay_cx) < bay_half_m
-                    and 0.28 <= c["w_m"] <= 1.15 and c["h_m"] <= 0.62):
-                # 上限放到 1.15 m：托盘标称 1.05 m 宽，用 0.90 会把整类托盘漏掉（实测 4 个 FN）
-                # 下限 0.28 m 挡货架立柱（0.1 m 宽）；h 允许≈0（托盘扁平）
-                mine.append(c)
-            else:
-                out["neighbors"].append({"world_x": round(float(wx), 2),
-                                         "class_hint": None, "area": c["area"]})
-        if not mine:
+            c["world_x"] = float(c["c_wx"])
+            c["lateral_m"] = float(c["c_wx"] - obs_x)
+        if not comps:
             out["levels"][lvl] = None
             continue
-        c = max(mine, key=lambda d: d["area"])
+        c = _merge_fragments(comps)
+        # 尺寸闸门：货架立柱是 0.1 m 宽、贯穿整层的细条（实测 w≈0.11 h≈0.7）；
+        # 货物是 0.35–1.05 m 宽。上限 1.15 m（托盘 1.05 宽，用 0.90 会把整类漏掉）；
+        # 下限 0.28 m 挡立柱；h 允许≈0（托盘扁平）。
+        if not (abs(c["c_wx"] - bay_cx) < bay_half_m
+                and 0.28 <= c["w_m"] <= 1.15 and c["h_m"] <= 0.62):
+            out["neighbors"].append({"world_x": round(float(c["c_wx"]), 2),
+                                     "class_hint": None, "area": c["area"]})
+            out["levels"][lvl] = None
+            continue
         patch = rgb[c["y0"]:c["y1"], c["x0"]:c["x1"]].reshape(-1, 3)
         col = patch.mean(axis=0)
         name, conf = classify(c["w_m"], c["h_m"], col)
@@ -357,7 +419,12 @@ def main() -> int:
     # 2026-11-04 重标：半深货位让货物**退到货架前沿之后**（前沿 ~1.34 m、货物 1.33–2.30 m）。
     # 旧标定的 (1.10, 1.55) 只框住"前沿那条连续横梁"，整幅货架连成一块 -> 全部判空。
     ap.add_argument("--d-lo", type=float, default=1.33, help="货物最近水平距离（m）")
-    ap.add_argument("--d-hi", type=float, default=2.35, help="货物最远水平距离（m）")
+    ap.add_argument("--d-hi", type=float, default=1.60,
+                    help="货物最远水平距离（m）。它同时是**本侧/对侧**的分界："
+                         "对侧(另一条巷)的货透过空货位能看到，d≈1.75–1.95")
+    ap.add_argument("--z-clear", type=float, default=None,
+                    help="层带下界相对层板台面的抬高量（m）。台面前沿是一整条连续横梁，"
+                         "会把整幅货架横向连成一块；默认见 Z_DECK_CLEAR")
     args = ap.parse_args()
 
     paths = [Path(p) for p in args.frames]
@@ -392,7 +459,7 @@ def main() -> int:
                            obs_yaw=float(pose_i[2]), bay_cx=float(bay_cx),
                            pitch_deg=args.pitch, cam_h=args.cam_h,
                            levels=tuple(args.levels),
-                           d_lo=args.d_lo, d_hi=args.d_hi)
+                           d_lo=args.d_lo, d_hi=args.d_hi, z_clear=args.z_clear)
         levels = got["levels"]
         preds = {}
         for addr in addrs:

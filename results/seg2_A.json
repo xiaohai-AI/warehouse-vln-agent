@@ -1,0 +1,1797 @@
+{
+  "occupancy": {
+    "tp": 31,
+    "fp": 0,
+    "fn": 3,
+    "precision": 1.0,
+    "recall": 0.9118
+  },
+  "class_top1": 0.8387,
+  "class_n": 31,
+  "wrong_slot_ratio": 0.0,
+  "criteria": {
+    "precision>=0.90": true,
+    "recall>=0.85": true,
+    "top1>=0.80": true,
+    "wrong_slot<5%": true
+  },
+  "pass": true,
+  "detail": [
+    {
+      "addr": "A-L-01-1",
+      "pred": "carton_m",
+      "truth": "carton_m",
+      "level": 1
+    },
+    {
+      "addr": "A-R-01-1",
+      "pred": "carton_s",
+      "truth": "carton_s",
+      "level": 1
+    },
+    {
+      "addr": "A-L-02-1",
+      "pred": "carton_s",
+      "truth": "carton_s",
+      "level": 1
+    },
+    {
+      "addr": "A-R-02-1",
+      "pred": "carton_s",
+      "truth": "carton_s",
+      "level": 1
+    },
+    {
+      "addr": "A-L-03-1",
+      "pred": "carton_s",
+      "truth": "carton_m",
+      "level": 1
+    },
+    {
+      "addr": "A-R-03-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-L-04-1",
+      "pred": "carton_s",
+      "truth": "carton_s",
+      "level": 1
+    },
+    {
+      "addr": "A-R-04-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-L-05-1",
+      "pred": "carton_m",
+      "truth": "carton_m",
+      "level": 1
+    },
+    {
+      "addr": "A-R-05-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-L-06-1",
+      "pred": "pallet",
+      "truth": "pallet",
+      "level": 1
+    },
+    {
+      "addr": "A-R-06-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-L-07-1",
+      "pred": "tote",
+      "truth": "tote",
+      "level": 1
+    },
+    {
+      "addr": "A-R-07-1",
+      "pred": "pallet",
+      "truth": "pallet",
+      "level": 1
+    },
+    {
+      "addr": "A-L-08-1",
+      "pred": "carton_m",
+      "truth": "tote",
+      "level": 1
+    },
+    {
+      "addr": "A-R-08-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-L-09-1",
+      "pred": "carton_l",
+      "truth": "carton_l",
+      "level": 1
+    },
+    {
+      "addr": "A-R-09-1",
+      "pred": "carton_m",
+      "truth": "tote",
+      "level": 1
+    },
+    {
+      "addr": "A-L-10-1",
+      "pred": "pallet",
+      "truth": "pallet",
+      "level": 1
+    },
+    {
+      "addr": "A-R-10-1",
+      "pred": "carton_m",
+      "truth": "carton_l",
+      "level": 1
+    },
+    {
+      "addr": "A-L-11-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-R-11-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-L-12-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-R-12-1",
+      "pred": "carton_l",
+      "truth": "carton_l",
+      "level": 1
+    },
+    {
+      "addr": "A-L-13-1",
+      "pred": "carton_s",
+      "truth": "carton_s",
+      "level": 1
+    },
+    {
+      "addr": "A-R-13-1",
+      "pred": "carton_s",
+      "truth": "carton_s",
+      "level": 1
+    },
+    {
+      "addr": "A-L-14-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-R-14-1",
+      "pred": "empty",
+      "truth": "carton_l",
+      "level": null
+    },
+    {
+      "addr": "A-L-15-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-R-15-1",
+      "pred": "carton_s",
+      "truth": "carton_s",
+      "level": 1
+    },
+    {
+      "addr": "A-L-16-1",
+      "pred": "carton_m",
+      "truth": "carton_m",
+      "level": 1
+    },
+    {
+      "addr": "A-R-16-1",
+      "pred": "carton_s",
+      "truth": "tote",
+      "level": 1
+    },
+    {
+      "addr": "A-L-17-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-R-17-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-L-18-1",
+      "pred": "carton_m",
+      "truth": "carton_m",
+      "level": 1
+    },
+    {
+      "addr": "A-R-18-1",
+      "pred": "carton_l",
+      "truth": "carton_l",
+      "level": 1
+    },
+    {
+      "addr": "A-L-19-1",
+      "pred": "carton_m",
+      "truth": "carton_m",
+      "level": 1
+    },
+    {
+      "addr": "A-R-19-1",
+      "pred": "carton_m",
+      "truth": "carton_m",
+      "level": 1
+    },
+    {
+      "addr": "A-L-20-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-R-20-1",
+      "pred": "empty",
+      "truth": "carton_l",
+      "level": null
+    },
+    {
+      "addr": "A-L-21-1",
+      "pred": "pallet",
+      "truth": "pallet",
+      "level": 1
+    },
+    {
+      "addr": "A-R-21-1",
+      "pred": "empty",
+      "truth": "carton_m",
+      "level": null
+    },
+    {
+      "addr": "A-L-22-1",
+      "pred": "carton_m",
+      "truth": "carton_m",
+      "level": 1
+    },
+    {
+      "addr": "A-R-22-1",
+      "pred": "tote",
+      "truth": "tote",
+      "level": 1
+    },
+    {
+      "addr": "A-L-23-1",
+      "pred": "carton_l",
+      "truth": "carton_l",
+      "level": 1
+    },
+    {
+      "addr": "A-R-23-1",
+      "pred": "carton_s",
+      "truth": "carton_s",
+      "level": 1
+    },
+    {
+      "addr": "A-L-24-1",
+      "pred": "empty",
+      "truth": "empty",
+      "level": null
+    },
+    {
+      "addr": "A-R-24-1",
+      "pred": "carton_s",
+      "truth": "carton_s",
+      "level": 1
+    }
+  ],
+  "precision": 1.0,
+  "recall": 0.9118,
+  "top1_acc": 0.8387,
+  "n_levels_evaluated": [
+    1
+  ],
+  "coverage_note": "只评下层（level 1）：上层在该相机高度被层板下沿遮挡，物理不可见",
+  "frames": [
+    {
+      "frame": 0,
+      "bay": 1,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            224,
+            289,
+            334,
+            352
+          ],
+          "area": 6796,
+          "d_med": 1.487,
+          "size_m": [
+            0.489,
+            0.247
+          ],
+          "class": "carton_m",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -27.695,
+          "lateral_m": -0.187,
+          "z_med": 0.482,
+          "rgb": [
+            80.9,
+            59.1,
+            29.6
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-01-1",
+        "A-L-01-2"
+      ],
+      "pred": {
+        "A-L-01-1": "carton_m"
+      }
+    },
+    {
+      "frame": 1,
+      "bay": 1,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            291,
+            308,
+            374,
+            336
+          ],
+          "area": 1473,
+          "d_med": 1.339,
+          "size_m": [
+            0.334,
+            0.087
+          ],
+          "class": "carton_s",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -27.652,
+          "lateral_m": -0.084,
+          "z_med": 0.486,
+          "rgb": [
+            73.3,
+            52.1,
+            23.1
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-01-1",
+        "A-R-01-2"
+      ],
+      "pred": {
+        "A-R-01-1": "carton_s"
+      }
+    },
+    {
+      "frame": 2,
+      "bay": 2,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            326,
+            309,
+            411,
+            351
+          ],
+          "area": 3509,
+          "d_med": 1.355,
+          "size_m": [
+            0.346,
+            0.146
+          ],
+          "class": "carton_s",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -25.062,
+          "lateral_m": 0.2,
+          "z_med": 0.439,
+          "rgb": [
+            82.4,
+            58.1,
+            26.0
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-02-1",
+        "A-L-02-2"
+      ],
+      "pred": {
+        "A-L-02-1": "carton_s"
+      }
+    },
+    {
+      "frame": 3,
+      "bay": 2,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            232,
+            309,
+            315,
+            353
+          ],
+          "area": 3585,
+          "d_med": 1.379,
+          "size_m": [
+            0.34,
+            0.157
+          ],
+          "class": "carton_s",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -25.06,
+          "lateral_m": 0.199,
+          "z_med": 0.435,
+          "rgb": [
+            72.2,
+            60.2,
+            40.9
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-02-1",
+        "A-R-02-2"
+      ],
+      "pred": {
+        "A-R-02-1": "carton_s"
+      }
+    },
+    {
+      "frame": 4,
+      "bay": 3,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            287,
+            284,
+            391,
+            329
+          ],
+          "area": 2676,
+          "d_med": 1.342,
+          "size_m": [
+            0.403,
+            0.14
+          ],
+          "class": "carton_s",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -22.856,
+          "lateral_m": 0.023,
+          "z_med": 0.559,
+          "rgb": [
+            75.5,
+            52.2,
+            21.3
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-03-1",
+        "A-L-03-2"
+      ],
+      "pred": {
+        "A-L-03-1": "carton_s"
+      }
+    },
+    {
+      "frame": 5,
+      "bay": 3,
+      "side": "R",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-R-03-1",
+        "A-R-03-2"
+      ],
+      "pred": {
+        "A-R-03-1": "empty"
+      }
+    },
+    {
+      "frame": 6,
+      "bay": 4,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            262,
+            309,
+            345,
+            353
+          ],
+          "area": 3620,
+          "d_med": 1.361,
+          "size_m": [
+            0.343,
+            0.154
+          ],
+          "class": "carton_s",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -20.529,
+          "lateral_m": -0.071,
+          "z_med": 0.436,
+          "rgb": [
+            79.8,
+            57.4,
+            27.5
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-04-1",
+        "A-L-04-2"
+      ],
+      "pred": {
+        "A-L-04-1": "carton_s"
+      }
+    },
+    {
+      "frame": 7,
+      "bay": 4,
+      "side": "R",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-R-04-1",
+        "A-R-04-2"
+      ],
+      "pred": {
+        "A-R-04-1": "empty"
+      }
+    },
+    {
+      "frame": 8,
+      "bay": 5,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            279,
+            288,
+            392,
+            352
+          ],
+          "area": 7064,
+          "d_med": 1.449,
+          "size_m": [
+            0.488,
+            0.246
+          ],
+          "class": "carton_m",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -17.981,
+          "lateral_m": 0.067,
+          "z_med": 0.483,
+          "rgb": [
+            79.1,
+            57.9,
+            29.3
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-05-1",
+        "A-L-05-2"
+      ],
+      "pred": {
+        "A-L-05-1": "carton_m"
+      }
+    },
+    {
+      "frame": 9,
+      "bay": 5,
+      "side": "R",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-R-05-1",
+        "A-R-05-2"
+      ],
+      "pred": {
+        "A-R-05-1": "empty"
+      }
+    },
+    {
+      "frame": 10,
+      "bay": 6,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            242,
+            345,
+            458,
+            348
+          ],
+          "area": 648,
+          "d_med": 1.444,
+          "size_m": [
+            0.982,
+            0.0
+          ],
+          "class": "pallet",
+          "conf": 0.75,
+          "level": 1,
+          "world_x": -15.507,
+          "lateral_m": 0.134,
+          "z_med": 0.371,
+          "rgb": [
+            58.0,
+            51.0,
+            36.6
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-06-1",
+        "A-L-06-2"
+      ],
+      "pred": {
+        "A-L-06-1": "pallet"
+      }
+    },
+    {
+      "frame": 11,
+      "bay": 6,
+      "side": "R",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-R-06-1",
+        "A-R-06-2"
+      ],
+      "pred": {
+        "A-R-06-1": "empty"
+      }
+    },
+    {
+      "frame": 12,
+      "bay": 7,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            269,
+            313,
+            377,
+            353
+          ],
+          "area": 4188,
+          "d_med": 1.359,
+          "size_m": [
+            0.439,
+            0.141
+          ],
+          "class": "tote",
+          "conf": 0.8,
+          "level": 1,
+          "world_x": -13.237,
+          "lateral_m": 0.009,
+          "z_med": 0.427,
+          "rgb": [
+            38.4,
+            43.4,
+            36.0
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-07-1",
+        "A-L-07-2"
+      ],
+      "pred": {
+        "A-L-07-1": "tote"
+      }
+    },
+    {
+      "frame": 13,
+      "bay": 7,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            185,
+            345,
+            401,
+            348
+          ],
+          "area": 648,
+          "d_med": 1.444,
+          "size_m": [
+            0.98,
+            0.0
+          ],
+          "class": "pallet",
+          "conf": 0.75,
+          "level": 1,
+          "world_x": -13.111,
+          "lateral_m": 0.124,
+          "z_med": 0.371,
+          "rgb": [
+            54.1,
+            48.9,
+            37.4
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-07-1",
+        "A-R-07-2"
+      ],
+      "pred": {
+        "A-R-07-1": "pallet"
+      }
+    },
+    {
+      "frame": 14,
+      "bay": 8,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            317,
+            313,
+            422,
+            353
+          ],
+          "area": 4001,
+          "d_med": 1.412,
+          "size_m": [
+            0.435,
+            0.144
+          ],
+          "class": "carton_m",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -10.652,
+          "lateral_m": 0.215,
+          "z_med": 0.427,
+          "rgb": [
+            49.5,
+            49.5,
+            38.8
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-08-1",
+        "A-L-08-2"
+      ],
+      "pred": {
+        "A-L-08-1": "carton_m"
+      }
+    },
+    {
+      "frame": 15,
+      "bay": 8,
+      "side": "R",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-R-08-1",
+        "A-R-08-2"
+      ],
+      "pred": {
+        "A-R-08-1": "empty"
+      }
+    },
+    {
+      "frame": 16,
+      "bay": 9,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            252,
+            252,
+            419,
+            353
+          ],
+          "area": 15727,
+          "d_med": 1.382,
+          "size_m": [
+            0.68,
+            0.374
+          ],
+          "class": "carton_l",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -8.389,
+          "lateral_m": 0.058,
+          "z_med": 0.559,
+          "rgb": [
+            71.2,
+            52.4,
+            25.7
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-09-1",
+        "A-L-09-2"
+      ],
+      "pred": {
+        "A-L-09-1": "carton_l"
+      }
+    },
+    {
+      "frame": 17,
+      "bay": 9,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            249,
+            312,
+            357,
+            330
+          ],
+          "area": 1681,
+          "d_med": 1.339,
+          "size_m": [
+            0.433,
+            0.06
+          ],
+          "class": "carton_m",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -8.362,
+          "lateral_m": 0.084,
+          "z_med": 0.477,
+          "rgb": [
+            33.3,
+            35.6,
+            28.1
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-09-1",
+        "A-R-09-2"
+      ],
+      "pred": {
+        "A-R-09-1": "carton_m"
+      }
+    },
+    {
+      "frame": 18,
+      "bay": 10,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            232,
+            345,
+            449,
+            348
+          ],
+          "area": 651,
+          "d_med": 1.444,
+          "size_m": [
+            0.985,
+            0.0
+          ],
+          "class": "pallet",
+          "conf": 0.75,
+          "level": 1,
+          "world_x": -5.966,
+          "lateral_m": 0.091,
+          "z_med": 0.371,
+          "rgb": [
+            58.0,
+            51.1,
+            36.7
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-10-1",
+        "A-L-10-2"
+      ],
+      "pred": {
+        "A-L-10-1": "pallet"
+      }
+    },
+    {
+      "frame": 19,
+      "bay": 10,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            212,
+            248,
+            347,
+            293
+          ],
+          "area": 3700,
+          "d_med": 1.336,
+          "size_m": [
+            0.525,
+            0.149
+          ],
+          "class": "carton_m",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -5.83,
+          "lateral_m": 0.228,
+          "z_med": 0.705,
+          "rgb": [
+            63.0,
+            46.1,
+            21.1
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-10-1",
+        "A-R-10-2"
+      ],
+      "pred": {
+        "A-R-10-1": "carton_m"
+      }
+    },
+    {
+      "frame": 20,
+      "bay": 11,
+      "side": "L",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-L-11-1",
+        "A-L-11-2"
+      ],
+      "pred": {
+        "A-L-11-1": "empty"
+      }
+    },
+    {
+      "frame": 21,
+      "bay": 11,
+      "side": "R",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-R-11-1",
+        "A-R-11-2"
+      ],
+      "pred": {
+        "A-R-11-1": "empty"
+      }
+    },
+    {
+      "frame": 22,
+      "bay": 12,
+      "side": "L",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-L-12-1",
+        "A-L-12-2"
+      ],
+      "pred": {
+        "A-L-12-1": "empty"
+      }
+    },
+    {
+      "frame": 23,
+      "bay": 12,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            223,
+            252,
+            390,
+            353
+          ],
+          "area": 16050,
+          "d_med": 1.385,
+          "size_m": [
+            0.68,
+            0.379
+          ],
+          "class": "carton_l",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": -1.194,
+          "lateral_m": 0.058,
+          "z_med": 0.553,
+          "rgb": [
+            129.5,
+            97.2,
+            52.4
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-12-1",
+        "A-R-12-2"
+      ],
+      "pred": {
+        "A-R-12-1": "carton_l"
+      }
+    },
+    {
+      "frame": 24,
+      "bay": 13,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            249,
+            309,
+            331,
+            353
+          ],
+          "area": 3511,
+          "d_med": 1.387,
+          "size_m": [
+            0.337,
+            0.157
+          ],
+          "class": "carton_s",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 1.042,
+          "lateral_m": -0.129,
+          "z_med": 0.435,
+          "rgb": [
+            148.5,
+            115.4,
+            70.1
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-13-1",
+        "A-L-13-2"
+      ],
+      "pred": {
+        "A-L-13-1": "carton_s"
+      }
+    },
+    {
+      "frame": 25,
+      "bay": 13,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            250,
+            310,
+            328,
+            352
+          ],
+          "area": 3165,
+          "d_med": 1.465,
+          "size_m": [
+            0.341,
+            0.157
+          ],
+          "class": "carton_s",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 1.327,
+          "lateral_m": 0.144,
+          "z_med": 0.434,
+          "rgb": [
+            149.7,
+            108.6,
+            55.4
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-13-1",
+        "A-R-13-2"
+      ],
+      "pred": {
+        "A-R-13-1": "carton_s"
+      }
+    },
+    {
+      "frame": 26,
+      "bay": 14,
+      "side": "L",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-L-14-1",
+        "A-L-14-2"
+      ],
+      "pred": {
+        "A-L-14-1": "empty"
+      }
+    },
+    {
+      "frame": 27,
+      "bay": 14,
+      "side": "R",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-R-14-1",
+        "A-R-14-2"
+      ],
+      "pred": {
+        "A-R-14-1": "empty"
+      }
+    },
+    {
+      "frame": 28,
+      "bay": 15,
+      "side": "L",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-L-15-1",
+        "A-L-15-2"
+      ],
+      "pred": {
+        "A-L-15-1": "empty"
+      }
+    },
+    {
+      "frame": 29,
+      "bay": 15,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            287,
+            308,
+            371,
+            341
+          ],
+          "area": 2390,
+          "d_med": 1.345,
+          "size_m": [
+            0.342,
+            0.103
+          ],
+          "class": "carton_s",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 5.932,
+          "lateral_m": -0.041,
+          "z_med": 0.465,
+          "rgb": [
+            72.4,
+            54.3,
+            28.5
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-15-1",
+        "A-R-15-2"
+      ],
+      "pred": {
+        "A-R-15-1": "carton_s"
+      }
+    },
+    {
+      "frame": 30,
+      "bay": 16,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            272,
+            285,
+            391,
+            353
+          ],
+          "area": 6666,
+          "d_med": 1.36,
+          "size_m": [
+            0.486,
+            0.229
+          ],
+          "class": "carton_m",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 8.441,
+          "lateral_m": 0.064,
+          "z_med": 0.502,
+          "rgb": [
+            81.1,
+            57.5,
+            26.0
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-16-1",
+        "A-L-16-2"
+      ],
+      "pred": {
+        "A-L-16-1": "carton_m"
+      }
+    },
+    {
+      "frame": 31,
+      "bay": 16,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            264,
+            312,
+            340,
+            320
+          ],
+          "area": 552,
+          "d_med": 1.34,
+          "size_m": [
+            0.308,
+            0.027
+          ],
+          "class": "carton_s",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 8.469,
+          "lateral_m": 0.091,
+          "z_med": 0.495,
+          "rgb": [
+            28.2,
+            29.5,
+            27.4
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-16-1",
+        "A-R-16-2"
+      ],
+      "pred": {
+        "A-R-16-1": "carton_s"
+      }
+    },
+    {
+      "frame": 32,
+      "bay": 17,
+      "side": "L",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-L-17-1",
+        "A-L-17-2"
+      ],
+      "pred": {
+        "A-L-17-1": "empty"
+      }
+    },
+    {
+      "frame": 33,
+      "bay": 17,
+      "side": "R",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-R-17-1",
+        "A-R-17-2"
+      ],
+      "pred": {
+        "A-R-17-1": "empty"
+      }
+    },
+    {
+      "frame": 34,
+      "bay": 18,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            271,
+            286,
+            390,
+            353
+          ],
+          "area": 7788,
+          "d_med": 1.374,
+          "size_m": [
+            0.489,
+            0.245
+          ],
+          "class": "carton_m",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 13.192,
+          "lateral_m": 0.041,
+          "z_med": 0.482,
+          "rgb": [
+            79.1,
+            56.1,
+            25.2
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-18-1",
+        "A-L-18-2"
+      ],
+      "pred": {
+        "A-L-18-1": "carton_m"
+      }
+    },
+    {
+      "frame": 35,
+      "bay": 18,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            195,
+            250,
+            362,
+            311
+          ],
+          "area": 9443,
+          "d_med": 1.349,
+          "size_m": [
+            0.676,
+            0.225
+          ],
+          "class": "carton_l",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 13.317,
+          "lateral_m": 0.167,
+          "z_med": 0.648,
+          "rgb": [
+            63.5,
+            45.1,
+            19.1
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-18-1",
+        "A-R-18-2"
+      ],
+      "pred": {
+        "A-R-18-1": "carton_l"
+      }
+    },
+    {
+      "frame": 36,
+      "bay": 19,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            258,
+            285,
+            378,
+            345
+          ],
+          "area": 6224,
+          "d_med": 1.357,
+          "size_m": [
+            0.486,
+            0.2
+          ],
+          "class": "carton_m",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 15.64,
+          "lateral_m": 0.002,
+          "z_med": 0.513,
+          "rgb": [
+            80.8,
+            56.4,
+            24.2
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-19-1",
+        "A-L-19-2"
+      ],
+      "pred": {
+        "A-L-19-1": "carton_m"
+      }
+    },
+    {
+      "frame": 37,
+      "bay": 19,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            291,
+            288,
+            405,
+            353
+          ],
+          "area": 7142,
+          "d_med": 1.44,
+          "size_m": [
+            0.488,
+            0.248
+          ],
+          "class": "carton_m",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 15.502,
+          "lateral_m": -0.121,
+          "z_med": 0.482,
+          "rgb": [
+            71.3,
+            50.3,
+            21.9
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-19-1",
+        "A-R-19-2"
+      ],
+      "pred": {
+        "A-R-19-1": "carton_m"
+      }
+    },
+    {
+      "frame": 38,
+      "bay": 20,
+      "side": "L",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-L-20-1",
+        "A-L-20-2"
+      ],
+      "pred": {
+        "A-L-20-1": "empty"
+      }
+    },
+    {
+      "frame": 39,
+      "bay": 20,
+      "side": "R",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-R-20-1",
+        "A-R-20-2"
+      ],
+      "pred": {
+        "A-R-20-1": "empty"
+      }
+    },
+    {
+      "frame": 40,
+      "bay": 21,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            206,
+            345,
+            453,
+            353
+          ],
+          "area": 1887,
+          "d_med": 1.353,
+          "size_m": [
+            1.017,
+            0.019
+          ],
+          "class": "pallet",
+          "conf": 0.75,
+          "level": 1,
+          "world_x": 20.409,
+          "lateral_m": 0.026,
+          "z_med": 0.364,
+          "rgb": [
+            39.4,
+            36.0,
+            27.8
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-21-1",
+        "A-L-21-2"
+      ],
+      "pred": {
+        "A-L-21-1": "pallet"
+      }
+    },
+    {
+      "frame": 41,
+      "bay": 21,
+      "side": "R",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-R-21-1",
+        "A-R-21-2"
+      ],
+      "pred": {
+        "A-R-21-1": "empty"
+      }
+    },
+    {
+      "frame": 42,
+      "bay": 22,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            298,
+            286,
+            417,
+            353
+          ],
+          "area": 7733,
+          "d_med": 1.385,
+          "size_m": [
+            0.488,
+            0.246
+          ],
+          "class": "carton_m",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 22.931,
+          "lateral_m": 0.154,
+          "z_med": 0.482,
+          "rgb": [
+            77.9,
+            55.3,
+            24.9
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-22-1",
+        "A-L-22-2"
+      ],
+      "pred": {
+        "A-L-22-1": "carton_m"
+      }
+    },
+    {
+      "frame": 43,
+      "bay": 22,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            254,
+            313,
+            360,
+            353
+          ],
+          "area": 4139,
+          "d_med": 1.374,
+          "size_m": [
+            0.439,
+            0.143
+          ],
+          "class": "tote",
+          "conf": 0.8,
+          "level": 1,
+          "world_x": 22.827,
+          "lateral_m": 0.059,
+          "z_med": 0.427,
+          "rgb": [
+            34.7,
+            39.6,
+            32.9
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-22-1",
+        "A-R-22-2"
+      ],
+      "pred": {
+        "A-R-22-1": "tote"
+      }
+    },
+    {
+      "frame": 44,
+      "bay": 23,
+      "side": "L",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            255,
+            251,
+            423,
+            346
+          ],
+          "area": 14044,
+          "d_med": 1.37,
+          "size_m": [
+            0.679,
+            0.335
+          ],
+          "class": "carton_l",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 25.194,
+          "lateral_m": 0.067,
+          "z_med": 0.584,
+          "rgb": [
+            70.4,
+            51.7,
+            25.0
+          ]
+        }
+      ],
+      "addrs": [
+        "A-L-23-1",
+        "A-L-23-2"
+      ],
+      "pred": {
+        "A-L-23-1": "carton_l"
+      }
+    },
+    {
+      "frame": 45,
+      "bay": 23,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            286,
+            309,
+            370,
+            342
+          ],
+          "area": 2739,
+          "d_med": 1.348,
+          "size_m": [
+            0.343,
+            0.119
+          ],
+          "class": "carton_s",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 25.095,
+          "lateral_m": -0.032,
+          "z_med": 0.457,
+          "rgb": [
+            72.8,
+            54.1,
+            28.0
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-23-1",
+        "A-R-23-2"
+      ],
+      "pred": {
+        "A-R-23-1": "carton_s"
+      }
+    },
+    {
+      "frame": 46,
+      "bay": 24,
+      "side": "L",
+      "n_det": 0,
+      "dets": [],
+      "addrs": [
+        "A-L-24-1",
+        "A-L-24-2"
+      ],
+      "pred": {
+        "A-L-24-1": "empty"
+      }
+    },
+    {
+      "frame": 47,
+      "bay": 24,
+      "side": "R",
+      "n_det": 1,
+      "dets": [
+        {
+          "bbox": [
+            264,
+            310,
+            343,
+            352
+          ],
+          "area": 3276,
+          "d_med": 1.43,
+          "size_m": [
+            0.342,
+            0.154
+          ],
+          "class": "carton_s",
+          "conf": 0.85,
+          "level": 1,
+          "world_x": 27.676,
+          "lateral_m": 0.074,
+          "z_med": 0.436,
+          "rgb": [
+            74.3,
+            52.4,
+            23.3
+          ]
+        }
+      ],
+      "addrs": [
+        "A-R-24-1",
+        "A-R-24-2"
+      ],
+      "pred": {
+        "A-R-24-1": "carton_s"
+      }
+    }
+  ],
+  "n_frames": 48
+}

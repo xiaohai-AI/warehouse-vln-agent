@@ -18,7 +18,7 @@ A02,attribute,A 巷哪面货架有油桶,reach:A-R,reject:AMBIGUOUS,False,False,
 A03,attribute,去放纸箱最多的那排货架,reach:A-R,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""max_class"", ""classes"": [""carton_l"", ""carton_m"", ""carton_s""]}",[],期望到达 A-R
 A04,attribute,纸箱最多的是哪排货架,reach:A-R,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""max_class"", ""classes"": [""carton_l"", ""carton_m"", ""carton_s""]}",[],期望到达 A-R
 A05,attribute,去 A 巷最里面那个空位,reach:A-L-24-1,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""farthest"", ""aisle"": ""A"", ""empty"": true}",[],期望到达 A-L-24-1
-A06,attribute,A 巷最里头第一层那个空位,reach:A-L-24-1,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""farthest"", ""aisle"": ""A"", ""empty"": true, ""level"": 1}",[],期望到达 A-L-24-1
+A06,attribute,A 巷最里头第一层那个空位,reach:A-L-24-1,reach:A-L-24-1,True,False,,0,rule,"{""kind"": ""farthest"", ""aisle"": ""A"", ""empty"": true, ""level"": 1}",[],
 A07,attribute,去 E 巷 13 号位第一层放油桶的那格,reach:E-R-13-1,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""class_in_bay"", ""aisle"": ""E"", ""bay"": 13, ""classes"": [""drum""], ""level"": 1}",[],期望到达 E-R-13-1
 A08,attribute,C 巷 7 号位第二层放油桶的那格,reach:C-R-07-2,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""class_in_bay"", ""aisle"": ""C"", ""bay"": 7, ""classes"": [""drum""], ""level"": 2}",[],期望到达 C-R-07-2
 A09,attribute,去 D 巷 4 号位第二层放周转箱的,reach:D-R-04-2,reject:UNOBSERVED,False,False,UNOBSERVED,0,rule,"{""kind"": ""class_in_bay"", ""aisle"": ""D"", ""bay"": 4, ""classes"": [""tote""], ""level"": 2}",[],期望到达 D-R-04-2
