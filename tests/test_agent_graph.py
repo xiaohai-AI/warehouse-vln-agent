@@ -10,16 +10,18 @@ from depot_vln.inventory import Inventory
 from depot_vln.sim import load_sim_world
 
 
-def run(utterance: str, answer: str | None = None, world=None):
+def run(utterance: str, answer: str | None = None, world=None, **state_overrides):
     world = world or load_sim_world()
     graph = build_graph(OfflineToolLayer(world), RuleNLU(), world=world,
                         checkpointer=memory_checkpointer())
     cfg = {"configurable": {"thread_id": "t"}, "recursion_limit": 30}
-    state = graph.invoke({
+    init = {
         "thread_id": "t", "utterance": utterance, "history": [],
         "clarify_count": 0, "recover_count": 0, "alt_index": 0, "seq": 0,
         "trajectory": [], "node_trace": [], "notes": [],
-    }, cfg)
+    }
+    init.update(state_overrides)
+    state = graph.invoke(init, cfg)
     asked = "__interrupt__" in state
     if asked and answer:
         from langgraph.types import Command
@@ -45,6 +47,29 @@ def test_blocked_target_refuses():
     st, _ = run("去 F-L-20-1")
     assert st["reason_code"] == "BLOCKED"
     assert "observation" not in st or st.get("observation") is None
+
+
+def test_substitution_verifies_the_substitute_not_the_original():
+    """换位后 verify 必须比对**换位目标**的旧观测。
+
+    踩过：`candidates[0]` 还是原目标，原目标真值占用、替代位是空位时，
+    换位明明成功却报 VERIFY_MISMATCH（离线可稳定复现）。
+    """
+    from dataclasses import replace
+
+    from depot_vln.sim import sim_inventory
+    from depot_vln.world import load_world
+
+    inv = sim_inventory()
+    entries = dict(inv.entries)
+    entries["F-L-20-1"] = replace(entries["F-L-20-1"], occupied=True, cls="carton_l")
+    entries["F-L-17-1"] = replace(entries["F-L-17-1"], occupied=False, cls=None)
+    world = load_world(Inventory(entries=entries, provenance=inv.provenance))
+
+    st, _ = run("去 F-L-20-1", world=world, allow_substitute=True)
+    assert st.get("substituted_from") == "F-L-20-1"
+    assert st["target"]["address"] == "F-L-17-1"
+    assert st.get("reason_code") is None, st.get("notes")
 
 
 def test_missing_slot_refuses():

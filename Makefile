@@ -16,6 +16,7 @@ CAM_ARGS ?= cam_width:=320 cam_height:=240 cam_rate:=5
 .PHONY: help world map map-check robot verify perf inventory bench bench-perception \
         test ci sim down nav2 slam nav-to preflight m1 m1-truth m2 m2-static s1-depth \
         slam1 slam1-s3 slam1-s4 slam1-s5 seg1 seg1-capture-all seg2 seg2-capture seg2-robot \
+        seg2-all seg2-aisles seg2-detect-all \
         p6-demo p6-selftest guard-selftest cam-bridge cam-check gpu-observe drive-to \
         cmd-audit graph clean
 
@@ -29,7 +30,7 @@ help:
 	@echo "    make inventory    把感知产物汇总成 results/inventory.json（语义层数据源）"
 	@echo "    make bench        跑指令基准（rule 后端 + 显式替身库存）"
 	@echo "    make bench-perception  用真实感知库存跑同一份基准（覆盖率低，如实计入）"
-	@echo "    make test         单元测试（45 条，秒级）"
+	@echo "    make test         单元测试（61 条，秒级）"
 	@echo "    make ci           test + bench + 反硬编码守护"
 	@echo ""
 	@echo "  仿真（需要 ROS + Gazebo）"
@@ -172,10 +173,13 @@ seg2-robot:
 	$(MAKE) robot SENSORS=nav CAM_ARGS='cam_width:=640 cam_height:=480 cam_rate:=10 cam_pitch:=16'
 
 seg2-capture:
-	bash -lc 'source $(ROS) && $(PY) scripts/seg2_capture.py --bays $${BAYS:-1-24} --aisle $${AISLE:-A} --pitch $${PITCH:-16} --out $${OUT:-results/seg2_frames.npz}'
+	bash -lc 'source $(ROS) && exec $(PY) -u scripts/seg2_capture.py \
+	  --bays $(if $(BAYS),$(BAYS),1-24) --aisle $(if $(AISLE),$(AISLE),A) \
+	  --pitch $(if $(PITCH),$(PITCH),16) --out $(if $(OUT),$(OUT),results/seg2_frames.npz)'
 
 seg2:
-	$(PY) scripts/seg2_detect.py --frames $${FRAMES:-results/seg2_frames.npz} --out results/seg2.json --plot
+	$(PY) scripts/seg2_detect.py --frames $(if $(FRAMES),$(FRAMES),results/seg2_frames.npz) \
+	  --out results/seg2.json --plot
 
 # 全 6 条巷道的 SEG-2 采集（按巷落盘、断点续跑）。
 # 每条巷 48 帧（24 bay × 左右各一帧），F 巷 18–24 被路障封死 -> 只采到 17。
@@ -224,5 +228,5 @@ gpu-observe:
 	$(PY) scripts/gpu_observe.py --minutes 10 --json results/gpu_cam.json
 
 clean:
-	rm -rf world/warehouse.sdf world/layout.json results/*.csv results/*.npz transitions/*.jsonl
-	@echo "已清理生成物（保留世界配置、真值与证据 json）"
+	rm -rf world/warehouse.sdf world/layout.json results/*.npz transitions/*.jsonl
+	@echo "已清理生成物（保留世界配置、真值与证据 csv/json）"

@@ -196,7 +196,10 @@ def cargo_components(depth: np.ndarray, k: np.ndarray, pitch_deg: float, cam_h: 
     # 逐像素世界 x：横向偏移 = (u-cx)/fx·dh；世界 x = obs_x + 横向·sin(yaw)
     h_, w_ = depth.shape
     uu = np.arange(w_, dtype=np.float64)[None, :]
-    wx_map = obs_x + (uu - k[0, 2]) / k[0, 0] * dh * np.sin(obs_yaw)
+    # 无效深度会让 dh 是 NaN；这里只是逐像素投影，NaN 会被下面的掩码排除。
+    # 不加 errstate 会在终端刷 "invalid value encountered in multiply"（2026-11-05 实测）。
+    with np.errstate(invalid="ignore"):
+        wx_map = obs_x + (uu - k[0, 2]) / k[0, 0] * dh * np.sin(obs_yaw)
     # **先按本 bay 的横向窗口裁掉**，再做连通域。
     # 不裁的话，左右邻 bay 的货、巷道口的端板都会和本 bay 连成一块：
     # 实测 16 个漏检全是 1.5–3.6 m 的宽块，被尺寸闸门（≤1.15 m）整块丢掉。

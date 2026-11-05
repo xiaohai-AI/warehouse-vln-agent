@@ -121,7 +121,12 @@ class Inventory:
         if isinstance(rows, dict):
             rows = [dict(v, address=k) for k, v in rows.items()]
         prov = dict(obj.get("provenance") or {"provider": "perception"})
-        prov.setdefault("file", str(p))
+        # 出处写成仓库相对路径：证据 JSON 会入库，不能把某台机器的 /home/xxx 带进去。
+        try:
+            default_file = str(p.resolve().relative_to(ROOT))
+        except ValueError:
+            default_file = str(p)
+        prov.setdefault("file", default_file)
         return cls.from_rows(rows, provenance=prov, now=obj.get("now"))
 
     @classmethod

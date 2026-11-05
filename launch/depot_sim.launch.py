@@ -47,6 +47,7 @@ def generate_launch_description() -> LaunchDescription:
     gui = LaunchConfiguration("gui")
     software_render = LaunchConfiguration("software_render")
     egl_vendor = LaunchConfiguration("egl_vendor")
+    gpu_offload = LaunchConfiguration("gpu_offload")
     bridge_images = LaunchConfiguration("bridge_images")
     x = LaunchConfiguration("x")
     y = LaunchConfiguration("y")
@@ -170,6 +171,18 @@ def generate_launch_description() -> LaunchDescription:
         value="/usr/share/glvnd/egl_vendor.d/50_mesa.json",
         condition=LaunchConfigurationEquals("egl_vendor", "mesa"),
     )
+    # 只设 EGL 还不够：GUI 的 Qt/OpenGL 走 GLX，Optimus 笔记本上会继续用核显。
+    # 下面三个把 GUI + OGRE2 都赶到独显（RTX 4080 Laptop）。没有独显/用软件渲染时
+    # 传 gpu_offload:=false。
+    gpu_prime_env = SetEnvironmentVariable(
+        name="__NV_PRIME_RENDER_OFFLOAD", value="1", condition=IfCondition(gpu_offload)
+    )
+    gpu_glx_env = SetEnvironmentVariable(
+        name="__GLX_VENDOR_LIBRARY_NAME", value="nvidia", condition=IfCondition(gpu_offload)
+    )
+    gpu_vk_env = SetEnvironmentVariable(
+        name="__VK_LAYER_NV_optimus", value="NVIDIA_only", condition=IfCondition(gpu_offload)
+    )
 
     # 里程计 + TF 的唯一来源：从 /joint_states 的四个轮速积分（见脚本头部说明）。
     # odom_tf.py 保留但不再使用 —— 两个节点同时发 odom->base_footprint 会互相打架。
@@ -194,6 +207,8 @@ def generate_launch_description() -> LaunchDescription:
                                   description="LIBGL_ALWAYS_SOFTWARE=1（EGL 建不起来时的兜底）"),
             DeclareLaunchArgument("egl_vendor", default_value="nvidia",
                                   description="强制 EGL 厂商: nvidia / mesa / none"),
+            DeclareLaunchArgument("gpu_offload", default_value="true",
+                                  description="Optimus/PRIME: 把 GUI/OGRE2 赶到独显；软件渲染时设 false"),
             DeclareLaunchArgument("bridge_images", default_value="false", description="桥相机图像到 ROS"),
             DeclareLaunchArgument("odom_tf", default_value="true",
                                   description="mecanum_odom 是否发 TF odom->base_footprint（S2 用 false，交给 EKF）"),
@@ -202,6 +217,9 @@ def generate_launch_description() -> LaunchDescription:
             DeclareLaunchArgument("use_sim_time", default_value="true"),
             egl_env_nvidia,
             egl_env_mesa,
+            gpu_prime_env,
+            gpu_glx_env,
+            gpu_vk_env,
             software_render_env,
             server,
             server_headless,

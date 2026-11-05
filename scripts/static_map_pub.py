@@ -8,20 +8,23 @@
 """
 from __future__ import annotations
 
+import os
 import sys
+
+# 必须在 import depot_vln **之前**把仓库根加进 sys.path：
+# `python scripts/xxx.py` 的 sys.path[0] 是 scripts/，不是仓库根。
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _ROOT not in sys.path:
+    sys.path.insert(0, _ROOT)
 
 import rclpy
 from nav_msgs.msg import OccupancyGrid, MapMetaData
 from rclpy.node import Node
 from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPolicy
+from rclpy.parameter import Parameter
 from geometry_msgs.msg import TransformStamped
 from tf2_ros import StaticTransformBroadcaster
 from depot_vln.catalog import get_catalog
-import os as _os
-import sys as _sys
-_ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
-if _ROOT not in _sys.path:
-    _sys.path.insert(0, _ROOT)
 
 
 def read_pgm(path: str) -> tuple[bytes, int, int]:
@@ -141,7 +144,10 @@ def main() -> int:
     img, w, h = read_pgm(str(__import__("pathlib").Path(args.yaml).with_suffix(".pgm")))
 
     rclpy.init()
-    n = Node("static_map_pub")
+    # 与 Nav2 同一时基：地图/TF 的 stamp 必须是 /clock 的仿真时间，
+    # 否则 static 模式下的 map->odom 也会触发 TF extrapolation。
+    n = Node("static_map_pub",
+             parameter_overrides=[Parameter("use_sim_time", value=True)])
     qos = QoSProfile(depth=1, history=HistoryPolicy.KEEP_LAST,
                      reliability=ReliabilityPolicy.RELIABLE,
                      durability=DurabilityPolicy.TRANSIENT_LOCAL)

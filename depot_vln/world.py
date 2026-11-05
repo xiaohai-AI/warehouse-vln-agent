@@ -158,6 +158,11 @@ class WorldModel:
     def _faces(self) -> list[tuple[str, str]]:
         return [(a, s) for a in self.catalog.aisles for s in self.catalog.sides]
 
+    def _unknown(self, addr: str) -> bool:
+        """没看过（无状态）或看过但判不出占用 —— 都不能当"空"或"没有这种货"。"""
+        st = self.map.get(addr)
+        return st is None or st.occupied is None
+
     # ------------------------------------------------------------ 查询
     def resolve(self, query: dict[str, Any]) -> tuple[list[dict[str, Any]], str | None]:
         """返回 (候选列表, 拒绝原因码)。候选里带 score / why / reachable。"""
@@ -225,7 +230,7 @@ class WorldModel:
                 n = sum(v for k, v in counts.items() if k in classes)
                 # 这一面还有没看过的格子吗？有就不能断言"没有这种货"
                 face_slots = [a for a in self.grid["slots"] if a.startswith(f"{aisle}-{side}-")]
-                unknown = sum(1 for a in face_slots if self.map.get(a) is None)
+                unknown = sum(1 for a in face_slots if self._unknown(a))
                 if n <= 0 and not unknown:
                     continue                     # 整面都看过、确实没有
                 if unknown:
@@ -255,7 +260,7 @@ class WorldModel:
                 for lv in levels:
                     addr = cat.format_address(aisle, side, bay, lv)
                     st = self.map.get(addr)
-                    if st is None:
+                    if st is None or st.occupied is None:
                         any_unknown = True
                         continue
                     any_known = True
@@ -281,7 +286,7 @@ class WorldModel:
             # 只要范围内还有没看过的货位，答案就可能是错的 —— 明说不知道，不猜。
             scope_aisles = (query["aisle"],) if query.get("aisle") else cat.aisles
             scope_slots = [a for a in self.grid["slots"] if a.split("-")[0] in scope_aisles]
-            unknown = [a for a in scope_slots if self.map.get(a) is None]
+            unknown = [a for a in scope_slots if self._unknown(a)]
             if unknown:
                 return [], "UNOBSERVED"
             if not ranking or ranking[0]["count"] == 0:
@@ -311,7 +316,7 @@ class WorldModel:
                     for lv in levels:
                         addr = cat.format_address(aisle, side, bay, lv)
                         st = self.map.get(addr)
-                        if st is None:
+                        if st is None or st.occupied is None:
                             unknown_d.append(d)
                             continue
                         seen_any = True
@@ -338,10 +343,10 @@ class WorldModel:
                 for lv in levels:
                     addr = cat.format_address(aisle, side, bay, lv)
                     st = self.map.get(addr)
-                    if st is None:
-                        continue
+                    if st is None or st.occupied is None:
+                        continue          # 没看过 / 判不出：不能当空位
                     any_known = True
-                    if not st.occupied:
+                    if st.occupied is False:
                         empties.append(addr)
             if not any_known:
                 return [], "UNOBSERVED"

@@ -19,6 +19,7 @@ ROS_SETUP=${ROS_SETUP:-/opt/ros/humble/setup.bash}
 PY=${PY:-.venv/bin/python}
 KEEP=${KEEP:-0}
 BUDGET=${BUDGET:-400}
+SPAWN_X=${SPAWN_X:-$($PY -c 'from depot_vln.catalog import get_catalog; print(get_catalog().spawn["x"])' 2>/dev/null)}
 # 定位方式：truth（默认，真值锚定，仿真里最可靠）/ static（纯 odom）/ amcl
 LOC=${LOC:-truth}
 NAVPID=""
@@ -42,6 +43,14 @@ cleanup() {
     kill -TERM -"$NAVPID" 2>/dev/null
     sleep 3
     kill -9 -"$NAVPID" 2>/dev/null
+    # `setsid` 有时让 $NAVPID 不是真正的进程组，kill -PGID 会漏；按名字兜底清一次，
+    # 避免下一次 `nav-to` 复用"没有 map 的旧栈"（2026-11-05 实测踩过）。
+    pkill -TERM -f "[m]2_static_run.sh" 2>/dev/null || true
+    pkill -TERM -f "[s]tatic_map_pub" 2>/dev/null || true
+    pkill -TERM -f "[t]ruth_map_odom" 2>/dev/null || true
+    pkill -TERM -f "[n]av2_" 2>/dev/null || true
+    sleep 2
+    pkill -9 -f "[n]av2_" 2>/dev/null || true
   fi
 }
 trap cleanup EXIT
@@ -82,12 +91,15 @@ else
     tail -25 results/nav2_stack.log
     exit 7
   fi
-  # RTF 过低（<5%）时 Nav2 的定时器/服务会大面积超时 —— 先查 GPU 是不是没用上
+  # 只在 nvidia-smi 本身不可用时提示。不要用 `--query-compute-apps` 判断 GUI 是否走独显：
+  # Gazebo 用 OpenGL 渲染，图形进程不会出现在 compute apps 列表里，那个检查必然误报
+  # （2026-11-05 实测：驱动 580 正常，警告仍然每次都打）。GUI 的 GPU 选择由 launch 的
+  # gpu_offload:=true（默认）负责。
   if pgrep -f "[i]gn gazebo gui" >/dev/null 2>&1; then
-    if ! nvidia-smi --query-compute-apps=pid --format=csv,noheader 2>/dev/null | grep -q . ; then
-      echo "[nav] ⚠️ nvidia-smi 看不到算图进程 —— GUI 很可能在核显(iris)上软件渲染，"
-      echo "[nav]    RTF 会掉到个位数、Nav2 服务大面积超时。用 NVIDIA 起仿真："
-      echo "[nav]    __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia make sim SIM_ARGS='gui:=true'"
+    if ! nvidia-smi -L >/dev/null 2>&1; then
+      echo "[nav] ⚠️ nvidia-smi 不可用 —— NVIDIA 驱动可能没起来；Gazebo 会退回核显/软件渲染，"
+      echo "[nav]    RTF 会很低、Nav2 服务可能超时。先检查：nvidia-smi -L"
+      echo "[nav]    正常后重起：make down && make sim SIM_ARGS='gui:=true'"
     fi
   fi
 
@@ -120,16 +132,16 @@ if [ -f results/map_pub.log ]; then
   [ -n "$line" ] && echo "[nav] $line"
   read_line=$(grep -o '读数 OK：[^\n]*' results/map_pub.log | tail -1)
   [ -n "$read_line" ] && echo "[nav] $read_line"
-  # 偏移离出生点太远 = 仿真被手动开脏了（odom 累积误差），提示但不阻断
-  # 与出生点比较：偏移≈出生点 = odom 干净（出生点由 catalog 派生，不再写死字符串）
-  if echo "$line" | grep -qE 'map->odom = \(' && awk -v sx="$SPAWN_X" -v line="$line" 'BEGIN{
-        match(line, /map->odom = \(([-0-9.]+),/, m);
-        exit !(m[1] != "" && (m[1] - sx) < 0.5 && (sx - m[1]) < 0.5)
-      }'; then
-    echo "[nav] map->odom 与出生点一致（车在出生点、odom 干净）"
+  # 偏移离出生点太远 = 仿真被手动开脏了（odom 累积误差），提示但不阻断。
+  # 用 POSIX sed 取第一个数：mawk 不支持 3 参数 match()（旧版在这里直接语法错误）。
+  mx=$(printf '%s\n' "$line" | sed -n 's/.*map->odom = (\([-0-9.]*\).*/\1/p')
+  if [ -n "$mx" ] && [ -n "$SPAWN_X" ] && awk -v a="$mx" -v b="$SPAWN_X" \
+       'BEGIN{ exit !((a-b) < 0.5 && (b-a) < 0.5) }'; then
+    echo "[nav] map->odom 与默认出生点一致（车在出生点、odom 干净）"
   else
-    echo "[nav] ⚠️ map->odom 不是出生点值 —— 说明 odom 已被手动驾驶污染（本次已按真值修正）；"
-    echo "[nav]    录制/判据前建议 make down 重起仿真，让 odom 从 0 开始，基线才干净。"
+    echo "[nav] map->odom = ${mx:-?}，默认出生点 x = ${SPAWN_X:-?}。"
+    echo "[nav]    用 x:= 自定义出生点时不一致是正常的；否则说明 odom 已被手动驾驶污染。"
+    echo "[nav]    录制/判据前若要干净基线：make down 重起仿真，让 odom 从 0 开始。"
   fi
 fi
 

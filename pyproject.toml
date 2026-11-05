@@ -20,7 +20,8 @@ dependencies = [
 
 [project.optional-dependencies]
 # 评测/离线开发：不需要 ROS、不碰 GPU
-dev = ["pytest>=7", "numpy>=1.26"]
+# opencv 是给 tests/test_seg2_geometry.py（import scripts/seg2_detect.py）用的
+dev = ["pytest>=7", "numpy>=1.26", "opencv-python-headless>=4.8,<5"]
 # 在仿真里跑：需要系统装 ROS 2 Humble + Gazebo Fortress + nav2
 sim = ["numpy>=1.26", "opencv-python>=4.8"]
 

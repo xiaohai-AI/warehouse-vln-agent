@@ -25,15 +25,18 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+# 必须在 import depot_vln **之前**加仓库根：直接 `python scripts/m2_side_dock.py`
+# 时 sys.path[0] 是 scripts/，否则 ModuleNotFoundError: No module named 'depot_vln'。
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 import rclpy
 from geometry_msgs.msg import PoseStamped
 from nav_msgs.msg import Odometry
 from rclpy.node import Node
 from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPolicy
 from depot_vln.catalog import get_catalog
-
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))
 
 ROBOT = "depot_bot"
 WORLD = "depot"

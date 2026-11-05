@@ -2,15 +2,17 @@
 #
 # 为什么单独一个文件：
 #   1. 本地 .venv 是 `--system-site-packages` 建的，numpy/opencv 这些走**系统包**；
-#      CI runner 没有系统包，必须显式装。之前直接在干净 venv 里跑 `make accept` 得到
-#      PASS 15 / FAIL 1 —— 挂掉的正是 P6-1 约束层自检（缺 langgraph）。
-#   2. 判据链里唯一需要 numpy 的是 `scripts/verify_depth_audit.py`（深度图复算）。
-#   3. **不需要** ROS / rclpy / Gazebo / GPU / 显示器：CI 只跑离线判据（见 scripts/ci_local.sh）。
+#      CI runner 没有系统包，必须显式装。
+#   2. 单测 `tests/test_seg2_geometry.py` 会 import `scripts/seg2_detect.py`，后者在
+#      模块级 `import cv2` —— 干净环境不装 OpenCV 的话，pytest 在**收集阶段**就报错。
+#   3. **不需要** ROS / rclpy / Gazebo / GPU / 显示器：CI 只跑离线断言
+#      （见 .github/workflows/verify.yml）。
 #
 # 装：python3.10 -m pip install -r requirements-ci.txt
 
 -r requirements.txt
 numpy>=1.26,<3
+# seg2_detect.py 模块级 import cv2（headless 版没有 GUI 依赖，跑 CI 足够）
+opencv-python-headless>=4.8,<5
 # 判据链现在就是 pytest 断言（原来那套"读日志对账"脚本已删）
 pytest>=7
-

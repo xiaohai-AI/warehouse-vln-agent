@@ -1,5 +1,7 @@
 # depot-vln
 
+> **English** · [Introduction, installation, runnable demos](README.en.md)
+
 亚马逊式自动化仓库里的**麦克纳姆全向车 + 组合 SLAM + 从感知长出来的语义地图 + LangGraph 指代导航**。
 底层 ROS 2 Humble / Nav2 / Gazebo Fortress，顶层 LangGraph。
 
@@ -15,7 +17,7 @@ python3.10 -m venv --system-site-packages .venv
 .venv/bin/pip install -r requirements.txt
 
 make bench      # 指令基准 54 条：direct/attribute/ambiguous/unreachable 各一类
-make test       # 45 条单元测试
+make test       # 61 条单元测试
 make ci         # test + bench + 安全层自检
 ```
 
@@ -28,9 +30,15 @@ make ci         # test + bench + 安全层自检
 | ambiguous | 14 | 14 | 0 |
 | unreachable | 12 | 12 | 0 |
 
-用**真实感知库存**（`make inventory` 从 SEG-2 的 46 个观测生成，覆盖率 8%）跑同一份基准：
+用**真实感知库存**（`make inventory` 从 SEG-2 的 48 个观测生成，覆盖率 8.3%）跑同一份基准：
 36/54 通过（direct 14/14、ambiguous 11/14、unreachable 10/12、attribute 1/14）、**静默猜错 0**。差距不是"退步"，而是语义层这时只能诚实地说"我没看过" ——
 见 [docs/LIMITATIONS.md](docs/LIMITATIONS.md)。
+
+## 演示
+
+![Gazebo 仓库行驶](docs/media/warehouse_demo.gif)
+
+[完整 78 s 720p 录屏](docs/media/warehouse_demo_720p.mp4)（4.4 MB）。原始 2560×1600 WebM（266 MB）不入库，压缩方法见 [docs/media/README.md](docs/media/README.md)。
 
 ## 架构（三层，边界是类型不是自觉）
 
@@ -60,7 +68,8 @@ make ci         # test + bench + 安全层自检
 1. **运行时不许读真值**：`depot_vln/world.py`、`semantic_*`、`agent/**` 里没有任何
    `ground_truth` 依赖，`tests/test_runtime_isolation.py` 用 AST 检查 import 图。
    真值只出现在 `sim.py`（离线替身）、`scoring.py`（打分）、`eval/`（评测）。
-2. **图里只有 `act` 节点碰工具层**，工具层是唯一动作出口 —— 这是拓扑性质，不是纪律。
+2. **图里只有 `act` 节点调动作接口（`navigate`）**；`resolve` / `plan` / `verify` 只做查询、
+   规划、观测，工具层是唯一动作出口 —— 这是拓扑性质，不是纪律。
 3. **"没看过"是一等状态**：库存没覆盖的货位不是"空"，是未知。`resolve()` 返回
    `UNOBSERVED`，不编答案；静默猜错在基准里是零容忍项。
 
@@ -104,9 +113,12 @@ depot_vln/
     oracle.py            用真值复核每条声明，矛盾就拒绝运行
     runner.py            跑图 + 分类统计 + 静默猜错统计
 scripts/                 构建、仿真采集、判据（见 `make help`）
+examples/                四个可运行的离线小例子（语言→目标→规划 / 整图 / 感知库存 / LangGraph 断点续跑）
 tests/                   单元测试 + 反硬编码守护 + 真值隔离守护
 docs/ARCHITECTURE.md     设计细节与数据流
 docs/LIMITATIONS.md      唯一权威的降级/未测清单
+docs/DEMO_GUI.md         三个可录制的 GUI 演示（Nav2 / 语言 / 感知）
+docs/media/              演示截图 / GIF 的存放位置
 docs/archive/            重构前的过程文档（DECISIONS/TROUBLESHOOTING/REPORT…，仅供追溯）
 ```
 
@@ -125,15 +137,16 @@ docs/archive/            重构前的过程文档（DECISIONS/TROUBLESHOOTING/RE
 | 语义地图数据源 | `mock/world.py` 遍历 `ground_truth/slots.json` 抄进地图 | `inventory.py`：感知产物快照，带 provenance；替身明确标 `sim-sampled` |
 | 语言层 | 300 行正则分支，与基准模板同构 | 槽位抽取（数据驱动）→ 编译器决定"要不要发问"，图负责歧义 |
 | 基准 | 模板生成、与正则一一对应 → 100% 是恒等式 | 人工编写、真值独立复核；静默猜错单独统计 |
-| 判据 | 16 条"读日志对账" | 45 条 pytest 断言 |
+| 判据 | 16 条"读日志对账" | 61 条 pytest 断言 |
 
 ## 已知边界
 
 见 [docs/LIMITATIONS.md](docs/LIMITATIONS.md)。最重要的三条：
 
-* 感知库存只有 **8%** 覆盖率（SEG-2 只采了一条巷的下层）—— 属性类问题因此只能回答"没看过"；
+* 感知库存只有 **8.3%** 覆盖率（SEG-2 只汇总了 A 巷下层）—— 属性类问题因此只能回答"没看过"；
 * 规则解析器不支持"第三个货架""蓝色的大箱子"这类**相对/外观**表达（LLM 后端可补，但没做端到端验证）；
-* 本次重构**没有**重跑 Gazebo 侧判据（M1/M2/SLAM/SEG），只保证离线链路与代码一致性。
+* 本次重构**没有**重跑 M1/M2/SLAM-1/SEG-1 的 Gazebo 判据（SEG-2 已在 2026-11-04 按新世界重做，
+  见 [docs/LIMITATIONS.md](docs/LIMITATIONS.md) A5），只保证离线链路与代码一致性。
 
 ## 许可
 

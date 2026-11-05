@@ -288,12 +288,19 @@ def capture_aisle(node: "Cam", poller, sg: dict, aisle: str, bays: list[int],
             break
         p_now = poller.get()
         dist = math.hypot(v["x"] - p_now[0], v["y"] - p_now[1]) if p_now else 60.0
-        budget = 2.2 * dist / max(args.speed, 0.05) + 25.0
+        # **墙钟**预算必须按 RTF 折算：GUI + 相机桥时 RTF≈0.15–0.25，
+        # 2.4 m 名义 8 s 仿真时间实际要 40–55 s 墙钟；原来的 42 s 固定值必然超时。
+        budget = 2.2 * dist / max(args.speed, 0.05) / max(RTF_EST, 0.12) + 25.0
         if not drive_to_point(poller, v["x"], v["y"], args.speed, 0.12, budget):
             print(f"[seg2] 到 {aisle}-{v['bay']}-{v['side']} 观测位失败，跳过")
             continue
         t_turn = time.monotonic()
         ok_turn, yaw_err_deg = turn_to_precise(poller, v["yaw"], tol_deg=2.0)
+        if yaw_err_deg > 5.0:
+            # 低 RTF 下自校准偶尔停在 5–8°：先做一次小幅重试，再决定丢不丢。
+            print(f"[seg2] {aisle}-{v['bay']}-{v['side']} 朝向残差 "
+                  f"{yaw_err_deg:.1f}°，小幅重试一次")
+            _ok2, yaw_err_deg = turn_to_precise(poller, v["yaw"], tol_deg=1.0)
         turn_s = time.monotonic() - t_turn
         cmd(0.0, 0.0, 0.0)
         if yaw_err_deg > 5.0:

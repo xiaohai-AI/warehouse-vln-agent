@@ -221,8 +221,16 @@ def make_verify(rt: Runtime) -> Callable[[AgentState], dict]:
         if reason is None and want and target.get("kind") == "slot" and obs.cls and obs.cls not in want:
             reason = "VERIFY_MISMATCH"
         if reason is None and target.get("kind") == "slot":
-            cand = (state.get("candidates") or [{}])[0]
-            if cand.get("observed_occupied") is not None and obs.occupied is not None:
+            # 必须按**当前目标地址**找回它自己的候选：语义换位（recover 改道）之后
+            # candidates[0] 还是原目标，拿它比对会得到假的 VERIFY_MISMATCH。
+            addr = target.get("address")
+            cand = next(
+                (c for c in (state.get("candidates") or [])
+                 if (c.get("target") or {}).get("address") == addr),
+                None,
+            )
+            if (cand is not None and cand.get("observed_occupied") is not None
+                    and obs.occupied is not None):
                 if cand["observed_occupied"] != obs.occupied:
                     reason = "VERIFY_MISMATCH"
         # 写回地图：这就是"再次观测刷新置信度"的那一步

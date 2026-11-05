@@ -529,19 +529,19 @@
   <joint name="stereo_left_joint" type="fixed">
     <parent link="base_link"/>
     <child link="stereo_left_link"/>
-    <origin rpy="0 -0.27925268031909245 0" xyz="0.26 0.06 0.27399999999999997"/>
+    <origin rpy="0 -0.0 0" xyz="0.26 0.06 0.27399999999999997"/>
   </joint>
   <gazebo reference="stereo_left_link">
     <sensor name="stereo_left" type="camera">
-      <update_rate>10</update_rate>
+      <update_rate>5</update_rate>
       <always_on>False</always_on>
       <visualize>false</visualize>
       <topic>stereo_left</topic>
       <camera>
         <horizontal_fov>1.5708</horizontal_fov>
         <image>
-          <width>640</width>
-          <height>480</height>
+          <width>320</width>
+          <height>240</height>
           <format>R8G8B8</format>
         </image>
         <clip>
@@ -560,19 +560,19 @@
   <joint name="stereo_right_joint" type="fixed">
     <parent link="base_link"/>
     <child link="stereo_right_link"/>
-    <origin rpy="0 -0.27925268031909245 0" xyz="0.26 -0.06 0.27399999999999997"/>
+    <origin rpy="0 -0.0 0" xyz="0.26 -0.06 0.27399999999999997"/>
   </joint>
   <gazebo reference="stereo_right_link">
     <sensor name="stereo_right" type="camera">
-      <update_rate>10</update_rate>
+      <update_rate>5</update_rate>
       <always_on>False</always_on>
       <visualize>false</visualize>
       <topic>stereo_right</topic>
       <camera>
         <horizontal_fov>1.5708</horizontal_fov>
         <image>
-          <width>640</width>
-          <height>480</height>
+          <width>320</width>
+          <height>240</height>
           <format>R8G8B8</format>
         </image>
         <clip>
@@ -591,19 +591,19 @@
   <joint name="rgbd_joint" type="fixed">
     <parent link="base_link"/>
     <child link="rgbd_link"/>
-    <origin rpy="0 -0.27925268031909245 0" xyz="0.265 0 0.284"/>
+    <origin rpy="0 -0.0 0" xyz="0.265 0 0.284"/>
   </joint>
   <gazebo reference="rgbd_link">
     <sensor name="rgbd" type="rgbd_camera">
-      <update_rate>10</update_rate>
+      <update_rate>5</update_rate>
       <always_on>False</always_on>
       <visualize>false</visualize>
       <topic>rgbd</topic>
       <camera>
         <horizontal_fov>1.5708</horizontal_fov>
         <image>
-          <width>640</width>
-          <height>480</height>
+          <width>320</width>
+          <height>240</height>
           <format>R8G8B8</format>
         </image>
         <clip>

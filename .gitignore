@@ -25,4 +25,14 @@ logs/
 transitions/*.jsonl.tmp
 !results/*.json
 !results/*.csv
+# 采集运行日志：每次覆盖，记的是"这一轮跑到哪"，不作为证据（必须放在 !results/*.json 之后）
+results/seg2_capture_manifest.json
 ground_truth/poses.csv
+
+# ---- LangGraph checkpoint / demo sqlite
+state/
+
+# ---- 原始录屏（体积大，压成 mp4/gif 后再入库）
+docs/media/*.webm
+docs/media/*.mkv
+docs/media/*.mov

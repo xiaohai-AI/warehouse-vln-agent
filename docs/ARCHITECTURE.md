@@ -79,11 +79,12 @@ START → understand → resolve ─┬─(ok)────────→ plan �
 | 状态 | 含义 | 表现 |
 |---|---|---|
 | `occupied=True/False` | 看过，并且判出来了 | 可以下结论 |
-| `occupied=None` | 看过，但判不出 | 说"现场未能判定"，不猜 |
+| `occupied=None` | 看过，但判不出 | 查询按 `UNOBSERVED`；现场核验说"未取到占用判定" |
 | 不在库存里 | **没看过** | `UNOBSERVED`，不发散成"空" |
 
-这条在代码里就是一个 `None`：`world.resolve()` 遇到没观测的格子在跟"空位/没有这种货"
-有关的查询上返回 `UNOBSERVED`；跟"能不能开过去"有关的查询不受影响（导航不需要知道货位里有没有货）。
+这条在代码里就是一个 `None`：`world.resolve()` 遇到**没观测过**或**看过但判不出占用**的格子，
+在跟"空位/没有这种货"有关的查询上返回 `UNOBSERVED`；跟"能不能开过去"有关的查询不受影响
+（导航不需要知道货位里有没有货）。
 
 **部分观测的货架面**也不能被当成"没有"：`class_in_aisle` 会把还有未知格子的面一起算成候选
 （score=0，why="还有 N 个格子未观测"），图上就成了歧义 → 问人。
@@ -109,10 +110,13 @@ START → understand → resolve ─┬─(ok)────────→ plan �
 | `test_no_hardcoded_world.py` | `depot_vln/` 里不许再出现 `-31.0` / `"ABCDEF"` / `bays=24` / `LANE_DY={` |
 | `test_runtime_isolation.py` | 运行时模块不许 import 真值 |
 | `test_nlu.py` | 同一意图的不同说法；欠定查询保持欠定；LLM 回退要记账 |
-| `test_agent_graph.py` | 歧义必问、封堵必拒、不存在必拒、未知不编 |
+| `test_agent_graph.py` | 歧义必问、封堵必拒、不存在必拒、未知不编；换位后按替代位复核 |
+| `test_semantics.py` | 三种状态（占用 / 空 / 未判定）不互相折叠 |
+| `test_map_entrypoints.py` | `make world` / `map-check` 的共享几何模块必须存在 |
 | `test_tools.py` | seq 单调、过期丢弃、取消不回报完成 |
 | `test_bench.py` | 基准声明与真值自洽；静默猜错 = 0 |
 | `test_inventory.py` | 替身必须标注；覆盖率下降时未知保持未知 |
+| `test_seg2_geometry.py` | SEG-2 层带/窗口/深度带的几何不变量 |
 
 ## 7. 为什么删掉了 `accept.py` 那一套
 

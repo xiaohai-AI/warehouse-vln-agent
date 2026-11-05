@@ -10,6 +10,8 @@
     "z_max": 8.0
   },
   "derived": {
+    "bay_pitch": 2.4,
+    "n_levels": 2,
     "rack_run": 57.599999999999994,
     "rack_total_y": 26.900000000000006,
     "footprint_x": 67.0,

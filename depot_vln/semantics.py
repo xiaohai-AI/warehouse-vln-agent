@@ -20,7 +20,8 @@ HALF_LIFE_S = 1800.0  # 置信度半衰期 30 分钟（仓库一次巡检的时�
 @dataclass
 class SlotState:
     address: str
-    occupied: bool
+    #: None = **看过但判不出占用**（与"没看过"不同：后者根本没有 SlotState，`get()` 返回 None）
+    occupied: bool | None
     cls: str | None
     confidence: float
     last_seen: float
@@ -46,7 +47,7 @@ class SemanticMap:
     def observe(
         self,
         address: str,
-        occupied: bool,
+        occupied: bool | None,
         cls: str | None,
         confidence: float,
         t: float,
@@ -54,7 +55,15 @@ class SemanticMap:
     ) -> SlotState:
         self.now = max(self.now, t)
         prev = self.slots.get(address)
-        if prev is not None and prev.occupied != occupied:
+        # 只有"两个已知值不同"才算冲突。None 是"判不出"，不是第三种占用状态：
+        # 从一个未知值变成已知值（或反过来）是补信息，不是矛盾。
+        conflict = (
+            prev is not None
+            and prev.occupied is not None
+            and occupied is not None
+            and prev.occupied != occupied
+        )
+        if conflict:
             # 冲突：双方都保留，谁新谁当 current，旧的进 conflicts 并标 stale
             prev.conflicts.append(
                 {
@@ -72,7 +81,7 @@ class SemanticMap:
             confidence=max(0.0, min(1.0, confidence)),
             last_seen=t,
             source=source,
-            stale=prev is not None and prev.occupied != occupied,
+            stale=conflict,
             conflicts=prev.conflicts if prev else [],
         )
         self.slots[address] = st
@@ -102,7 +111,8 @@ class SemanticMap:
             "bay": bay,
             "observed_slots": len(seen),
             "occupied_slots": len(occ_slots),
-            "empty_slots": sum(1 for s in seen if not s.occupied),
+            "empty_slots": sum(1 for s in seen if s.occupied is False),
+            "unknown_slots": sum(1 for s in seen if s.occupied is None),
             "class_counts": counts,
             "confidence": min((s.effective_confidence(self.now) for s in occ_slots), default=0.0),
             "any_stale": any(s.stale for s in seen),
@@ -137,10 +147,11 @@ class SemanticMap:
         return out
 
     def empty_slots(self, aisle: str | None = None) -> list[str]:
+        """**确认**为空的货位；"看过但判不出"（occupied=None）不算空。"""
         return sorted(
             a
             for a, s in self.slots.items()
-            if not s.occupied and (aisle is None or a.startswith(f"{aisle}-"))
+            if s.occupied is False and (aisle is None or a.startswith(f"{aisle}-"))
         )
 
     # ------------------------------------------------------------ 从快照装载
@@ -154,7 +165,8 @@ class SemanticMap:
         for addr, e in inv.observed().items():
             if addr not in slot_grid.get("slots", {}):
                 continue
-            m.observe(addr, bool(e.occupied), e.cls, float(e.confidence), float(e.observed_at),
+            # **不要 bool(e.occupied)**：那样会把"看过但判不出"折叠成"空"。
+            m.observe(addr, e.occupied, e.cls, float(e.confidence), float(e.observed_at),
                       source=e.source)
         return m
 

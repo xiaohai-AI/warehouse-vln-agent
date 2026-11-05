@@ -139,9 +139,10 @@ if [ "$LOC" = "amcl" ]; then
   echo "[m2-static] AMCL active，map_server 已加载静态图"
 elif [ "$LOC" = "truth" ]; then
   # 真值锚定（2026-11-03）：纯 odom 在 20 m 内漂 15.6°/1.1 m → 车贴货架面滑行、开出 16 m 过头。
-  # 这里静态图只发 /map（--no-tf），map->odom 交给 truth_map_odom 以 ~2 Hz 按真值校正。
+  # 这里静态图只发 /map（--no-tf），map->odom 交给 truth_map_odom：
+  # 20 Hz 发布（控制器也按 20 Hz 查）、真值 1 Hz 校正、stamp 后移 0.3 s（防 future extrapolation）。
   # 定位精度本身仍由 S5/EKF 与 AMCL 单独评估；这条链路只保证"驾驶+语义+读编号"有位姿可用。
-  echo "[m2-static] 真值锚定定位：静态图(--no-tf) + truth_map_odom（2 Hz 校正）…"
+  echo "[m2-static] 真值锚定定位：静态图(--no-tf) + truth_map_odom（20 Hz 发布 / 1 Hz 真值校正）…"
   bash -lc "source $ROS && $PY scripts/static_map_pub.py --no-tf" > results/map_pub.log 2>&1 &
   sleep 3
   bash -lc "source $ROS && $PY scripts/truth_map_odom.py" > results/map_odom.log 2>&1 &

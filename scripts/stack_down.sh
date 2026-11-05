@@ -21,7 +21,13 @@ pkill -f "[b]ehavior_server"
 pkill -f "[w]aypoint_follower"
 pkill -f "[v]elocity_smoother"
 pkill -f "[s]tatic_map_pub"
+pkill -f "[t]ruth_map_odom"
 pkill -f "[t]ruth_localization"
+pkill -f "[s]can_relay"
+pkill -f "[m]2_static_run.sh"
+pkill -f "[m]2_side_dock.py"
+pkill -f "[n]av_to\.(py|sh)"
+pkill -f "[s]eg2_capture.py"
 pkill -f "[g]pu_watchdog"
 
 sleep 5
@@ -35,10 +41,16 @@ pkill -9 -f "[r]obot_state_publisher"
 pkill -9 -f "[s]lam_toolbox"
 pkill -9 -f "[n]av2_"
 pkill -9 -f "[s]tatic_map_pub"
+pkill -9 -f "[t]ruth_map_odom"
 pkill -9 -f "[t]ruth_localization"
+pkill -9 -f "[s]can_relay"
+pkill -9 -f "[m]2_static_run.sh"
+pkill -9 -f "[m]2_side_dock.py"
+pkill -9 -f "[n]av_to\.(py|sh)"
+pkill -9 -f "[s]eg2_capture.py"
 pkill -9 -f "[g]pu_watchdog"
 sleep 2
-left=$(pgrep -af "[w]arehouse.sdf|[d]epot_sim.launch|[p]arameter_bridge|[m]ecanum_odom|[n]av2_|[s]lam_toolbox|[s]tatic_map_pub|[t]ruth_localization" 2>/dev/null | grep -vc stack_down)
+left=$(pgrep -af "[w]arehouse.sdf|[d]epot_sim.launch|[p]arameter_bridge|[m]ecanum_odom|[n]av2_|[s]lam_toolbox|[s]tatic_map_pub|[t]ruth_map_odom|[t]ruth_localization|[s]can_relay|[m]2_static_run.sh" 2>/dev/null | grep -vc stack_down)
 echo "已拆除；关键进程残留数 = $left"
 if [ "$left" -ne 0 ]; then
   pgrep -af "[w]arehouse.sdf|[d]epot_sim.launch|[p]arameter_bridge|[m]ecanum_odom|[n]av2_|[s]lam_toolbox" | grep -v stack_down | head -8

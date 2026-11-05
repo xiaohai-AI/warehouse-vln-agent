@@ -11,7 +11,7 @@
     ],
     "built_at": "2026-11-04T18:25:00",
     "note": "只包含真实观测过的货位；未观测的货位在运行时是 'unknown'，不是 '空'",
-    "file": "/home/dan/Project/depot-vln/results/inventory.json"
+    "file": "results/inventory.json"
   },
   "n": 54,
   "ok": 36,
@@ -43,5 +43,5 @@
       "silent_wrong": 0
     }
   },
-  "wall_s": 1.28
+  "wall_s": 1.95
 }
