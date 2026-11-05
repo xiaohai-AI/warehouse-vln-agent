@@ -396,8 +396,12 @@ def main() -> int:
             y_line = aisle_y(sg, aisle)
             n = capture_aisle(node, poller, sg, aisle, bays, y_line, out, args)
             total += n
+            try:
+                out_s = str(out.relative_to(ROOT))
+            except ValueError:      # --out 指到项目外（如 /tmp 做验证）时 relative_to 会抛
+                out_s = str(out)
             manifest[aisle] = {"status": "ok" if n else "empty", "frames": n,
-                               "bays": [bays[0], bays[-1]], "out": str(out.relative_to(ROOT))}
+                               "bays": [bays[0], bays[-1]], "out": out_s}
     finally:
         cmd(0.0, 0.0, 0.0)
         node.destroy_node()

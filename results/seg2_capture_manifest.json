@@ -1,0 +1,15 @@
+{
+  "schema": "depot-vln/seg2_capture@1",
+  "cam_pitch_deg": 16.0,
+  "aisles": {
+    "C": {
+      "status": "ok",
+      "frames": 2,
+      "bays": [
+        23,
+        24
+      ],
+      "out": "/tmp/turn_test3.npz"
+    }
+  }
+}

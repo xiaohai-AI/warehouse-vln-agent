@@ -233,10 +233,9 @@ def turn_to_precise(poller: TruthPoller, yaw: float, tol_deg: float = 2.0) -> tu
     只用脉冲：每脉冲最多 0.9 s × 0.25 rad/s ≈ 13°，转 180° 要 14 个脉冲，而预算只有 6 个
     -> 实测残差 58–135°。只用 P 律：大角度冲过头、小角度被静摩擦卡住。必须两段。
     """
-    # 粗转只负责"把大角度快速拉近"，剩下的由自适应精修收敛（不再有第二次粗转）
-    turn_to(poller, yaw, tol_deg=15.0, max_seconds=15.0)
-    cmd(0.0, 0.0, 0.0)
-    time.sleep(0.3)
+    # **不再用 P 律粗转**：实测 34° 的小角度它反而收敛不了（15 s 仍差 12°），
+    # 而自校准脉冲对 34° 和 180° 都稳定（180° 实测 20.8 s / 残差 1.1°）。
+    # 脉冲段长度按实测角速度算，所以大角度只是多几段，不会失控。
     return align_to(poller, yaw, tol_deg=tol_deg, tries=None, wz=TURN_RATE, settle=0.35)
 
 
