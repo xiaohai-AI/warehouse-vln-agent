@@ -272,6 +272,11 @@ def capture_aisle(node: "Cam", poller, sg: dict, aisle: str, bays: list[int],
 
     partial = out.with_name(out.stem + ".partial.npz")
     frames, done = load_partial(partial, args.pitch)
+    if not frames and args.fill_gaps and out.exists():
+        # 成品里有 39/48 帧这种"缺几个观测"的情况：只补缺的，别把 39 帧重开一遍
+        frames, done = load_partial(out, args.pitch)
+        if frames:
+            print(f"[seg2] {aisle} 补洞模式：已有成品 {len(frames)} 帧，只补缺的观测")
     if frames:
         print(f"[seg2] {aisle} 巷续跑：断点里已有 {len(frames)} 帧（跳过已覆盖的观测）")
     t_start = time.monotonic()
@@ -345,6 +350,8 @@ def main() -> int:
                     help="多巷模式：逗号分隔，如 A,B,C；'all' = 全部。每巷一个 npz")
     ap.add_argument("--out", default="", help="单巷输出路径（多巷模式忽略，按巷命名）")
     ap.add_argument("--force", action="store_true", help="已有产物也重抓")
+    ap.add_argument("--fill-gaps", action="store_true",
+                    help="成品已存在时只补缺的观测（用于修复被丢帧的巷，不重抓已采的）")
     ap.add_argument("--speed", type=float, default=0.30)
     ap.add_argument("--settle", type=float, default=0.5, help="转向后等几秒让图像稳定")
     ap.add_argument("--max-seconds", type=float, default=3600.0, help="每条巷的墙钟上限")
@@ -389,7 +396,8 @@ def main() -> int:
     total = 0
     try:
         for aisle, bays, out in jobs:
-            if out.exists() and out.stat().st_size > 1_000_000 and not args.force:
+            if (out.exists() and out.stat().st_size > 1_000_000
+                    and not args.force and not args.fill_gaps):
                 print(f"[seg2] 跳过 {aisle}：已有 {out.name}（--force 可重抓）")
                 manifest[aisle] = {"status": "skipped", "out": str(out.relative_to(ROOT))}
                 continue

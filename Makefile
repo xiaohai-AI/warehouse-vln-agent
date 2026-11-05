@@ -189,9 +189,12 @@ seg2-all:
 	  --bays 1-24 --speed 0.40 --max-seconds 5400 --pitch 16'
 
 # 已经在仿真里、只想补某几条巷：AISLES=C,E make seg2-aisles
+# 只补某几条巷里缺的观测：AISLES=B FILL=1 make seg2-aisles
+# （成品已有 39/48 帧时，只补缺的 9 帧，不重抓已采的）
 seg2-aisles:
-	bash -lc 'source $(ROS) && exec $(PY) -u scripts/seg2_capture.py --aisles $${AISLES:?AISLES=A,B} \
-	  --bays $${BAYS:-1-24} --speed 0.40 --max-seconds 5400 --pitch 16'
+	bash -lc 'source $(ROS) && exec $(PY) -u scripts/seg2_capture.py \
+	  --aisles $(if $(AISLES),$(AISLES),A,B) --bays $(if $(BAYS),$(BAYS),1-24) \
+	  --speed 0.40 --max-seconds 5400 --pitch 16 $(if $(FILL),--fill-gaps)'
 
 # 全巷检测（吃 results/seg2_frames_*.npz）
 seg2-detect-all:
