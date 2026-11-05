@@ -287,7 +287,9 @@ def capture_aisle(node: "Cam", poller, sg: dict, aisle: str, bays: list[int],
         if not drive_to_point(poller, v["x"], v["y"], args.speed, 0.12, budget):
             print(f"[seg2] 到 {aisle}-{v['bay']}-{v['side']} 观测位失败，跳过")
             continue
+        t_turn = time.monotonic()
         ok_turn, yaw_err_deg = turn_to_precise(poller, v["yaw"], tol_deg=2.0)
+        turn_s = time.monotonic() - t_turn
         cmd(0.0, 0.0, 0.0)
         if yaw_err_deg > 5.0:
             # **宁缺毋错**：朝向错了的帧会把"对面货架"当成这一侧存下来，
@@ -324,7 +326,7 @@ def capture_aisle(node: "Cam", poller, sg: dict, aisle: str, bays: list[int],
         print(f"  [seg2] {i + 1}/{len(views)}  {aisle}-{v['bay']}-{v['side']}  "
               f"位姿 ({p[0]:+.2f},{p[1]:+.2f}) yaw={math.degrees(p[2]):+.1f}°  "
               f"深度有效 {100 * fin.mean():.0f}%  中位 {np.median(dep[fin]):.2f} m  "
-              f"转向残差 {yaw_err_deg:4.1f}°{warn}")
+              f"转向残差 {yaw_err_deg:4.1f}°（转向 {turn_s:.1f}s 墙钟）{warn}")
 
     if not frames:
         print(f"[seg2] {aisle} 巷一帧都没抓到")
