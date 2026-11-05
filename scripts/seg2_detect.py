@@ -184,8 +184,8 @@ def cargo_components(depth: np.ndarray, k: np.ndarray, pitch_deg: float, cam_h: 
     z, dh, _ = pixel_geometry(depth, k, pitch_deg, cam_h)
     # 深度带**相对本帧货架面**：货架面本身（以及它后面的对侧）必须排除，
     # 比货架面近 6 cm 以上的才算货物。这样停近/停远 0.3 m 都不影响检测。
-    d_hi = 1.55 if d_hi is None else d_hi
-    d_lo = 1.10 if d_lo is None else d_lo
+    d_hi = 2.35 if d_hi is None else d_hi
+    d_lo = 1.33 if d_lo is None else d_lo
     m = (np.isfinite(depth) & (depth > 0.25) & (dh > d_lo) & (dh < d_hi)
          & (z > z_band[0]) & (z < z_band[1]))
     # 逐像素世界 x：横向偏移 = (u-cx)/fx·dh；世界 x = obs_x + 横向·sin(yaw)
@@ -236,7 +236,8 @@ def level_bands() -> dict[int, tuple[float, float]]:
 def detect_frame(rgb: np.ndarray, depth: np.ndarray, k: np.ndarray,
                  obs_x: float, obs_y: float, obs_yaw: float, bay_cx: float,
                  pitch_deg: float = 16.0, cam_h: float = 0.436,
-                 bay_half_m: float = 0.70, levels: tuple[int, ...] = (1,)) -> dict:
+                 bay_half_m: float = 0.70, levels: tuple[int, ...] = (1,),
+                 d_lo: float | None = None, d_hi: float | None = None) -> dict:
     """单帧 -> {"levels": {lvl: det|None}, "neighbors": [...] }。
 
     归属：物体的**世界 x** = obs_x + lateral·sin(yaw)，其中 lateral 是它相对光轴的横向米数。
@@ -251,7 +252,8 @@ def detect_frame(rgb: np.ndarray, depth: np.ndarray, k: np.ndarray,
     out: dict = {"levels": {}, "neighbors": []}
     for lvl in levels:
         comps = cargo_components(depth, k, pitch_deg, cam_h, bands[lvl],
-                                 obs_x=obs_x, obs_yaw=obs_yaw)
+                                 obs_x=obs_x, obs_yaw=obs_yaw,
+                                 d_lo=d_lo, d_hi=d_hi)
         mine = []
         for c in comps:
             wx = c["c_wx"]
@@ -350,6 +352,12 @@ def main() -> int:
                     help="评哪几层。默认只评下层：上层在该相机高度被层板下沿遮挡（物理不可见）")
     ap.add_argument("--pitch", type=float, default=16.0, help="相机仰角（度），实测值")
     ap.add_argument("--cam-h", type=float, default=0.43, help="相机离地高度（m），地面平面拟合实测值")
+    # 货物前景的**水平距离**带（相机 -> 货物前表面）。默认值是 2026-10-29 世界标定的；
+    # 世界加了编号牌/半深货位之后货物退到 ~1.9 m，必须按 `--d-lo/--d-hi` 重标。
+    # 2026-11-04 重标：半深货位让货物**退到货架前沿之后**（前沿 ~1.34 m、货物 1.33–2.30 m）。
+    # 旧标定的 (1.10, 1.55) 只框住"前沿那条连续横梁"，整幅货架连成一块 -> 全部判空。
+    ap.add_argument("--d-lo", type=float, default=1.33, help="货物最近水平距离（m）")
+    ap.add_argument("--d-hi", type=float, default=2.35, help="货物最远水平距离（m）")
     args = ap.parse_args()
 
     paths = [Path(p) for p in args.frames]
@@ -383,7 +391,8 @@ def main() -> int:
                            obs_x=float(pose_i[0]), obs_y=float(pose_i[1]),
                            obs_yaw=float(pose_i[2]), bay_cx=float(bay_cx),
                            pitch_deg=args.pitch, cam_h=args.cam_h,
-                           levels=tuple(args.levels))
+                           levels=tuple(args.levels),
+                           d_lo=args.d_lo, d_hi=args.d_hi)
         levels = got["levels"]
         preds = {}
         for addr in addrs:

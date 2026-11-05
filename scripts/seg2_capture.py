@@ -184,6 +184,50 @@ def build_views(sg: dict, aisle: str, bays: list[int], y_line: float) -> list[di
     return views
 
 
+def save_frames(frames: list[dict], out: Path, pitch: float) -> None:
+    out.parent.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(
+        out,
+        rgb=np.stack([f["rgb"] for f in frames]),
+        depth=np.stack([f["depth"] for f in frames]).astype(np.float32),
+        k=np.stack([f["k"] for f in frames]),
+        pose=np.stack([f["pose"] for f in frames]),
+        bay=np.array([f["bay"] for f in frames], np.int32),
+        side=np.array([f["side"] for f in frames]),
+        addr=np.array([",".join(f["addr"]) for f in frames]),
+        yaw_err_deg=np.array([f["yaw_err_deg"] for f in frames], np.float64),
+        cam_xyz=np.array(CAM_XYZ, np.float64),
+        cam_pitch_deg=np.array(pitch, np.float64),
+    )
+
+
+def load_partial(path: Path, pitch: float) -> tuple[list[dict], set[tuple[int, str]]]:
+    """读断点文件，返回 (已抓帧, 已覆盖的 (bay, side) 集合)。
+
+    长任务必须能断：一条巷 48 个观测按实测 RTF 要 50+ 分钟，中途被中断
+    （换参数、GPU 报警、会话结束）时，已经开过去的里程不应该白跑。
+    """
+    if not path.exists():
+        return [], set()
+    try:
+        d = np.load(path)
+        if abs(float(d["cam_pitch_deg"]) - pitch) > 1e-6:
+            print(f"[seg2] 断点文件的相机仰角 {float(d['cam_pitch_deg'])}° 与本次 {pitch}° 不符，忽略")
+            return [], set()
+        frames = []
+        for i in range(d["rgb"].shape[0]):
+            frames.append({"rgb": d["rgb"][i], "depth": d["depth"][i], "k": d["k"][i],
+                           "pose": d["pose"][i], "bay": int(d["bay"][i]),
+                           "side": str(d["side"][i]),
+                           "addr": str(d["addr"][i]).split(",") if str(d["addr"][i]) else [],
+                           "yaw_err_deg": float(d["yaw_err_deg"][i])})
+        done = {(f["bay"], f["side"]) for f in frames}
+        return frames, done
+    except Exception as e:
+        print(f"[seg2] 断点文件读不了（{type(e).__name__}: {e}），从头抓")
+        return [], set()
+
+
 def capture_aisle(node: "Cam", poller, sg: dict, aisle: str, bays: list[int],
                   y_line: float, out: Path, args) -> int:
     """在一个巷道里拍完所有观测位，返回帧数。"""
@@ -211,12 +255,17 @@ def capture_aisle(node: "Cam", poller, sg: dict, aisle: str, bays: list[int],
             print(f"[seg2] {aisle} 巷转场失败，跳过")
             return 0
 
-    frames: list[dict] = []
+    partial = out.with_name(out.stem + ".partial.npz")
+    frames, done = load_partial(partial, args.pitch)
+    if frames:
+        print(f"[seg2] {aisle} 巷续跑：断点里已有 {len(frames)} 帧（跳过已覆盖的观测）")
     t_start = time.monotonic()
     if node.fresh(20.0) is None:
         print("[seg2] 拿不到 RGB-D（相机桥没起？）-> 未跑")
         return 0
     for i, v in enumerate(views):
+        if (v["bay"], v["side"]) in done:
+            continue
         if time.monotonic() - t_start > args.max_seconds:
             print(f"[seg2] {aisle} 巷到时间上限，收在 {i}/{len(views)} 个观测")
             break
@@ -255,6 +304,9 @@ def capture_aisle(node: "Cam", poller, sg: dict, aisle: str, bays: list[int],
                        "pose": np.array(p, np.float64), "bay": v["bay"],
                        "side": v["side"], "addr": v["addr"],
                        "yaw_err_deg": float(yaw_err_deg)})
+        if len(frames) % 8 == 0:
+            save_frames(frames, partial, args.pitch)
+            print(f"[seg2] {aisle} 巷断点已存 {len(frames)} 帧 -> {partial.name}")
         fin = np.isfinite(dep) & (dep > 0.1)
         warn = "  ⚠️ 中心深度 >4 m，可能透过空货位看到对面" if core_med > 4.0 else ""
         print(f"  [seg2] {i + 1}/{len(views)}  {aisle}-{v['bay']}-{v['side']}  "
@@ -265,20 +317,8 @@ def capture_aisle(node: "Cam", poller, sg: dict, aisle: str, bays: list[int],
     if not frames:
         print(f"[seg2] {aisle} 巷一帧都没抓到")
         return 0
-    out.parent.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(
-        out,
-        rgb=np.stack([f["rgb"] for f in frames]),
-        depth=np.stack([f["depth"] for f in frames]).astype(np.float32),
-        k=np.stack([f["k"] for f in frames]),
-        pose=np.stack([f["pose"] for f in frames]),
-        bay=np.array([f["bay"] for f in frames], np.int32),
-        side=np.array([f["side"] for f in frames]),
-        addr=np.array([",".join(f["addr"]) for f in frames]),
-        yaw_err_deg=np.array([f["yaw_err_deg"] for f in frames], np.float64),
-        cam_xyz=np.array(CAM_XYZ, np.float64),
-        cam_pitch_deg=np.array(args.pitch, np.float64),
-    )
+    save_frames(frames, out, args.pitch)
+    partial.unlink(missing_ok=True)
     print(f"[seg2] {aisle} 巷 {len(frames)} 帧 -> {out}")
     return len(frames)
 
