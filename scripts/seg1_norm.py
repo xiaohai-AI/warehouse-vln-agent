@@ -21,6 +21,10 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# 让 `import depot_vln` 在任何 cwd 下都能用（脚本以 scripts/ 为 sys.path[0] 运行）
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from drive_to import drive_to_point  # noqa: E402

@@ -114,16 +114,32 @@ def drive_to_point(poller: TruthPoller, tx: float, ty: float, speed: float,
 
 
 def turn_to(poller: TruthPoller, yaw: float, tol_deg: float = 3.0,
-            max_seconds: float = 25.0) -> bool:
+            max_seconds: float = 25.0, stall_seconds: float = 1.5) -> bool:
+    """纯 P 律转向。**误差不再下降就早退**，不把整个预算耗在静摩擦上。
+
+    为什么加早退：四轮静摩擦（mu=3.0）会吃掉小误差对应的微小 wz，残差卡在 2–5° 不动，
+    而这里只有 P 律 —— 于是每次转向都跑满 25–30 s 超时。实测每条观测位多花 ~30 s 墙钟
+    （SEG-2 全巷采集 274 帧，光这一项就是 2 小时）。精修由 `align_to` 的脉冲负责，
+    所以这里"卡住就交棒"是正确行为，不是失败。
+    """
     t0 = time.monotonic()
+    best = 1e9
+    last_progress = t0
     while time.monotonic() - t0 < max_seconds:
         p = poller.get()
         if p is None:
             time.sleep(0.05)
             continue
         err = math.atan2(math.sin(yaw - p[2]), math.cos(yaw - p[2]))
-        if abs(math.degrees(err)) < tol_deg:
+        err_deg = abs(math.degrees(err))
+        if err_deg < tol_deg:
             return True
+        now = time.monotonic()
+        if err_deg < best - 0.3:
+            best, last_progress = err_deg, now
+        elif now - last_progress > stall_seconds:
+            cmd(0.0, 0.0, 0.0)
+            return False            # 停住了：交给 align_to 的脉冲精修
         cmd(0.0, 0.0, max(-0.5, min(0.5, 1.5 * err)))
         time.sleep(0.05)
     print("[drive] 转向超时")
@@ -131,16 +147,24 @@ def turn_to(poller: TruthPoller, yaw: float, tol_deg: float = 3.0,
 
 
 def align_to(poller: TruthPoller, yaw: float, tol_deg: float = 2.0,
-             tries: int = 6, wz: float = 0.25, settle: float = 0.6) -> tuple[bool, float]:
+             tries: int | None = None, wz: float = 0.25, settle: float = 0.6,
+             max_seconds: float = 28.0) -> tuple[bool, float]:
     """脉冲式对齐（转一小段 → 停稳 → 量残差 → 按新残差再来）。
 
     为什么不用纯 P 闭环：误差 10° 时 wz 打到 0.5 rad/s，车体动量带着冲过头（实测残差 10°）；
     误差 2–4° 时 wz 只有 0.06 rad/s，被四轮静摩擦（mu=3.0）完全吃掉，于是"转不动 → 超时"。
     脉冲给出**足够大的角速度**再停稳测量，两种情况都能收敛。
+    预算从"固定脉冲数"改成**时间预算**：原来 tries=6/8 只覆盖 ~80–100°，
+    180° 转身必然停在半路（实测残差 140–146°，于是整帧朝错了方向还被存下来）。
+    现在按时间给预算（默认 28 s ≈ 18 个脉冲 ≈ 230°），大角度也收敛。
     返回 (是否达标, 最终残差度数)。
     """
     err_deg = 999.0
-    for _ in range(tries):
+    t_start = time.monotonic()
+    n = 0
+    while (tries is not None and n < tries) or \
+            (tries is None and time.monotonic() - t_start < max_seconds):
+        n += 1
         p = poller.get()
         if p is None:
             time.sleep(0.05)
@@ -173,8 +197,15 @@ def turn_to_precise(poller: TruthPoller, yaw: float, tol_deg: float = 2.0) -> tu
     """
     turn_to(poller, yaw, tol_deg=10.0, max_seconds=30.0)
     cmd(0.0, 0.0, 0.0)
-    time.sleep(0.6)
-    return align_to(poller, yaw, tol_deg=tol_deg, tries=8, wz=0.25, settle=0.6)
+    time.sleep(0.4)
+    ok, err = align_to(poller, yaw, tol_deg=tol_deg, tries=None, wz=0.25, settle=0.5)
+    # 还差得远（>20°）说明粗转被"停滞早退"掐断了：再补一次粗转 + 精修
+    if not ok and err > 20.0:
+        turn_to(poller, yaw, tol_deg=10.0, max_seconds=20.0)
+        cmd(0.0, 0.0, 0.0)
+        time.sleep(0.4)
+        ok, err = align_to(poller, yaw, tol_deg=tol_deg, tries=None, wz=0.25, settle=0.5)
+    return ok, err
 
 
 def main() -> int:

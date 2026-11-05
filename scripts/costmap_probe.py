@@ -32,6 +32,11 @@ import argparse
 import json
 import math
 import sys
+import os as _os
+import sys as _sys
+_ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
+if _ROOT not in _sys.path:
+    _sys.path.insert(0, _ROOT)
 
 LEHTAL = 99          # nav2_costmap_2d 的 LETHAL_OBSTACLE
 SPAWN_X = float(__import__("depot_vln.catalog", fromlist=["get_catalog"]).get_catalog().spawn["x"])  # 来自 catalog

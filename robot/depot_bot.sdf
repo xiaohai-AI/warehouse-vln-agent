@@ -1428,15 +1428,15 @@
         <pose>-0.1 0 0.55 0 -0 0</pose>
       </sensor>
       <sensor name='rgbd' type='rgbd_camera'>
-        <update_rate>5</update_rate>
+        <update_rate>10</update_rate>
         <always_on>0</always_on>
         <visualize>0</visualize>
         <topic>rgbd</topic>
         <camera>
           <horizontal_fov>1.5708</horizontal_fov>
           <image>
-            <width>320</width>
-            <height>240</height>
+            <width>640</width>
+            <height>480</height>
             <format>R8G8B8</format>
           </image>
           <clip>
@@ -1444,18 +1444,18 @@
             <far>25</far>
           </clip>
         </camera>
-        <pose>0.265 0 0.36 0 -0 0</pose>
+        <pose>0.265 0 0.36 0 -0.279253 0</pose>
       </sensor>
       <sensor name='stereo_left' type='camera'>
-        <update_rate>5</update_rate>
+        <update_rate>10</update_rate>
         <always_on>0</always_on>
         <visualize>0</visualize>
         <topic>stereo_left</topic>
         <camera>
           <horizontal_fov>1.5708</horizontal_fov>
           <image>
-            <width>320</width>
-            <height>240</height>
+            <width>640</width>
+            <height>480</height>
             <format>R8G8B8</format>
           </image>
           <clip>
@@ -1468,18 +1468,18 @@
             <stddev>0.004</stddev>
           </noise>
         </camera>
-        <pose>0.26 0.06 0.35 0 -0 0</pose>
+        <pose>0.26 0.06 0.35 0 -0.279253 0</pose>
       </sensor>
       <sensor name='stereo_right' type='camera'>
-        <update_rate>5</update_rate>
+        <update_rate>10</update_rate>
         <always_on>0</always_on>
         <visualize>0</visualize>
         <topic>stereo_right</topic>
         <camera>
           <horizontal_fov>1.5708</horizontal_fov>
           <image>
-            <width>320</width>
-            <height>240</height>
+            <width>640</width>
+            <height>480</height>
             <format>R8G8B8</format>
           </image>
           <clip>
@@ -1492,7 +1492,7 @@
             <stddev>0.004</stddev>
           </noise>
         </camera>
-        <pose>0.26 -0.06 0.35 0 -0 0</pose>
+        <pose>0.26 -0.06 0.35 0 -0.279253 0</pose>
       </sensor>
     </link>
     <joint name='wheel_fl_joint' type='revolute'>

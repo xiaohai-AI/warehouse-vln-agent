@@ -175,6 +175,23 @@ seg2-capture:
 seg2:
 	$(PY) scripts/seg2_detect.py --frames $${FRAMES:-results/seg2_frames.npz} --out results/seg2.json --plot
 
+# 全 6 条巷道的 SEG-2 采集（按巷落盘、断点续跑）。
+# 每条巷 48 帧（24 bay × 左右各一帧），F 巷 18–24 被路障封死 -> 只采到 17。
+# 需要先 `make seg2-robot && make sim && make cam-bridge`。速度按实测 RTF≈0.22 定。
+seg2-all:
+	.venv/bin/python -u scripts/seg2_capture.py --aisles all --bays 1-24 --speed 0.40 \
+	  --max-seconds 5400 --pitch 16
+
+# 已经在仿真里、只想补某几条巷：AISLES=C,E make seg2-aisles
+seg2-aisles:
+	.venv/bin/python -u scripts/seg2_capture.py --aisles $${AISLES:?AISLES=A,B} --bays $${BAYS:-1-24} \
+	  --speed 0.40 --max-seconds 5400 --pitch 16
+
+# 全巷检测（吃 results/seg2_frames_*.npz）
+seg2-detect-all:
+	$(PY) scripts/seg2_detect.py --frames $$(ls results/seg2_frames_*.npz) \
+	  --out results/seg2.json --plot
+
 # 一条指令端到端（真工具层）：起 sim + 相机桥 -> 跑 -> 拆栈
 p6-demo:
 	UTT="$(UTT)" ANSWER="$(ANSWER)" DRY="$(DRY)" BLOCK="$(BLOCK)" \

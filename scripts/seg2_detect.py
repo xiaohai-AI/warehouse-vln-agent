@@ -30,19 +30,9 @@ import cv2
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
-# 闭集类别（尺寸来自 config/world.yaml 的 semantics.classes）
-CLASSES = {
-    "carton_s": {"dims": (0.35, 0.30, 0.30), "rgb": (0.72, 0.55, 0.34)},
-    "carton_m": {"dims": (0.50, 0.40, 0.40), "rgb": (0.66, 0.48, 0.28)},
-    "carton_l": {"dims": (0.70, 0.60, 0.55), "rgb": (0.58, 0.42, 0.24)},
-    "tote":     {"dims": (0.45, 0.35, 0.30), "rgb": (0.20, 0.35, 0.62)},
-    "pallet":   {"dims": (1.05, 0.90, 0.15), "rgb": (0.78, 0.70, 0.48)},
-    "drum":     {"dims": (0.56, 0.56, 0.85), "rgb": (0.30, 0.45, 0.40)},
-}
-
-
-# ------------------------------------------------------------------ 检测
 def pixel_geometry(depth: np.ndarray, k: np.ndarray, pitch_deg: float,
                    cam_h: float) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """逐像素 -> (世界高度 z, 到相机的水平距离, 射线仰角)。
@@ -158,10 +148,24 @@ def classify(w: float, h: float, rgb: np.ndarray) -> tuple[str, float]:
     return "carton_l", 0.85
 
 
+def rack_plane_dist(dh: np.ndarray, z: np.ndarray, z_band: tuple[float, float],
+                    lo: float = 0.8, hi: float = 3.2) -> float:
+    """本帧的货架面水平距离（水平距离在该层带内的 90 分位）。
+
+    为什么必须逐帧估：观测距离会随停位误差变化（实测同一条巷不同帧差 0.2 m）。
+    用固定深度带时，只要车停近 0.2 m，整个货架面就整体落进带内、连成 2.5 m 的大块，
+    尺寸闸门（≤1.15 m）把所有货都判成"没有" —— 实测 A 巷新采集 48 帧全部检出 0。
+    """
+    m = np.isfinite(dh) & (dh > lo) & (dh < hi) & (z > z_band[0]) & (z < z_band[1])
+    if not m.any():
+        return float("nan")
+    return float(np.percentile(dh[m], 90))
+
+
 def cargo_components(depth: np.ndarray, k: np.ndarray, pitch_deg: float, cam_h: float,
                      z_band: tuple[float, float], obs_x: float = 0.0,
-                     obs_yaw: float = 0.0, d_lo: float = 1.10,
-                     d_hi: float = 1.55, min_px: int = 260) -> list[dict]:
+                     obs_yaw: float = 0.0, d_lo: float | None = None,
+                     d_hi: float | None = None, min_px: int = 260) -> list[dict]:
     """整幅图里找**货架内部那一段**的物体（不假设它们在本 bay）。
 
     为什么不再用"画面中心 ±0.95 m"的窗口：转向误差实测到 35°，窗口会把邻 bay 的货
@@ -178,6 +182,10 @@ def cargo_components(depth: np.ndarray, k: np.ndarray, pitch_deg: float, cam_h: 
     且每个误检的对侧确实都有货（已逐一核对）。
     """
     z, dh, _ = pixel_geometry(depth, k, pitch_deg, cam_h)
+    # 深度带**相对本帧货架面**：货架面本身（以及它后面的对侧）必须排除，
+    # 比货架面近 6 cm 以上的才算货物。这样停近/停远 0.3 m 都不影响检测。
+    d_hi = 1.55 if d_hi is None else d_hi
+    d_lo = 1.10 if d_lo is None else d_lo
     m = (np.isfinite(depth) & (depth > 0.25) & (dh > d_lo) & (dh < d_hi)
          & (z > z_band[0]) & (z < z_band[1]))
     # 逐像素世界 x：横向偏移 = (u-cx)/fx·dh；世界 x = obs_x + 横向·sin(yaw)
@@ -213,6 +221,18 @@ def cargo_components(depth: np.ndarray, k: np.ndarray, pitch_deg: float, cam_h: 
     return out
 
 
+def level_bands() -> dict[int, tuple[float, float]]:
+    """每个货位层的可见高度区间 (底, 顶) —— 顶压在编号牌底面以下。"""
+    from depot_vln.catalog import get_catalog
+    from depot_vln.slot_signs import band_z
+
+    out: dict[int, tuple[float, float]] = {}
+    for lv in get_catalog().levels:
+        z0, _z1 = band_z(lv.deck_z)          # 牌子底/顶
+        out[lv.index] = (round(lv.deck_z + 0.02, 3), round(z0 - 0.01, 3))
+    return out
+
+
 def detect_frame(rgb: np.ndarray, depth: np.ndarray, k: np.ndarray,
                  obs_x: float, obs_y: float, obs_yaw: float, bay_cx: float,
                  pitch_deg: float = 16.0, cam_h: float = 0.436,
@@ -222,9 +242,12 @@ def detect_frame(rgb: np.ndarray, depth: np.ndarray, k: np.ndarray,
     归属：物体的**世界 x** = obs_x + lateral·sin(yaw)，其中 lateral 是它相对光轴的横向米数。
     |世界 x − bay 中心| < 1.0 m 判为本 bay；否则记为邻 bay（用于错格率）。
     """
-    # 下层带下界必须够低：托盘只有 0.15 m 高、躺在 0.15 的层板上（z 0.15–0.30），
-    # 用 0.25 会把托盘整类漏掉（实测 4 个漏检全是 pallet）
-    bands = {1: (0.17, 1.60), 2: (1.80, 2.62)}
+    # 层带上界必须压在**货位编号牌**底面以下。
+    # 牌底 = deck_z + 0.87（depot_vln/slot_signs.band_z），level 1 就是 1.02 m。
+    # 原来上界写 1.60，把牌整条含进去：牌子是一整排连续的前景平面，形态学闭运算后
+    # 横向连成 2.4 m 的大块，尺寸闸门（≤1.15 m）于是把所有货都判成"没有"——
+    # 实测新世界（有编号牌）48 帧全部检出 0 个物体。下界保持 0.17（托盘只有 0.15 高）。
+    bands = level_bands()
     out: dict = {"levels": {}, "neighbors": []}
     for lvl in levels:
         comps = cargo_components(depth, k, pitch_deg, cam_h, bands[lvl],

@@ -28,11 +28,19 @@ from rclpy.qos import QoSProfile, ReliabilityPolicy
 from sensor_msgs.msg import CameraInfo, Image
 
 ROOT = Path(__file__).resolve().parents[1]
+# 让 `import depot_vln` 在任何 cwd 下都能用（脚本以 scripts/ 为 sys.path[0] 运行）
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from drive_to import align_to, drive_to_point, turn_to, turn_to_precise  # noqa: E402  # noqa: F401
 from slam_route import TruthPoller, cmd  # noqa: E402
 from depot_vln.catalog import get_catalog
+
+# 实测实时率（2026-11-04 带相机渲染：0.22）。只用于折算"距离 -> 墙钟预算"，
+# 不参与任何控制；换机器就改这一个数。
+RTF_EST = 0.22
 
 # 相机在 base_link 里的位置（xacro: cam_z=0.35；x 前移 0.10，与雷达同位）
 CAM_XYZ = (0.10, 0.0, 0.35 - 0.076)
@@ -133,118 +141,131 @@ def depth_to_np(m: Image) -> np.ndarray:
     raise RuntimeError(f"未处理的深度编码 {m.encoding}")
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--aisle", default="A")
-    ap.add_argument("--bays", default="1-3", help='如 "1-3" 或 "1,2,5"')
-    ap.add_argument("--out", default=str(ROOT / "results" / "seg2_frames.npz"))
-    ap.add_argument("--speed", type=float, default=0.26)
-    ap.add_argument("--settle", type=float, default=0.8, help="转向后等几秒让图像稳定")
-    ap.add_argument("--max-seconds", type=float, default=900.0)
-    ap.add_argument("--pitch", type=float, default=0.0,
-                    help="相机仰角（度）。必须与 make robot 时的 cam_pitch 一致，"
-                         "否则反投影会错（SEG-2 用 16）")
-    args = ap.parse_args()
+# ---------------------------------------------------------------- 多巷道支持
+def _nav_offsets(kind: str = "capture_lane_offsets") -> dict[str, float]:
+    import yaml
 
-    sg = json.loads((ROOT / "world" / "slot_grid.json").read_text(encoding="utf-8"))
-    bays = [b for b in sg["bays"] if b["aisle"] == args.aisle]
-    want = set(parse_range(args.bays))
-    bays = [b for b in bays if b["bay"] in want]
-    if not bays:
-        print(f"[seg2] A 巷没有这些 bay：{args.bays}")
-        return 2
-    aisle_y = bays[0]["aisle_center_y"]
-    # 每个 bay 两个观测方向（L / R），观测位就是 bay 中心 x
+    cfg = yaml.safe_load((ROOT / "config" / "nav.yaml").read_text(encoding="utf-8")) or {}
+    return {str(k).upper(): float(v) for k, v in (cfg.get(kind) or {}).items()}
+
+
+def aisle_y(sg: dict, aisle: str, offsets: dict[str, float] | None = None) -> float:
+    """采集行驶线 y = 巷道中心 + 配置化偏移（C 巷绕开叉车，见 config/nav.yaml）。"""
+    off = _nav_offsets() if offsets is None else offsets
+    a = next(a for a in sg["aisles"] if a["name"] == aisle)
+    return round(float(a["center_y"]) + off.get(aisle.upper(), 0.0), 3)
+
+
+def blocked_bays(aisle: str) -> list[tuple[int, int]]:
+    """该巷被路障封死的 bay 区间（从 catalog 派生，不再靠人记）。"""
+    return [(int(s["bay_from"]), int(s["bay_to"]))
+            for s in get_catalog().blocked_segments()
+            if s["aisle"] == aisle and s.get("bay_from")]
+
+
+def reachable_bays(sg: dict, aisle: str, want: list[int]) -> tuple[list[int], list[int]]:
+    ranges = blocked_bays(aisle)
+    ok, bad = [], []
+    for b in want:
+        (bad if any(lo <= b <= hi for lo, hi in ranges) else ok).append(b)
+    return ok, bad
+
+
+def build_views(sg: dict, aisle: str, bays: list[int], y_line: float) -> list[dict]:
+    by_bay = {b["bay"]: b for b in sg["bays"] if b["aisle"] == aisle}
     views = []
-    for b in bays:
+    for b in sorted(bays):
+        rec = by_bay[b]
         for side, yaw in (("L", math.pi / 2), ("R", -math.pi / 2)):
-            addr = [s for s in b["slots"] if f"-{side}-" in s]
-            # slot_grid 的 slots 是地址字符串，用 slots 字典查层高确认
-            views.append({"bay": b["bay"], "x": b["center_x"], "y": aisle_y,
-                          "yaw": yaw, "side": side, "addr": addr})
-    print(f"[seg2] 巷道 {args.aisle}（y={aisle_y:+.2f}）bay {[b['bay'] for b in bays]} -> "
+            views.append({
+                "bay": b, "x": rec["center_x"], "y": y_line, "yaw": yaw,
+                "side": side, "addr": [s for s in rec["slots"] if f"-{side}-" in s],
+            })
+    return views
+
+
+def capture_aisle(node: "Cam", poller, sg: dict, aisle: str, bays: list[int],
+                  y_line: float, out: Path, args) -> int:
+    """在一个巷道里拍完所有观测位，返回帧数。"""
+    from seg1_go import safe_route
+
+    views = build_views(sg, aisle, bays, y_line)
+    if not views:
+        print(f"[seg2] {aisle} 巷没有可观测的 bay，跳过")
+        return 0
+    print(f"[seg2] 巷道 {aisle}（y={y_line:+.2f}）bay {bays[0]}..{bays[-1]} -> "
           f"{len(views)} 个观测（每 bay 左/右各一帧）")
 
-    poller = TruthPoller()
-    t0 = time.monotonic()
-    while poller.get(10.0) is None and time.monotonic() - t0 < 30:
-        time.sleep(0.3)
-    if poller.get() is None:
-        print("[seg2] 读不到真值位姿 —— 仿真没起？")
-        return 2
-
-    # 前置：先把车送到 A 巷西口。
-    # 踩过：仿真重启后车在出生点 (-31,0)，直接从那里开向 bay 1 是**斜穿货架端面**，
-    # 顶住不动 -> 每个观测都"超时未到"，6 个观测全跳过、一帧没抓到。
+    entry_x = min(v["x"] for v in views) - 1.2
     p0 = poller.get()
-    if p0 is not None and abs(p0[1] - aisle_y) > 0.6:
-        print(f"[seg2] 车不在巷内（y={p0[1]:+.2f}），先送到 A 巷西口 (-28.5,{aisle_y:+.2f})")
-        drive_to_point(poller, float(get_catalog().spawn["x"]), aisle_y, args.speed, 0.20, 180.0)
-        drive_to_point(poller, -28.5, aisle_y, args.speed, 0.12, 90.0)
+    if p0 is None or abs(p0[1] - y_line) > 0.6 or abs(p0[0] - entry_x) > 3.0:
+        # 从任意位置安全转场（横通道 + 目标巷道，绝不斜穿货架）
+        # 转场预算 = 距离 × RTF 折算 × 余量。固定 600 s 在"绕横通道 76 m"那条腿上
+        # 刚好不够（76 / 0.45 / 0.223 ≈ 758 s 墙钟），实测把整条 B 巷判成"转场失败"。
+        p0d = poller.get() or (entry_x, y_line, 0.0)
+        dist = math.hypot(entry_x - p0d[0], y_line - p0d[1])
+        budget = max(420.0, dist / max(args.speed, 0.20) / max(RTF_EST, 0.12) * 1.8 + 120.0)
+        print(f"[seg2] {aisle} 巷转场 {dist:.0f} m，预算 {budget:.0f} s 墙钟")
+        if not safe_route(poller, entry_x, y_line, speed=max(args.speed, 0.45),
+                          max_seconds=min(budget, max(args.max_seconds, 420.0))):
+            print(f"[seg2] {aisle} 巷转场失败，跳过")
+            return 0
 
-    rclpy.init()
-    node = Cam()
-    frames = []
+    frames: list[dict] = []
     t_start = time.monotonic()
-    try:
-        # 先等第一帧，确认相机链路真的通（否则白开一路）
-        if node.fresh(20.0) is None:
-            print("[seg2] 拿不到 RGB-D（相机桥没起？）-> 未跑")
-            return 2
-        for i, v in enumerate(views):
-            if time.monotonic() - t_start > args.max_seconds:
-                print(f"[seg2] 到时间上限，收在 {i}/{len(views)} 个观测")
-                break
-            # 超时按距离算：固定 120 s 在 40 m 行程上会失败（0.26 m/s 需 154 s），
-            # 前两次因此"超时未到 bay 1"。
-            p_now = poller.get()
-            dist = math.hypot(v["x"] - p_now[0], v["y"] - p_now[1]) if p_now else 60.0
-            budget = 2.2 * dist / max(args.speed, 0.05) + 25.0
-            ok = drive_to_point(poller, v["x"], v["y"], args.speed, 0.12, budget)
-            if not ok:
-                print(f"[seg2] 到 bay {v['bay']} 观测位失败，跳过")
-                continue
-            # 转向必须"停稳再校正"：turn_to 是纯 P，误差大时冲过头（10°）、误差小时被静摩擦
-            # 卡住（2–4° 超时）。SEG-2 的横向归属全靠实际朝向，残差直接变成 ±0.5 m 定位散布，
-            # 所以这里用脉冲式对齐（见 drive_to.align_to）。
-            ok_turn, yaw_err_deg = turn_to_precise(poller, v["yaw"], tol_deg=2.0)
-            cmd(0.0, 0.0, 0.0)
-            # 只接受转向完成之后拍的帧（否则可能拿到转向前的画面）
-            node.mark()
-            got = node.fresh(15.0)
-            if got is None:
-                print(f"[seg2] bay {v['bay']}-{v['side']} 取图失败"
-                      f"（闸门 {node._last_stamp:.2f}，最新收到 {node.latest_stamp():.2f}）"
-                      f" —— 若两者相同说明相机桥没在出新帧")
-                continue
-            rgb, dep, k = got
-            p = poller.get() or (0.0, 0.0, 0.0)
-            frames.append({"rgb": rgb, "depth": dep, "k": k,
-                           "pose": np.array(p, np.float64), "bay": v["bay"],
-                           "side": v["side"], "addr": v["addr"],
-                           "yaw_err_deg": float(yaw_err_deg)})
-            fin = np.isfinite(dep) & (dep > 0.1)
-            h, w = dep.shape
-            core = dep[h // 4: 3 * h // 4, w // 4: 3 * w // 4]
-            core = core[np.isfinite(core) & (core > 0.1)]
-            core_med = float(np.median(core)) if core.size else float("nan")
-            warn = "  ⚠️ 中心深度 >4 m，可能没对着货架" if core_med > 4.0 else ""
-            print(f"  [seg2] {i + 1}/{len(views)}  bay {v['bay']}-{v['side']}  "
-                  f"位姿 ({p[0]:+.2f},{p[1]:+.2f}) yaw={math.degrees(p[2]):+.1f}°  "
-                  f"深度有效 {100 * fin.mean():.0f}%  中位 {np.median(dep[fin]):.2f} m  "
-                  f"转向残差 {yaw_err_deg:4.1f}°  货位 {v['addr']}{warn}")
-    finally:
+    if node.fresh(20.0) is None:
+        print("[seg2] 拿不到 RGB-D（相机桥没起？）-> 未跑")
+        return 0
+    for i, v in enumerate(views):
+        if time.monotonic() - t_start > args.max_seconds:
+            print(f"[seg2] {aisle} 巷到时间上限，收在 {i}/{len(views)} 个观测")
+            break
+        p_now = poller.get()
+        dist = math.hypot(v["x"] - p_now[0], v["y"] - p_now[1]) if p_now else 60.0
+        budget = 2.2 * dist / max(args.speed, 0.05) + 25.0
+        if not drive_to_point(poller, v["x"], v["y"], args.speed, 0.12, budget):
+            print(f"[seg2] 到 {aisle}-{v['bay']}-{v['side']} 观测位失败，跳过")
+            continue
+        ok_turn, yaw_err_deg = turn_to_precise(poller, v["yaw"], tol_deg=2.0)
         cmd(0.0, 0.0, 0.0)
-        node.destroy_node()
-        rclpy.shutdown()
-        poller.stop()
+        if yaw_err_deg > 5.0:
+            # **宁缺毋错**：朝向错了的帧会把"对面货架"当成这一侧存下来，
+            # 下游会把它当真实观测（实测出现过 140° 残差）。这种帧只能丢。
+            print(f"[seg2] {aisle}-{v['bay']}-{v['side']} 朝向未对齐"
+                  f"（残差 {yaw_err_deg:.1f}°），丢弃这一帧")
+            continue
+        node.mark()
+        got = node.fresh(15.0)
+        if got is None:
+            print(f"[seg2] {aisle}-{v['bay']}-{v['side']} 取图失败（相机桥没出新帧？）")
+            continue
+        rgb, dep, k = got
+        p = poller.get() or (0.0, 0.0, 0.0)
+        h, w = dep.shape
+        core = dep[h // 4: 3 * h // 4, w // 4: 3 * w // 4]
+        core = core[np.isfinite(core) & (core > 0.1)]
+        core_med = float(np.median(core)) if core.size else float("nan")
+        if core_med < 0.60:
+            # 正前方 <0.6 m 有东西：那是挡在观测位前的障碍（C 巷 bay5 的叉车就是这么来的），
+            # 拍下来的不是这一侧货架 —— 存进去会污染 SEG-2 的占用/类别统计。
+            print(f"[seg2] {aisle}-{v['bay']}-{v['side']} 前方 {core_med:.2f} m 被遮挡，"
+                  f"丢弃这一帧（不是该货架面的观测）")
+            continue
+        frames.append({"rgb": rgb, "depth": dep, "k": k,
+                       "pose": np.array(p, np.float64), "bay": v["bay"],
+                       "side": v["side"], "addr": v["addr"],
+                       "yaw_err_deg": float(yaw_err_deg)})
+        fin = np.isfinite(dep) & (dep > 0.1)
+        warn = "  ⚠️ 中心深度 >4 m，可能透过空货位看到对面" if core_med > 4.0 else ""
+        print(f"  [seg2] {i + 1}/{len(views)}  {aisle}-{v['bay']}-{v['side']}  "
+              f"位姿 ({p[0]:+.2f},{p[1]:+.2f}) yaw={math.degrees(p[2]):+.1f}°  "
+              f"深度有效 {100 * fin.mean():.0f}%  中位 {np.median(dep[fin]):.2f} m  "
+              f"转向残差 {yaw_err_deg:4.1f}°{warn}")
 
     if not frames:
-        print("[seg2] 一帧都没抓到 -> 未跑")
-        return 2
-    out = Path(args.out)
+        print(f"[seg2] {aisle} 巷一帧都没抓到")
+        return 0
     out.parent.mkdir(parents=True, exist_ok=True)
-    # 存成扁平数组 + 每帧索引（npz 里放 list 会丢类型）
     np.savez_compressed(
         out,
         rgb=np.stack([f["rgb"] for f in frames]),
@@ -258,8 +279,91 @@ def main() -> int:
         cam_xyz=np.array(CAM_XYZ, np.float64),
         cam_pitch_deg=np.array(args.pitch, np.float64),
     )
-    print(f"[seg2] {len(frames)} 帧 -> {out}")
-    return 0
+    print(f"[seg2] {aisle} 巷 {len(frames)} 帧 -> {out}")
+    return len(frames)
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--aisle", default="A", help="单巷模式（配合 --bays）")
+    ap.add_argument("--bays", default="1-24", help="bay 范围，如 1-24 或 1-3,7,9")
+    ap.add_argument("--aisles", default="",
+                    help="多巷模式：逗号分隔，如 A,B,C；'all' = 全部。每巷一个 npz")
+    ap.add_argument("--out", default="", help="单巷输出路径（多巷模式忽略，按巷命名）")
+    ap.add_argument("--force", action="store_true", help="已有产物也重抓")
+    ap.add_argument("--speed", type=float, default=0.30)
+    ap.add_argument("--settle", type=float, default=0.5, help="转向后等几秒让图像稳定")
+    ap.add_argument("--max-seconds", type=float, default=3600.0, help="每条巷的墙钟上限")
+    ap.add_argument("--pitch", type=float, default=16.0,
+                    help="相机仰角（度）。必须与 make seg2-robot 的 cam_pitch 一致")
+    args = ap.parse_args()
+
+    sg = json.loads((ROOT / "world" / "slot_grid.json").read_text(encoding="utf-8"))
+
+    if args.aisles:
+        aisles = list(get_catalog().aisles) if args.aisles.lower() == "all" \
+            else [a.strip().upper() for a in args.aisles.split(",") if a.strip()]
+        want = set(parse_range(args.bays))
+        jobs = []
+        for aisle in aisles:
+            ok, bad = reachable_bays(sg, aisle, sorted(want))
+            if bad:
+                print(f"[seg2] {aisle} 巷 bay {bad[0]}..{bad[-1]} 被路障封死（catalog blocked），"
+                      f"只能采到 bay {ok[-1] if ok else '-'}")
+            if not ok:
+                continue
+            jobs.append((aisle, ok, ROOT / "results" / f"seg2_frames_{aisle}.npz"))
+        if not jobs:
+            print("[seg2] 没有可采的巷道")
+            return 2
+    else:
+        ok, _bad = reachable_bays(sg, args.aisle, sorted(set(parse_range(args.bays))))
+        out = Path(args.out) if args.out else ROOT / "results" / f"seg2_frames_{args.aisle}.npz"
+        jobs = [(args.aisle.upper(), ok, out)]
+
+    poller = TruthPoller()
+    t0 = time.monotonic()
+    while poller.get(10.0) is None and time.monotonic() - t0 < 30:
+        time.sleep(0.3)
+    if poller.get() is None:
+        print("[seg2] 读不到真值位姿 —— 仿真没起？")
+        return 2
+
+    rclpy.init()
+    node = Cam()
+    manifest: dict[str, object] = {}
+    total = 0
+    try:
+        for aisle, bays, out in jobs:
+            if out.exists() and out.stat().st_size > 1_000_000 and not args.force:
+                print(f"[seg2] 跳过 {aisle}：已有 {out.name}（--force 可重抓）")
+                manifest[aisle] = {"status": "skipped", "out": str(out.relative_to(ROOT))}
+                continue
+            y_line = aisle_y(sg, aisle)
+            n = capture_aisle(node, poller, sg, aisle, bays, y_line, out, args)
+            total += n
+            manifest[aisle] = {"status": "ok" if n else "empty", "frames": n,
+                               "bays": [bays[0], bays[-1]], "out": str(out.relative_to(ROOT))}
+    finally:
+        cmd(0.0, 0.0, 0.0)
+        node.destroy_node()
+        rclpy.shutdown()
+        poller.stop()
+
+    man = ROOT / "results" / "seg2_capture_manifest.json"
+    prev = {}
+    if man.exists():
+        try:
+            prev = json.loads(man.read_text(encoding="utf-8")).get("aisles") or {}
+        except Exception:
+            prev = {}
+    prev.update(manifest)
+    man.parent.mkdir(parents=True, exist_ok=True)
+    man.write_text(json.dumps({"schema": "depot-vln/seg2_capture@1",
+                               "cam_pitch_deg": args.pitch, "aisles": prev},
+                              indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"[seg2] 合计 {total} 帧；manifest -> {man.relative_to(ROOT)}")
+    return 0 if total else 2
 
 
 if __name__ == "__main__":

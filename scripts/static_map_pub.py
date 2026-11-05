@@ -17,6 +17,11 @@ from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPo
 from geometry_msgs.msg import TransformStamped
 from tf2_ros import StaticTransformBroadcaster
 from depot_vln.catalog import get_catalog
+import os as _os
+import sys as _sys
+_ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
+if _ROOT not in _sys.path:
+    _sys.path.insert(0, _ROOT)
 
 
 def read_pgm(path: str) -> tuple[bytes, int, int]:
