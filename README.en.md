@@ -72,6 +72,10 @@ config/world.yaml + semantics.yaml + nav.yaml     ← the only place to edit the
 `depot_vln/sim.py` is the one module that samples the world generator to make the offline benchmark
 possible; its provenance is always labelled `sim-sampled`.
 
+This repository is intentionally a **monorepo application**, not a ROS 2 package/workspace. For the
+reasoning, the target industrial package split, and a phased migration plan, see
+[docs/ROS_PACKAGING.md](docs/ROS_PACKAGING.md).
+
 ## Repository layout
 
 ```

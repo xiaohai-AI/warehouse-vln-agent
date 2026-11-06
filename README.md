@@ -119,6 +119,7 @@ examples/                四个可运行的离线小例子（语言→目标→�
 tests/                   单元测试 + 反硬编码守护 + 真值隔离守护
 docs/ARCHITECTURE.md     设计细节与数据流
 docs/LIMITATIONS.md      唯一权威的降级/未测清单
+docs/ROS_PACKAGING.md    为什么现在不是 ROS 2 package，以及上真机的拆包/迁移计划
 docs/DEMO_GUI.md         三个可录制的 GUI 演示（Nav2 / 语言 / 感知）
 docs/media/              演示截图 / GIF 的存放位置
 docs/archive/            重构前的过程文档（DECISIONS/TROUBLESHOOTING/REPORT…，仅供追溯）
